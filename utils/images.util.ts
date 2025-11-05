@@ -13,11 +13,6 @@ export function uploadedImageHandler(req: Request, res: Response) {
     imageHandler(imagePath, req, res);
 }
 
-export function foodImageHandler(req: Request, res: Response) {
-    const imagePath = path.join("images/food");
-    imageHandler(imagePath, req, res);
-}
-
 /**
  * Retrieve image
  * @returns Image
