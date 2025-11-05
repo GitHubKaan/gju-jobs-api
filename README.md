@@ -1,4 +1,9 @@
-# gju-jobs-api
-API for the German Jordanian University (GJU) Job Portal
+# GJU Job API
+This software is proprietary and confidential. Unauthorized use, reproduction, or distribution is strictly prohibited.
 
-Backend will be build with express.js
+Made by Kaan, Dilan and Khanh
+
+## Setup:
+1. Create .env, .env.production, .env.testing file, use .env.example as a template
+2. Configure PostgreSQL
+3. Configure Redis

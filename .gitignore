@@ -1,0 +1,10 @@
+.env
+.env.testing
+.env.production
+
+certificates/cert.pem
+certificates/key.pem
+
+node_modules
+
+.DS_Store

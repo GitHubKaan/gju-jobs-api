@@ -1,0 +1,446 @@
+{
+	"info": {
+		"_postman_id": "c646bc69-3308-44bb-ae68-4c477550ffe1",
+		"name": "HTTP/HTTPS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30410705"
+	},
+	"item": [
+		{
+			"name": "/api",
+			"item": [
+				{
+					"name": "General",
+					"item": [
+						{
+							"name": "Support",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"kaan@turanics.com\",\r\n    \"phone\": \"+0123456789\",\r\n    \"type\": \"LEGAL\",\r\n    \"message\": \"Hallo, ich brauche Hilfe!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/support",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"support"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Frontend Error Upload",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"errorMessage\": \"This is a test error message.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/send-frontend-error",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"send-frontend-error"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account",
+					"item": [
+						{
+							"name": "Signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"kaan@turanics.com\",\r\n    \"givenName\": \"Kaan\",\r\n    \"surname\": \"Turan\",\r\n    \"company\": \"Kaan Software GmbH\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"phone\": \"+490176123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/signup",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"kaan@turanics.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/login",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Auth",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjUxMTVkODQ3LWExMzItNDA4Mi05M2RlLWUyZjI1MTBiZGNkMCIsImF1dGhVVUlEIjoiMTVkZTU5OTUtOWFmOC00YmNlLTlkYjAtODdiZWE0ZWFkZDY4IiwidHlwZSI6ImF1dGgiLCJpYXQiOjE3NTY5ODUyNzUsImV4cCI6MTc1Njk4NjE3NX0.QzuTQ1WqYNJG4pKbUSnoTTag1TJs-sBxHq1rDUsaTjM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"607608\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/auth",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjUxMTVkODQ3LWExMzItNDA4Mi05M2RlLWUyZjI1MTBiZGNkMCIsImF1dGhVVUlEIjoiMTVkZTU5OTUtOWFmOC00YmNlLTlkYjAtODdiZWE0ZWFkZDY4IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc1Njk4NTMzNCwiZXhwIjoxNzcyNTM3MzM0fQ.CKWvaNE7RiP5raJUVnqSv0pR1CyOZU-XKYWUa0AR2_g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"givenName\": \"Kaan\",\r\n    \"surname\": \"Turan\",\r\n    \"company\": \"Kaan Software GmbH\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"phone\": \"+490176123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/update",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recovery",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"kaan@turanics.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/recovery",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"recovery"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recovery",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjFkODE0NDk4LWI4M2ItNDQ5Ni05YTM2LTJhMDA4YjZjN2MzZCIsImF1dGhVVUlEIjoiYWQ3MWFlYTgtMTRhYi00YTk0LWE5ODUtY2UzZjI3NjFlNDJlIiwidHlwZSI6InJlY292ZXJ5IiwiaWF0IjoxNzUzNTY4MTkyLCJleHAiOjE3NTM1NjkwOTJ9.9EXfA1PvLo1GlTMSxgagdX1DOVMx-tZP7IbnEYQkRv",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/recovery",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"recovery"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjUxMTVkODQ3LWExMzItNDA4Mi05M2RlLWUyZjI1MTBiZGNkMCIsImF1dGhVVUlEIjoiMTVkZTU5OTUtOWFmOC00YmNlLTlkYjAtODdiZWE0ZWFkZDY4IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc1Njk4NTMzNCwiZXhwIjoxNzcyNTM3MzM0fQ.CKWvaNE7RiP5raJUVnqSv0pR1CyOZU-XKYWUa0AR2_g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjU5MDI3NDE0LWE5YjEtNDgxNy1hMzk4LWUzZGRiZDU1NWY1MSIsImF1dGhVVUlEIjoiZmVjOTc3MzMtOTJjOC00NWZhLWI2M2EtYTM0ODZjMTcwYmI5IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTczOTEzOTEyMywiZXhwIjoxNzU0NjkxMTIzfQ.W_AywBiMaUpQaw5ua5qwfRtrM7epCd8cVeIQVjOORB0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/deletion",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"deletion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjU5MDI3NDE0LWE5YjEtNDgxNy1hMzk4LWUzZGRiZDU1NWY1MSIsImF1dGhVVUlEIjoiZmVjOTc3MzMtOTJjOC00NWZhLWI2M2EtYTM0ODZjMTcwYmI5IiwidHlwZSI6ImRlbGV0aW9uIiwiaWF0IjoxNzM5MTM5MjE0LCJleHAiOjE3MzkxMzk1MTR9.4RTdX0gBQ91GdiXHrAzFgkpw7nKFOOzGTBrsTZOSCEk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://www.localhost:4000/api/v1/user/deletion",
+									"protocol": "http",
+									"host": [
+										"www",
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"deletion"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
