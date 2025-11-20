@@ -1,15 +1,16 @@
-import { DBPool } from "../configs/postgreSQL.config";
-import { v4 as uuidv4 } from "uuid";
-import { decrypt, encrypt } from "../utils/encryption.util";
-import { DefaultError } from "../utils/error.util";
-import { MESSAGE, TITLE } from "../responseMessage";
-import { StatusCodes } from "http-status-codes";
-import { ENV } from "../utils/envReader.util";
-import { UUID } from "crypto";
-import { UUIDType } from "../enums";
-import { randomString } from "../utils/stringGenerator.util";
-import { UpdateUser, User } from "../types/user.type";
-import { hashValue } from "../utils/hash.util";
+import {DBPool} from "../configs/postgreSQL.config";
+import {v4 as uuidv4} from "uuid";
+import {decrypt, encrypt} from "../utils/encryption.util";
+import {DefaultError} from "../utils/error.util";
+import {MESSAGE, TITLE} from "../responseMessage";
+import {StatusCodes} from "http-status-codes";
+import {ENV} from "../utils/envReader.util";
+import {UUID} from "crypto";
+import {UUIDType} from "../enums";
+import {randomString} from "../utils/stringGenerator.util";
+import {UpdateUser, User} from "../types/user.type";
+import {hashValue} from "../utils/hash.util";
+import {PoolClient} from "pg";
 
 export class UserService {
     /**
@@ -155,7 +156,12 @@ export class UserService {
         UUID: UUID,
         authUUID: UUID
     }> {
-        const query = `
+        const client: PoolClient = await DBPool.connect();
+
+        try {
+            await client.query("BEGIN");
+
+            const query = `
             INSERT INTO users (
                 uuid,
                 auth_uuid,
@@ -168,40 +174,65 @@ export class UserService {
                 zip_code,
                 city,
                 country,
-                phone
+                phone,
+                is_student
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
             ON CONFLICT (email) DO NOTHING;
         `;
-    
-        const UUID = uuidv4() as UUID;
-        const authUUID = uuidv4() as UUID;
 
-        const result = await DBPool.query(query, [
-            UUID,
-            authUUID,
-            payload.email,
-            encrypt(payload.givenName.trimEnd().trimStart()),
-            encrypt(payload.surname.trimEnd().trimStart()),
-            encrypt(payload.company.trimEnd().trimStart()),
-            encrypt(payload.street.trimEnd().trimStart()),
-            encrypt(payload.streetNumber.trimEnd().trimStart()),
-            encrypt(payload.ZIPCode.toString()),
-            encrypt(payload.city.trimEnd().trimStart()),
-            encrypt(payload.country.trimEnd().trimStart()),
-            payload.phone ? encrypt(payload.phone) : null
-        ])
-        
-        if (result.rowCount && result.rowCount > 0) {
-            return {
-                UUID: UUID,
-                authUUID: authUUID
-            };
+            const UUID: UUID = uuidv4() as UUID;
+            const authUUID: UUID = uuidv4() as UUID;
+
+            const result = await client.query(query, [
+                UUID,
+                authUUID,
+                payload.email,
+                encrypt(payload.givenName.trim()),
+                encrypt(payload.surname.trim()),
+                encrypt(payload.company.trim()),
+                encrypt(payload.street.trim()),
+                encrypt(payload.streetNumber.trim()),
+                encrypt(payload.ZIPCode.toString()),
+                encrypt(payload.city.trim()),
+                encrypt(payload.country.trim()),
+                payload.phone ? encrypt(payload.phone) : null,
+                payload.isStudent
+            ]);
+
+            if (result.rowCount && result.rowCount > 0) {
+                throw new DefaultError(
+                    StatusCodes.CONFLICT,
+                    MESSAGE.ERROR.DUPLICATE(TITLE.E_MAIL_ADDRESS)
+                );
+            }
+
+            if (payload.isStudent) {
+                await client.query(
+                    `INSERT INTO users_student (uuid, user_id)
+                 VALUES ($1, $2)`,
+                    [uuidv4(), UUID]
+                );
+            } else {
+                await client.query(
+                    `INSERT INTO users_company (uuid, user_id)
+                 VALUES ($1, $2)`,
+                    [uuidv4(), UUID]
+                );
+            }
+
+            await client.query("COMMIT");
+
+            return { UUID, authUUID };
+
+        } catch (err) {
+            await client.query("ROLLBACK");
+            throw err;
+        } finally {
+            client.release();
         }
-
-        throw new DefaultError(StatusCodes.CONFLICT, MESSAGE.ERROR.DUPLICATE(TITLE.E_MAIL_ADDRESS));
     };
-    
+
     /**
      * Replace authUUID
      * @param authUUID Old authUUID
@@ -381,8 +412,7 @@ export class UserService {
     
         const result = await DBPool.query(query, [UUID]);
 
-        const decryptedCompany = decrypt(result.rows[0].company);
-        return decryptedCompany;
+        return decrypt(result.rows[0].company);
     };
     
     /**
@@ -462,7 +492,6 @@ export class UserService {
 
         const result = await DBPool.query(query);
 
-        const UUIDs: UUID[] = result.rows.map((row) => row.uuid);
-        return UUIDs;
+        return result.rows.map((row) => row.uuid);
     }
 }
