@@ -200,7 +200,7 @@ export class UserService {
                 payload.isStudent
             ]);
 
-            if (result.rowCount && result.rowCount > 0) {
+            if (result.rowCount === 0) {
                 throw new DefaultError(
                     StatusCodes.CONFLICT,
                     MESSAGE.ERROR.DUPLICATE(TITLE.E_MAIL_ADDRESS)
