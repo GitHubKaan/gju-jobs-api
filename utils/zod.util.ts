@@ -85,7 +85,8 @@ export class Schemas {
                 .regex(/^[a-zA-ZäöüÄÖÜß\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             phone: this.phone
-                .optional()
+                .optional(),
+            isStudent: z.boolean({ message: MESSAGE.ERROR.BOOLEAN() })
         });
 
     static readonly support =

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
     city TEXT NOT NULL, -- Encrypted
     country TEXT NOT NULL, -- Encrypted
     phone TEXT, -- Encrypted
-    is_student BOOLEAN,
+    is_student BOOLEAN DEFAULT FALSE,
     cooldown TIMESTAMP,
     auth_code TEXT, -- Hashed
     auth_code_created TIMESTAMP,

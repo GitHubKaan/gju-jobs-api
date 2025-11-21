@@ -24,7 +24,8 @@ export class Testing {
                 ZIPCode: 12105,
                 city: "Berlin",
                 country: "Germany",
-                phone: "+490123456789"
+                phone: "+490123456789",
+                isStudent: true,
             });
 
             authCode = signupResponse.body.authCode;
