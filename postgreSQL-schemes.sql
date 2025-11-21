@@ -24,22 +24,29 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- USERS_STUDENT
 CREATE TABLE users_student (
-   uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
-   user_id UUID NOT NULL,
-   CONSTRAINT fk_users_student_users
-       FOREIGN KEY (user_id)
-       REFERENCES users(uuid)
-       ON DELETE CASCADE
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
+    user_uuid UUID NOT NULL,
+    CONSTRAINT fk_users_student_users
+        FOREIGN KEY (user_uuid)
+        REFERENCES users(uuid)
+        ON DELETE CASCADE
+);
+
+-- USER_STUDENT TAGS
+CREATE TABLE users_student_tags (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
+    user_uuid UUID NOT NULL,
+    tag INT NOT NULL
 );
 
 -- USERS_COMPANY
 CREATE TABLE users_company (
-   uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
-   user_id UUID NOT NULL,
-   CONSTRAINT fk_users_company_users
-       FOREIGN KEY (user_id)
-       REFERENCES users(uuid)
-       ON DELETE CASCADE
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
+    user_uuid UUID NOT NULL,
+    CONSTRAINT fk_users_company_users
+        FOREIGN KEY (user_uuid)
+        REFERENCES users(uuid)
+        ON DELETE CASCADE
 );
 
 -- TOKEN BLACKLIST

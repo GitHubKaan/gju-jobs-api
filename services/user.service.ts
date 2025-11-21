@@ -209,14 +209,18 @@ export class UserService {
 
             if (payload.isStudent) {
                 await client.query(
-                    `INSERT INTO users_student (uuid, user_id)
-                 VALUES ($1, $2)`,
+                    `
+                        INSERT INTO users_student (uuid, user_uuid)
+                        VALUES ($1, $2)
+                    `,
                     [uuidv4(), UUID]
                 );
             } else {
                 await client.query(
-                    `INSERT INTO users_company (uuid, user_id)
-                 VALUES ($1, $2)`,
+                    `
+                        INSERT INTO users_company (uuid, user_uuid)
+                        VALUES ($1, $2)
+                    `,
                     [uuidv4(), UUID]
                 );
             }
