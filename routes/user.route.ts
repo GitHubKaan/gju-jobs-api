@@ -32,6 +32,13 @@ export async function handleSignup(
     const payload: User = req.body;
     checkFormat(payload, Schemas.user);
 
+    if (payload.isStudent) {
+        // zod check student
+    } else {
+        // zod check company
+        checkFormat(payload.company, Schemas.company);
+    }
+
     const UUIDs = await UserService.addUser(payload);
     const authCode = await UserService.addAuthCode(UUIDs.UUID);
     createUserUploadFolder(UUIDs.UUID);

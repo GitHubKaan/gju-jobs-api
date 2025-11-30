@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {z, ZodString} from "zod";
 import { FileType, fileTypes, SupportType, supportTypes } from "../enums";
 import { MESSAGE } from "../responseMessage";
 import { ENV } from "./envReader.util";
@@ -56,11 +56,6 @@ export class Schemas {
                 .max(60, { message: MESSAGE.ERROR.MAX_CHARACTERS(60) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
-            company: z.string({ message: MESSAGE.ERROR.STRING() }) // COMPANY ONLY VALUE; Khanh THIS VALUE SHOULD BE OPTIONAL; OPTION VALUES BELONG TO THE BOTTOM
-                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
-                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
-                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             street: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
                 .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
@@ -99,6 +94,13 @@ export class Schemas {
             isStudent: z.boolean({ message: MESSAGE.ERROR.BOOLEAN() })
         });
 
+    static readonly company: ZodString =
+        z.string({ message: MESSAGE.ERROR.STRING() })
+            .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+            .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+            .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+            .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY });
+
     static readonly support =
         z.object({
             email: this.email,
@@ -119,7 +121,7 @@ export class Schemas {
         z.string({ message: MESSAGE.ERROR.STRING("errorMessage") })
             .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
             .max(10000, { message: MESSAGE.ERROR.MAX_CHARACTERS(10000) })
-            .regex(/^[a-zA-Z0-9_\s.,;:!?(){}\[\]<>'"`~\-_=+|\\/@&%*$^#]+$/, { message: MESSAGE.ERROR.REGEX() });
+            .regex(/^[a-zA-Z0-9_\s.,;:!?(){}\[\]<>'"`~\-=+|\\/@&%*$^#]+$/, { message: MESSAGE.ERROR.REGEX() });
 
 
     static readonly fileType =
