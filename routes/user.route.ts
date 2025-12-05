@@ -38,8 +38,8 @@ export async function handleSignup(
         // zod check company
         checkFormat(payload.company, Schemas.company);
     }
-
-    const UUIDs = await UserService.addUser(payload);
+    
+    const UUIDs = await UserService.addUser(payload, payload.isStudent);
     const authCode = await UserService.addAuthCode(UUIDs.UUID);
     createUserUploadFolder(UUIDs.UUID);
     

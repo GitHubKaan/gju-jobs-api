@@ -117,7 +117,7 @@ export class UserService {
             phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
             givenName: decrypt(result.rows[0].given_name),
             surname: decrypt(result.rows[0].surname),
-            company: decrypt(result.rows[0].company),
+            company: result.rows[0].company === null ? null : decrypt(result.rows[0].company),
             street: decrypt(result.rows[0].street),
             streetNumber: decrypt(result.rows[0].street_number),
             ZIPCode: Number(decrypt(result.rows[0].zip_code)),
@@ -147,11 +147,13 @@ export class UserService {
     /**
      * Add new user
      * @param payload Signup payload
+     * @param isStudent Is student?
      * @returns UUID (userUUID) & authUUID
      * @throws {DefaultError} Already existing email
     */
     static async addUser(
-        payload: User
+        payload: User,
+        isStudent: boolean
     ): Promise<{
         UUID: UUID,
         authUUID: UUID
@@ -190,7 +192,7 @@ export class UserService {
                 payload.email,
                 encrypt(payload.givenName.trim()),
                 encrypt(payload.surname.trim()),
-                encrypt(payload.company.trim()),
+                isStudent ? undefined : encrypt(payload.company.trim()),
                 encrypt(payload.street.trim()),
                 encrypt(payload.streetNumber.trim()),
                 encrypt(payload.ZIPCode.toString()),

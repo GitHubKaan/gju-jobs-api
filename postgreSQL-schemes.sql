@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT UNIQUE NOT NULL,
     given_name TEXT NOT NULL, -- Encrypted
     surname TEXT NOT NULL, -- Encrypted
-    company TEXT NOT NULL, -- Encrypted
+    company TEXT, -- Encrypted; Optional for students
     street TEXT NOT NULL, -- Encrypted
     street_number TEXT NOT NULL, -- Encrypted
     zip_code TEXT NOT NULL, -- Encrypted
