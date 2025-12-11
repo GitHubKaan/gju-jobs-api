@@ -7,7 +7,7 @@ import { FileService } from "../services/file.service";
 import { deleteLocalFile, fileUpload } from "../utils/file.util";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { FileType } from "../enums";
-import { ENV } from "../utils/envReader.util";
+import { ENV, getBackendOrigin } from "../utils/envReader.util";
 import { Schemas } from "../utils/zod.util";
 
 /**
@@ -41,7 +41,7 @@ export async function handleRetrieveFiles(
     res: Response
 ) {
     const files = await FileService.getFiles(req.userUUID);
-
+    
     return res
         .status(StatusCodes.OK)
         .json({
@@ -66,11 +66,16 @@ export async function handleRetrieveFile(
 
     const file = await FileService.getFile(UUID, req.userUUID);
 
+    const modifFile = {
+        ...file,
+        url: `${getBackendOrigin()}/${ENV.IMAGE_UPLOAD_PATH}/${req.userUUID}/${file.name}`
+    };
+
     return res
         .status(StatusCodes.OK)
         .json({
             description: MESSAGE.RETRIEVED(TITLE.FILE),
-            file: file
+            file: modifFile
         });
 }
 

@@ -104,7 +104,7 @@ export function routerHandler() {
         routeWrapper(handleDeleteFile)
     );
     
-    // IMAGE
+    // Image
     app.use(
         `${getBackendPath()}/${ENV.IMAGE_UPLOAD_PATH}`, // If changed, do not forget to edit timeout.middleware.ts also
         routeWrapper(uploadedImageHandler)
