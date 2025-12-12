@@ -14,11 +14,6 @@ export function sendSignupMail(email: string, authCode: string) {
 
         authCode: ${authCode}\n
         authCode expiration: ${toTimestamp(getCurrentDateTime() + ENV.AUTH_EXP * 1000)}
-
-        <img src="cid:logoID" alt="logo" />
-        <img src="cid:instagramID" alt="instagram" />
-        <img src="cid:twitterID" alt="twitter" />
-        <img src="cid:youtubeID" alt="youtube" />
     `;
     sendEmail(EMailSender.NoReply, email, "Benutzerkonto Registrierung", content);
 };

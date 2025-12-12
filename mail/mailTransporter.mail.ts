@@ -24,11 +24,7 @@ export async function sendEmail(
         subject: subjectTitle,
         html: content,
         attachments: [
-            {
-                filename: "logo.png",
-                path: "images/mail/logo.png",
-                cid: "logoID"
-            },
+            /*
             {
                 filename: "instagram.png",
                 path: "images/mail/instagram.png",
@@ -44,6 +40,7 @@ export async function sendEmail(
                 path: "images/mail/youtube.png",
                 cid: "youtubeID"
             }
+            */
         ]
     };
 
