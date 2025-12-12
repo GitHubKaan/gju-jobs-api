@@ -140,6 +140,9 @@ export class ENV {
 
     // IMAGE
     static readonly IMAGE_UPLOAD_PATH: string = envAudit("IMAGE_UPLOAD_PATH", EnvType.String);
+
+    // CORS
+    static readonly USE_CORS: boolean = envAudit("USE_CORS", EnvType.Boolean);
 }
 
 envIntegrity();

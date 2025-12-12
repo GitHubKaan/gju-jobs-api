@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import cors from "cors";
-import { getFrontendOrigin } from "./envReader.util";
+import { ENV, getFrontendOrigin } from "./envReader.util";
 import { app } from "../Main";
 import { StatusCodes } from "http-status-codes";
 
@@ -10,7 +10,7 @@ import { StatusCodes } from "http-status-codes";
  */
 export function CORSHandler() {
     const corsOptions = {
-        origin: `${getFrontendOrigin()}`,
+        origin: ENV.USE_CORS ? `${getFrontendOrigin()}` : "*",
         credentials: true,
         methods: "GET, PATCH, PUT, POST, DELETE",
         optionsSuccessStatus: StatusCodes.OK,
