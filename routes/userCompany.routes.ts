@@ -8,32 +8,30 @@ import { Token } from "../utils/token.util";
 import { MESSAGE } from "../responseMessage";
 import { createUserUploadFolder } from "../utils/file.util";
 import { ENV } from "../utils/envReader.util";
-import { UserStudentType } from "../types/user.type";
+import { UserCompanyType } from "../types/user.type";
 import { sendSignupMail } from "../mail/templates/signup.mail";
 import { Schemas } from "../utils/zod.util";
-import { UserStudentService } from "../services/userStudent.service";
+import { UserCompanyService } from "../services/userCompany.service";
 
-export class UserStudent {
+export class UserCompany {
     /**
      * Signup
      * @param payload Signup
      */
     static async handleSignup(
-        req: Request<any, any, UserStudentType, ParsedQs, Record<string, any>>,
+        req: Request<any, any, UserCompanyType, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        const payload: UserStudentType = req.body;
-        checkFormat(payload, Schemas.userStudent);
+        const payload: UserCompanyType = req.body;
+        checkFormat(payload, Schemas.userCompany);
 
-        const newUser = await UserStudentService.add(payload);
-        const authCode = await UserService.addAuthCode(newUser.UUID, true);
+        const newUser = await UserCompanyService.add(payload);
+        const authCode = await UserService.addAuthCode(newUser.UUID, false);
         createUserUploadFolder(newUser.UUID);
-
-        // Seperate function needed for Tags, job pereferences and langauges
 
         sendSignupMail(payload.email, authCode);
 
-        const token = Token.auth(newUser.UUID, newUser.authUUID, UserType.Student);
+        const token = Token.auth(newUser.UUID, newUser.authUUID, UserType.Company);
 
         return res
             .status(StatusCodes.OK)

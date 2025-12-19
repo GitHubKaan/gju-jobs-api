@@ -10,6 +10,7 @@ import { handleRetrieveUser, handleAuth, handleUpdateUser, handleGetRecovery, ha
 import { handleSendFrontendError, handleSupport } from "../routes/general.route";
 import { routeWrapper } from "../middlewares/wrapper.middleware";
 import { UserStudent } from "../routes/userStudent.routes";
+import { UserCompany } from "../routes/userCompany.routes";
 
 /**
  * Endpoint routes
@@ -40,23 +41,20 @@ export function routerHandler() {
         routeWrapper(UserStudent.handleSignup)
     );
 
-
     // User Company
-    /*
     router.post(
         "/user/signup/company",
         rateLimiter(ENV.SIGNUP_WINDOW_MS, ENV.SIGNUP_LIMIT),
-        routeWrapper(handleCompanySignup)
+        routeWrapper(UserCompany.handleSignup)
     );
-    */
    
     // User
-        router.post(
+    router.post(
         "/user/login",
         rateLimiter(ENV.LOGIN_WINDOW_MS, ENV.LOGIN_LIMIT),
         routeWrapper(handleLogin)
     );
-    
+
     router.get(
         "/user",
         auth(TokenType.Access),
@@ -68,6 +66,7 @@ export function routerHandler() {
         auth(TokenType.Auth),
         routeWrapper(handleAuth)
     );
+    
     router.patch(
         "/user/update",
         auth(TokenType.Access),

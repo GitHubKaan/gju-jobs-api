@@ -39,7 +39,7 @@ export async function authController(
         
         const payload = Token.getPayload(extractedToken);
         const isStudent = payload.userType === UserType.Student;
-        
+
         await UserService.isValidAuthUUID(payload.authUUID, isStudent);
         await BlacklistService.isTokenBlacklisted(extractedToken);
         

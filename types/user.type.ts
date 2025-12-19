@@ -56,4 +56,4 @@ export type UserCompanyType = BaseUserCompany; //Make interface to type
 export type OptionalUserCompanyType = Partial<BaseUserCompany>; //Make all "BaseUser" values optional
 
 // Update User
-export type UpdateUserCompanyType = Omit<OptionalUserCompanyType, "email">;
+export type UpdateUserCompanyType = OptionalUserCompanyType;

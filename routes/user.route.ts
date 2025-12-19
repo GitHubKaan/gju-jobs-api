@@ -20,6 +20,7 @@ import { sendRecoveryMail } from "../mail/templates/recovery.mail";
 import { UpdateUserCompanyType, UpdateUserStudentType } from "../types/user.type";
 import { Schemas } from "../utils/zod.util";
 import { UserStudentService } from "../services/userStudent.service";
+import { UserCompanyService } from "../services/userCompany.service";
 
 /**
  * Authentication after login or signup
@@ -48,9 +49,11 @@ export async function handleAuth(
     const deviceInfo = getDeviceInfo(req);
     sendAuthMail(email, deviceInfo.os, deviceInfo.browser);
 
+    const accessToken = Token.access(req.userUUID, req.authUUID, req.isStudent ? UserType.Student : UserType.Company);
+
     return res
         .status(StatusCodes.OK)
-        .set("Authorization", `Bearer ${Token.access(req.userUUID, req.authUUID, UserType.Student)}`)
+        .set("Authorization", `Bearer ${accessToken}`)
         .json({ description: MESSAGE.SUCCESS(TITLE.AUTHENTICATION) });
 }
 
@@ -93,7 +96,7 @@ export async function handleLogin(
  * @param payload UpdateUserPayload
  */
 export async function handleUpdateUser(
-    req: Request<any, any, any, ParsedQs, Record<string, any>>,
+    req: Request<any, any, UpdateUserStudentType | UpdateUserCompanyType, ParsedQs, Record<string, any>>,
     res: Response
 ) {
     if (req.isStudent) {
@@ -101,7 +104,7 @@ export async function handleUpdateUser(
         await UserStudentService.update(req.userUUID, payload);
     } else {
         const payload: UpdateUserCompanyType = req.body;
-        // Update Company
+        await UserCompanyService.update(req.userUUID, payload);
     }
     
     return res

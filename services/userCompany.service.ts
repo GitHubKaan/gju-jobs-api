@@ -1,5 +1,5 @@
 import { UUID } from "crypto";
-import { UpdateUserStudentType, UserStudentType } from "../types/user.type";
+import { UpdateUserCompanyType, UpdateUserStudentType, UserCompanyType, UserStudentType } from "../types/user.type";
 import { PoolClient } from "pg";
 import { DBPool } from "../configs/postgreSQL.config";
 import { encrypt } from "../utils/encryption.util";
@@ -8,15 +8,15 @@ import { StatusCodes } from "http-status-codes";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { v4 as uuidv4 } from "uuid";
 
-export class UserStudentService {
+export class UserCompanyService {
     /**
-         * Add new student user
+         * Add new company user
          * @param payload Signup payload
          * @returns UUID (userUUID) & authUUID
          * @throws {DefaultError} Already existing email
         */
     static async add(
-        payload: UserStudentType,
+        payload: UserCompanyType,
     ): Promise<{
         UUID: UUID,
         authUUID: UUID
@@ -24,17 +24,22 @@ export class UserStudentService {
         const client: PoolClient = await DBPool.connect();
 
         const query = `
-                INSERT INTO users_student (
+                INSERT INTO users_company (
                     uuid,
                     auth_uuid,
                     email,
                     phone,
+                    company,
+                    description,
                     given_name,
                     surname,
-                    birthdate,
-                    degree
+                    street,
+                    street_number,
+                    zip_code,
+                    city,
+                    country
                 )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
                 ON CONFLICT (email) DO NOTHING;
             `;
 
@@ -46,10 +51,15 @@ export class UserStudentService {
             authUUID,
             payload.email,
             payload.phone ? encrypt(payload.phone) : null,
+            encrypt(payload.company.trim()),
+            payload.description ? encrypt(payload.description.trim()) : null,
             encrypt(payload.givenName.trim()),
             encrypt(payload.surname.trim()),
-            encrypt(payload.birthdate.trim()),
-            payload.degree ? encrypt(payload.degree.trim()) : null,
+            encrypt(payload.street.trim()),
+            encrypt(payload.streetNumber.trim()),
+            encrypt(String(payload.ZIPCode).trim()),
+            encrypt(payload.city.trim()),
+            encrypt(payload.country.trim()),
         ]);
 
         if (result.rowCount === 0) {
@@ -69,7 +79,7 @@ export class UserStudentService {
     */
     static async update(
         UUID: UUID,
-        payload: UpdateUserStudentType
+        payload: UpdateUserCompanyType
     ): Promise<
         void
     > {
@@ -79,10 +89,15 @@ export class UserStudentService {
 
         const fieldsToUpdate = {
             phone: payload.phone?.trimEnd().trimStart(),
+            company: payload.company?.trimEnd().trimStart(),
+            description: payload.description?.trimEnd().trimStart(),
             given_name: payload.givenName?.trimEnd().trimStart(),
             surname: payload.surname?.trimEnd().trimStart(),
-            birthdate: payload.birthdate?.trimEnd().trimStart(),
-            degree: payload.degree?.trimEnd().trimStart(),
+            street: payload.street?.trimEnd().trimStart(),
+            street_number: payload.streetNumber?.trimEnd().trimStart(),
+            zip_code: String(payload.ZIPCode)?.trimEnd().trimStart(),
+            city: payload.city?.trimEnd().trimStart(),
+            country: payload.country?.trimEnd().trimStart(),
         };
 
         const optionalClauses: string[] = [];
@@ -96,7 +111,7 @@ export class UserStudentService {
         });
 
         const query = `
-            UPDATE users_student
+            UPDATE users_company
             SET ${optionalClauses.join(", ")}
             WHERE uuid = $1;
         `;
