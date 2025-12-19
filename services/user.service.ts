@@ -131,34 +131,59 @@ export class UserService {
     /**
      * Get user data
      * @param UUID userUUID
+     * @param isStudent
      * @returns User data
     */
     static async getUser(
-        UUID: UUID
+        UUID: UUID,
+        isStudent: boolean,
     ): Promise<
         any
     > {
-        const query = `
-            SELECT *
-            FROM users
-            WHERE uuid = $1;
-        `;
+        let query;
+        if (isStudent) {
+            query = `
+                SELECT *
+                FROM users_student
+                WHERE uuid = $1;
+            `;
 
-        const result = await DBPool.query(query, [UUID]);
+            const result = await DBPool.query(query, [UUID]);
 
-        return {
-            UUID: result.rows[0].uuid,
-            authUUID: result.rows[0].auth_uuid,
-            email: result.rows[0].email,
-            phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
-            givenName: decrypt(result.rows[0].given_name),
-            surname: decrypt(result.rows[0].surname),
-            company: result.rows[0].company === null ? null : decrypt(result.rows[0].company),
-            street: decrypt(result.rows[0].street),
-            streetNumber: decrypt(result.rows[0].street_number),
-            ZIPCode: Number(decrypt(result.rows[0].zip_code)),
-            city: decrypt(result.rows[0].city),
-            country: decrypt(result.rows[0].country),
+            return {
+                UUID: result.rows[0].uuid,
+                authUUID: result.rows[0].auth_uuid,
+                email: result.rows[0].email,
+                phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
+                givenName: decrypt(result.rows[0].given_name),
+                surname: decrypt(result.rows[0].surname),
+                birthdate: decrypt(result.rows[0].birthdate),
+                degree: result.rows[0].degree ? decrypt(result.rows[0].degree) : null,
+            }
+        } else {
+            query = `
+                SELECT *
+                FROM users_company
+                WHERE uuid = $1;
+            `;
+
+            const result = await DBPool.query(query, [UUID]);
+
+            return {
+                UUID: result.rows[0].uuid,
+                authUUID: result.rows[0].auth_uuid,
+                email: result.rows[0].email,
+                phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
+                company: decrypt(result.rows[0].company),
+                description: decrypt(result.rows[0].description),
+                givenName: decrypt(result.rows[0].given_name),
+                surname: decrypt(result.rows[0].surname),
+                street: decrypt(result.rows[0].street),
+                streetNumber: decrypt(result.rows[0].street_number),
+                ZIPCode: Number(decrypt(result.rows[0].zip_code)),
+                city: decrypt(result.rows[0].city),
+                country: decrypt(result.rows[0].country),
+            }
         }
     };
 
@@ -174,7 +199,7 @@ export class UserService {
         void
     > {
         let query;
-        if (query) {
+        if (isStudent) {
             query = `
                 UPDATE users_student
                 SET cooldown = NOW()
@@ -280,18 +305,29 @@ export class UserService {
     /**
      * Replace authUUID
      * @param authUUID Old authUUID
+     * @param isStudent
      * @returns New authUUID
      */
     static async recover(
-        authUUID: UUID
+        authUUID: UUID,
+        isStudent: boolean
     ): Promise<
         UUID
     > {
-        const query = `
-            UPDATE users
-            SET auth_uuid = $1
-            WHERE auth_uuid = $2;
-        `;
+        let query;
+        if (isStudent) {
+            query = `
+                UPDATE users_student
+                SET auth_uuid = $1
+                WHERE auth_uuid = $2;
+            `;
+        } else {
+            query = `
+                UPDATE users_company
+                SET auth_uuid = $1
+                WHERE auth_uuid = $2;
+            `;
+        }
 
         const newAuthUUID = uuidv4() as UUID;
 

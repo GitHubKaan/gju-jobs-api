@@ -1,5 +1,5 @@
 import { UUID } from "crypto";
-import { UserStudentType } from "../types/user.type";
+import { UpdateUserStudentType, UserStudentType } from "../types/user.type";
 import { PoolClient } from "pg";
 import { DBPool } from "../configs/postgreSQL.config";
 import { encrypt } from "../utils/encryption.util";
@@ -61,4 +61,46 @@ export class UserStudentService {
 
         return { UUID, authUUID }
     };
+
+    /**
+     * Update user data
+     * @param UUID userUUID
+     * @param payload UpdateUser
+    */
+    static async update(
+        UUID: UUID,
+        payload: UpdateUserStudentType
+    ): Promise<
+        void
+    > {
+        if (!payload) {
+            throw new DefaultError(StatusCodes.NOT_MODIFIED, "No values provided to update.");
+        }
+
+        const fieldsToUpdate = {
+            phone: payload.phone?.trimEnd().trimStart(),
+            given_name: payload.givenName?.trimEnd().trimStart(),
+            surname: payload.surname?.trimEnd().trimStart(),
+            birthdate: payload.birthdate?.trimEnd().trimStart(),
+            degree: payload.degree?.trimEnd().trimStart(),
+        };
+
+        const optionalClauses: string[] = [];
+        const values: any[] = [UUID]; //First value ($1) is User UUID
+
+        Object.entries(fieldsToUpdate).forEach(([field, value]) => {
+            if (value) {
+                optionalClauses.push(`${field} = $${optionalClauses.length + 2}`);
+                values.push(encrypt(value));
+            }
+        });
+
+        const query = `
+            UPDATE users_student
+            SET ${optionalClauses.join(", ")}
+            WHERE uuid = $1;
+        `;
+
+        await DBPool.query(query, values);
+    }
 }

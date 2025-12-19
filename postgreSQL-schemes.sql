@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS users_student_tags (
     uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
     user_uuid UUID NOT NULL,
     tag_id INT NOT NULL,
+    created TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (user_uuid) REFERENCES users_student(uuid) ON DELETE CASCADE
 );
 
@@ -35,6 +36,7 @@ CREATE TABLE IF NOT EXISTS users_student_job_preferences (
     uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
     user_uuid UUID NOT NULL,
     preference_id INT NOT NULL,
+    created TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (user_uuid) REFERENCES users_student(uuid) ON DELETE CASCADE
 );
 
@@ -43,11 +45,12 @@ CREATE TABLE IF NOT EXISTS users_student_languages (
     uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
     user_uuid UUID NOT NULL,
     language_id INT NOT NULL,
+    created TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (user_uuid) REFERENCES users_student(uuid) ON DELETE CASCADE
 );
 
 -- []==============================[ COMPANY ]==============================[]
--- USERS STUDENT
+-- USERS COMPANY
 CREATE TABLE IF NOT EXISTS users_company (
     uuid UUID PRIMARY KEY UNIQUE NOT NULL, -- User UUID
     auth_uuid UUID UNIQUE NOT NULL,

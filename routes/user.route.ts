@@ -17,44 +17,11 @@ import { handleRequestCooldown } from "../utils/cooldown.util";
 import { sendGetRecoveryMail } from "../mail/templates/getRecovery.mail";
 import { sendLoginMail } from "../mail/templates/login.mail";
 import { sendRecoveryMail } from "../mail/templates/recovery.mail";
-import { UpdateUserStudentType, UserStudentType } from "../types/user.type";
+import { UpdateUserCompanyType, UpdateUserStudentType, UserStudentType } from "../types/user.type";
 import { sendSignupMail } from "../mail/templates/signup.mail";
 import { Schemas } from "../utils/zod.util";
 import { UserStudentService } from "../services/userStudent.service";
-
- /**
-     * Login
-     * @param email
-     */
-    export async function handleLogin(
-        req: Request<any, any, {
-            email: string;
-            isStudent: boolean;
-        }, ParsedQs, Record<string, any>>,
-        res: Response
-    ) {
-        const { email, isStudent } = req.body;
-        checkFormat(email, Schemas.email);
-        checkFormat(isStudent, Schemas.boolean);
-
-        const UUIDs = await UserService.getUUIDs(email, isStudent);
-        await handleRequestCooldown(UUIDs.UUID, isStudent);
-
-        const authCode = await UserService.addAuthCode(UUIDs.UUID, isStudent);
-        sendLoginMail(email, authCode);
-
-        const token = Token.auth(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
-
-        return res
-            .status(StatusCodes.OK)
-            .set("Authentication", `Bearer ${token.token}`)
-            .json({
-                description: MESSAGE.CONFIRMATION_EMAIL,
-                expires: token.expires,
-
-                ...((ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) && { authCode: authCode })
-            });
-    }
+import { Schema } from "zod";
 
 /**
  * Authentication after login or signup
@@ -87,6 +54,128 @@ export async function handleAuth(
         .status(StatusCodes.OK)
         .set("Authorization", `Bearer ${Token.access(req.userUUID, req.authUUID, UserType.Student)}`)
         .json({ description: MESSAGE.SUCCESS(TITLE.AUTHENTICATION) });
+}
+
+/**
+ * Login
+ * @param email
+*/
+export async function handleLogin(
+    req: Request<any, any, {
+        email: string;
+        isStudent: boolean;
+    }, ParsedQs, Record<string, any>>,
+    res: Response
+) {
+    const { email, isStudent } = req.body;
+    checkFormat(email, Schemas.email);
+    checkFormat(isStudent, Schemas.boolean);
+
+    const UUIDs = await UserService.getUUIDs(email, isStudent);
+    await handleRequestCooldown(UUIDs.UUID, isStudent);
+
+    const authCode = await UserService.addAuthCode(UUIDs.UUID, isStudent);
+    sendLoginMail(email, authCode);
+
+    const token = Token.auth(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
+
+    return res
+        .status(StatusCodes.OK)
+        .set("Authentication", `Bearer ${token.token}`)
+        .json({
+            description: MESSAGE.CONFIRMATION_EMAIL,
+            expires: token.expires,
+
+            ...((ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) && { authCode: authCode })
+        });
+}
+
+/**
+ * Update user data
+ * @param payload UpdateUserPayload
+ */
+export async function handleUpdateUser(
+    req: Request<any, any, any, ParsedQs, Record<string, any>>,
+    res: Response
+) {
+    if (req.isStudent) {
+        const payload: UpdateUserStudentType = req.body;
+        await UserStudentService.update(req.userUUID, payload);
+    } else {
+        const payload: UpdateUserCompanyType = req.body;
+        // Update Company
+    }
+    
+    return res
+        .status(StatusCodes.OK)
+        .json({ description: MESSAGE.UPDATED(TITLE.USER) });
+}
+
+/**
+ * Retrieve user data
+ * @returns user
+ */
+export async function handleRetrieveUser(
+    req: Request<any, any, any, ParsedQs, Record<string, any>>,
+    res: Response
+) {
+    const user = await UserService.getUser(req.userUUID, req.isStudent);
+
+    return res
+        .status(StatusCodes.OK)
+        .json({
+            description: MESSAGE.RETRIEVED(TITLE.USER),
+            user: user
+        });
+}
+
+/**
+ * Authentication for recovery
+ * @param email
+ */
+export async function handleGetRecovery(
+    req: Request<any, any, {
+        email: string;
+        isStudent: boolean;
+    }, ParsedQs, Record<string, any>>,
+    res: Response
+) {
+    const { email, isStudent } = req.body;
+    checkFormat(email, Schemas.email);
+    checkFormat(isStudent, Schemas.boolean);
+
+    const UUIDs = await UserService.getUUIDs(email, isStudent);
+    await handleRequestCooldown(UUIDs.UUID, isStudent);
+
+    const token = Token.recovery(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
+    sendGetRecoveryMail(email, token);
+
+    if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
+        res.set("Authentication", `Bearer ${token}`);
+    }
+
+    return res
+        .status(StatusCodes.OK)
+        .json({ description: MESSAGE.CONFIRMATION_EMAIL });
+}
+
+/**
+ * Recover account
+ */
+export async function handleRecovery(
+    req: Request<any, void, void, ParsedQs, Record<string, any>>,
+    res: Response
+) {
+    await BlacklistService.add(req.token, req.tokenExp);
+
+    const newAuthUUID = await UserService.recover(req.authUUID, req.isStudent);
+    const email = await UserService.getEmail(newAuthUUID, UUIDType.Auth, req.isStudent);
+
+    sendRecoveryMail(email);
+
+    return res
+        .status(StatusCodes.OK)
+        .json({ description: MESSAGE.SUCCESS(TITLE.RECOVERY) });
 }
 
 /**
@@ -127,90 +216,4 @@ export async function handleDeleteUser(
     return res
         .status(StatusCodes.OK)
         .json({ description: MESSAGE.DELETED(TITLE.USER) });
-}
-
-/**
- * Authentication for recovery
- * @param email
- */
-export async function handleGetRecovery(
-    req: Request<any, any, {
-        email: string;
-    }, ParsedQs, Record<string, any>>,
-    res: Response
-) {
-    const { email } = req.body;
-    checkFormat(email, Schemas.email);
-
-    const UUIDs = await UserService.getUUIDs(email, true);
-    await handleRequestCooldown(UUIDs.UUID, true);
-
-    const token = Token.recovery(UUIDs.UUID, UUIDs.authUUID, UserType.Student);
-    sendGetRecoveryMail(email, token);
-
-    if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
-        res.set("Authentication", `Bearer ${token}`);
-    }
-
-    return res
-        .status(StatusCodes.OK)
-        .json({ description: MESSAGE.CONFIRMATION_EMAIL });
-}
-
-/**
- * Recover account
- */
-export async function handleRecovery(
-    req: Request<any, void, void, ParsedQs, Record<string, any>>,
-    res: Response
-) {
-    await BlacklistService.add(req.token, req.tokenExp);
-
-    const newAuthUUID = await UserService.recover(req.authUUID);
-    const email = await UserService.getEmail(newAuthUUID, UUIDType.Auth, true);
-
-    sendRecoveryMail(email);
-
-    return res
-        .status(StatusCodes.OK)
-        .json({ description: MESSAGE.SUCCESS(TITLE.RECOVERY) });
-}
-
-/**
- * Retrieve user data
- * @returns user
- */
-export async function handleRetrieveUser(
-    req: Request<any, any, any, ParsedQs, Record<string, any>>,
-    res: Response
-) {
-    const user = await UserService.getUser(req.userUUID);
-
-    return res
-        .status(StatusCodes.OK)
-        .json({
-            description: MESSAGE.RETRIEVED(TITLE.USER),
-            user: user
-        });
-}
-
-/**
- * Update user data
- * @param payload UpdateUserPayload
- */
-export async function handleUpdateUser(
-    req: Request<any, any, UpdateUserStudentType, ParsedQs, Record<string, any>>,
-    res: Response
-) {
-    const payload: UpdateUserStudentType = req.body;
-
-    await UserService.update(req.userUUID, payload);
-
-    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
-    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
-    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
-
-    return res
-        .status(StatusCodes.OK)
-        .json({ description: MESSAGE.UPDATED(TITLE.USER) });
 }
