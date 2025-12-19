@@ -82,7 +82,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMjM2NzExODAtOTBkYS00NzVkLTk4MzctNWY3NTk3NWM3ODA5IiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3NjYxNTYwMzgsImV4cCI6MTc2NjE1NjkzOH0.rYBfaguVjC4cu9TGpZq0e97LEL4kTLrg2-7p0Y1VU4I",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjhmMWI1ZTIxLTk2ZjItNDBjYS04YjhhLTk3ZDNkYTE2ZTQwNSIsImF1dGhVVUlEIjoiYjRjYWRlMjAtYmJmOS00ZTNlLWI2Y2EtZDRjNDMxNTRjZDczIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IkNPTVBBTlkiLCJpYXQiOjE3NjYxNTk2NzQsImV4cCI6MTc2NjE2MDU3NH0.LDpbO45b4dXC8fLYXPnfvgB-M-TWxzanWSo7ZJaBHaM",
 											"type": "string"
 										}
 									]
@@ -91,7 +91,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"672737\"\r\n}",
+									"raw": "{\r\n    \"code\": \"386542\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -121,7 +121,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMjM2NzExODAtOTBkYS00NzVkLTk4MzctNWY3NTk3NWM3ODA5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2NjE1NjA1MCwiZXhwIjoxNzgxNzA4MDUwfQ.O8qO_FTOIwNAGS4OboiKP6W1Ce51-Yy9xZEG_2Qv0BQ",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
 											"type": "string"
 										}
 									]
@@ -130,7 +130,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "// STUDENT\r\n{\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"birthdate\": \"2000-06-15\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\" // optional\r\n}\r\n\r\n// COMPANY\r\n/*\r\n{\r\n    \"email\": \"hallo2@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}\r\n*/",
+									"raw": "// STUDENT\r\n/*\r\n{\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"birthdate\": \"2000-06-15\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\" // optional\r\n}\r\n*/\r\n\r\n// COMPANY\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -163,7 +163,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImE4ODE4ZTExLWNmMzEtNDE0ZS1hNTQ5LTVkY2VhODIwOWYxMSIsImF1dGhVVUlEIjoiYTU0ZTA3ZmMtMTU2Ny00ZTg1LWE0NTAtNzY1ZjRhODIxNmUwIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc2NTUzMDI3MywiZXhwIjoxNzgxMDgyMjczfQ.qY_b3MHbJvbG-kqi2EK1OQn-HIraGjoPotJ-mudt7ek",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjhmMWI1ZTIxLTk2ZjItNDBjYS04YjhhLTk3ZDNkYTE2ZTQwNSIsImF1dGhVVUlEIjoiYjRjYWRlMjAtYmJmOS00ZTNlLWI2Y2EtZDRjNDMxNTRjZDczIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTY5MCwiZXhwIjoxNzgxNzExNjkwfQ.sBiaIIfMZ1obWFyKdmDkW4B5B20q3AXS0soJUCFZWow",
 											"type": "string"
 										}
 									]
@@ -382,7 +382,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"hallo2@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}",
+									"raw": "{\r\n    \"email\": \"hallo3@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdawdwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
