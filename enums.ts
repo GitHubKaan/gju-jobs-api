@@ -48,3 +48,8 @@ export enum FileType {
     ProfilePicture = "PROFILE-PICTURE"
 }
 export const fileTypes: [FileType, ...FileType[]] = Object.values(FileType) as [FileType, ...FileType[]];
+
+export enum UserType {
+    Student = "STUDENT",
+    Company = "COMPANY"
+}

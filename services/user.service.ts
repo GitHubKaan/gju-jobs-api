@@ -1,35 +1,47 @@
-import {DBPool} from "../configs/postgreSQL.config";
-import {v4 as uuidv4} from "uuid";
-import {decrypt, encrypt} from "../utils/encryption.util";
-import {DefaultError} from "../utils/error.util";
-import {MESSAGE, TITLE} from "../responseMessage";
-import {StatusCodes} from "http-status-codes";
-import {ENV} from "../utils/envReader.util";
-import {UUID} from "crypto";
-import {UUIDType} from "../enums";
-import {randomString} from "../utils/stringGenerator.util";
-import {UpdateUser, User} from "../types/user.type";
-import {hashValue} from "../utils/hash.util";
-import {PoolClient} from "pg";
+import { DBPool } from "../configs/postgreSQL.config";
+import { v4 as uuidv4 } from "uuid";
+import { decrypt, encrypt } from "../utils/encryption.util";
+import { DefaultError } from "../utils/error.util";
+import { MESSAGE, TITLE } from "../responseMessage";
+import { StatusCodes } from "http-status-codes";
+import { ENV } from "../utils/envReader.util";
+import { UUID } from "crypto";
+import { UUIDType } from "../enums";
+import { randomString } from "../utils/stringGenerator.util";
+import { UpdateUserCompanyType, UserCompanyType, UserStudentType } from "../types/user.type";
+import { hashValue } from "../utils/hash.util";
+import { PoolClient } from "pg";
 
 export class UserService {
     /**
      * Check if authUUID exists
      * @param authUUID
+     * @param isStudent
      * @throws {DefaultError} Unauthorized token
      */
     static async isValidAuthUUID(
-        authUUID: UUID
+        authUUID: UUID,
+        isStudent: boolean
     ): Promise<
         void
     > {
-        let query = `
-            SELECT 1
-            FROM users
-            WHERE auth_uuid = $1
-            LIMIT 1;
-        `;
-        
+        let query;
+        if (isStudent) {
+            query = `
+                SELECT 1
+                FROM users_student
+                WHERE auth_uuid = $1
+                LIMIT 1;
+            `;
+        } else {
+            query = `
+                SELECT 1
+                FROM users_company
+                WHERE auth_uuid = $1
+                LIMIT 1;
+            `;
+        }
+
         const result = await DBPool.query(query, [authUUID]);
 
         if (result.rowCount && result.rowCount > 0) {
@@ -38,60 +50,84 @@ export class UserService {
 
         throw new DefaultError(StatusCodes.UNAUTHORIZED, MESSAGE.ERROR.UNAUTHORIZED(TITLE.TOKEN));
     };
-    
+
     /**
      * Get userUUID & authUUID by email
      * @param email
+     * @param isStudent
      * @returns UUID (userUUID) & authUUID
      * @throws {DefaultError} Email not found
      */
     static async getUUIDs(
-        email: string
+        email: string,
+        isStudent: boolean,
     ): Promise<{
         UUID: UUID,
         authUUID: UUID
     }> {
-        const query = `
-            SELECT
-                uuid,
-                auth_uuid
-            FROM users
-            WHERE email = $1;
-        `;
-        
+        let query;
+        if (isStudent) {
+            query = `
+                SELECT
+                    uuid,
+                    auth_uuid
+                FROM users_student
+                WHERE email = $1;
+            `;
+        } else {
+            query = `
+                SELECT
+                    uuid,
+                    auth_uuid
+                FROM users_company
+                WHERE email = $1;
+            `;
+        }
+
         const result = await DBPool.query(query, [email]);
-    
+
         if (result.rowCount && result.rowCount > 0) {
             return {
                 UUID: result.rows[0].uuid,
                 authUUID: result.rows[0].auth_uuid
             };
         }
-    
+
         throw new DefaultError(StatusCodes.NOT_FOUND, MESSAGE.ERROR.NOT_FOUND(TITLE.E_MAIL_ADDRESS));
     };
-    
+
     /**
      * Get Cooldown time
      * @param UUID userUUID
+     * @param isStudent
      * @returns Cooldown time or null
      */
     static async getCooldown(
-        UUID: UUID
+        UUID: UUID,
+        isStudent: boolean
     ): Promise<
         string | null
     > {
-        const query = `
-            SELECT cooldown
-            FROM users
-            WHERE uuid = $1;
-        `;
-        
+        let query;
+        if (isStudent) {
+            query = `
+                SELECT cooldown
+                FROM users_student
+                WHERE uuid = $1;
+            `;
+        } else {
+            query = `
+                SELECT cooldown
+                FROM users_company
+                WHERE uuid = $1;
+            `;
+        }
+
         const result = await DBPool.query(query, [UUID]);
-            
+
         return result.rows[0].cooldown;
     };
-    
+
     /**
      * Get user data
      * @param UUID userUUID
@@ -107,9 +143,9 @@ export class UserService {
             FROM users
             WHERE uuid = $1;
         `;
-    
+
         const result = await DBPool.query(query, [UUID]);
-        
+
         return {
             UUID: result.rows[0].uuid,
             authUUID: result.rows[0].auth_uuid,
@@ -125,35 +161,46 @@ export class UserService {
             country: decrypt(result.rows[0].country),
         }
     };
-    
+
     /**
      * Set new cooldown time (automatically uses current time)
      * @param UUID userUUID
+     * @param isStudent
      */
     static async setCooldown(
-        UUID: UUID
+        UUID: UUID,
+        isStudent: boolean
     ): Promise<
         void
     > {
-        const query = `
-            UPDATE users
-            SET cooldown = NOW()
-            WHERE uuid = $1;
-        `;
-        
+        let query;
+        if (query) {
+            query = `
+                UPDATE users_student
+                SET cooldown = NOW()
+                WHERE uuid = $1;
+            `;
+        } else {
+            query = `
+                UPDATE users_company
+                SET cooldown = NOW()
+                WHERE uuid = $1;
+            `;
+        }
+
         await DBPool.query(query, [UUID]);
     };
+
     
+
     /**
-     * Add new user
-     * @param payload Signup payload
-     * @param isStudent Is student?
-     * @returns UUID (userUUID) & authUUID
-     * @throws {DefaultError} Already existing email
-    */
-    static async addUser(
-        payload: User,
-        isStudent: boolean
+ * Add new student user
+ * @param payload Signup payload
+ * @returns UUID (userUUID) & authUUID
+ * @throws {DefaultError} Already existing email
+*/
+    static async addCompany(
+        payload: UserCompanyType,
     ): Promise<{
         UUID: UUID,
         authUUID: UUID
@@ -192,14 +239,14 @@ export class UserService {
                 payload.email,
                 encrypt(payload.givenName.trim()),
                 encrypt(payload.surname.trim()),
-                isStudent ? undefined : encrypt(payload.company.trim()),
+                encrypt(payload.company.trim()),
                 encrypt(payload.street.trim()),
                 encrypt(payload.streetNumber.trim()),
                 encrypt(payload.ZIPCode.toString()),
                 encrypt(payload.city.trim()),
                 encrypt(payload.country.trim()),
                 payload.phone ? encrypt(payload.phone) : null,
-                payload.isStudent
+
             ]);
 
             if (result.rowCount === 0) {
@@ -209,15 +256,6 @@ export class UserService {
                 );
             }
 
-            if (payload.isStudent) {
-                await client.query(
-                    `
-                        INSERT INTO users_student (uuid, user_uuid)
-                        VALUES ($1, $2)
-                    `,
-                    [uuidv4(), UUID]
-                );
-            } else {
                 await client.query(
                     `
                         INSERT INTO users_company (uuid, user_uuid)
@@ -225,7 +263,7 @@ export class UserService {
                     `,
                     [uuidv4(), UUID]
                 );
-            }
+        
 
             await client.query("COMMIT");
 
@@ -254,57 +292,83 @@ export class UserService {
             SET auth_uuid = $1
             WHERE auth_uuid = $2;
         `;
-    
+
         const newAuthUUID = uuidv4() as UUID;
 
         await DBPool.query(query, [newAuthUUID, authUUID]);
 
         return newAuthUUID;
     };
-    
+
     /**
      * Add auth code
      * @param UUID userUUID
+     * @param isStudent -- else company
      * @return authCode
     */
     static async addAuthCode(
         UUID: UUID,
+        isStudent: boolean,
     ): Promise<
         string
     > {
-        const query = `
-            UPDATE users
-            SET
-                auth_code = $1,
-                auth_code_created = NOW(),
-                auth_code_attempt = 0
-            WHERE uuid = $2;
-        `;
-        
+        let query: string = "";
+        if (isStudent) {
+            query = `
+                UPDATE users_student
+                SET
+                    auth_code = $1,
+                    auth_code_created = NOW(),
+                    auth_code_attempt = 0
+                WHERE uuid = $2;
+            `;
+        } else {
+            query = `
+                UPDATE users_company
+                SET
+                    auth_code = $1,
+                    auth_code_created = NOW(),
+                    auth_code_attempt = 0
+                WHERE uuid = $2;
+            `;
+        }
+
         const authCode = randomString("0", ENV.AUTH_CODE_LENGTH);
         const hashedAuthCode = hashValue(authCode);
 
         await DBPool.query(query, [hashedAuthCode, UUID]);
-            
+
         return authCode;
     };
-    
+
     /**
      * Check if auth code attempt(s) left
      * @param UUID userUUID
+     * @param isStudent
      * @throws {DefaultError} Authentication attempts used up
      */
     static async hasRemainingAuthAttempts(
-        UUID: UUID
+        UUID: UUID,
+        isStudent: boolean
     ): Promise<
         void
     > {
-        const query = `
-            SELECT *
-            FROM users
-            WHERE uuid = $1
-            AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS};
-        `;
+        let query;
+        if (isStudent) {
+            query = `
+                SELECT *
+                FROM users_student
+                WHERE uuid = $1
+                AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS};
+            `;
+        } else {
+            query = `
+                SELECT *
+                FROM users_company
+                WHERE uuid = $1
+                AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS};
+            `;
+        }
 
         const result = await DBPool.query(query, [UUID]);
 
@@ -314,92 +378,137 @@ export class UserService {
 
         throw new DefaultError(StatusCodes.CONFLICT, MESSAGE.ERROR.ATTEMPTS_USED_UP(TITLE.AUTHENTICATION)); //No more attempts left
     };
-    
+
     /**
      * Check if auth code valid
      * @param UUID userUUID
      * @param authCode
+     * @param isStudent
      * @returns boolean
      */
     static async isValidAuthCode(
         UUID: UUID,
         authCode: string,
+        isStudent: boolean
     ): Promise<
         boolean
     > {
-        const query = `
-            UPDATE users
-            SET
-                auth_code = NULL,
-                auth_code_attempt = 0,
-                auth_code_created = NULL
-            WHERE uuid = $1
-            AND auth_code = $2
-            AND auth_code_created > NOW() - INTERVAL '${ENV.AUTH_EXP} seconds';
-        `;
-        
+        let query;
+        if (isStudent) {
+            query = `
+                UPDATE users_student
+                SET
+                    auth_code = NULL,
+                    auth_code_attempt = 0,
+                    auth_code_created = NULL
+                WHERE uuid = $1
+                AND auth_code = $2
+                AND auth_code_created > NOW() - INTERVAL '${ENV.AUTH_EXP} seconds';
+            `;
+        } else {
+            query = `
+                UPDATE users_company
+                SET
+                    auth_code = NULL,
+                    auth_code_attempt = 0,
+                    auth_code_created = NULL
+                WHERE uuid = $1
+                AND auth_code = $2
+                AND auth_code_created > NOW() - INTERVAL '${ENV.AUTH_EXP} seconds';
+            `;
+        }
+
         const hashedAuthCode = hashValue(authCode);
         const result = await DBPool.query(query, [UUID, hashedAuthCode]);
-            
+
         if (result.rowCount && result.rowCount > 0) {
             return true;
         }
         return false;
     };
-    
+
     /**
      * Add authentication attempt
      * @param UUID userUUID
+     * @param isStudent
      * @throws {DefaultError} Unauthorized authentication
      */
     static async addAuthAttempt(
         UUID: UUID,
+        isStudent: boolean,
     ): Promise<
         void
     > {
-        const query = `
-            UPDATE users
-            SET auth_code_attempt = auth_code_attempt + 1
-            WHERE uuid = $1;
-        `;
-    
+        let query;
+        if (isStudent) {
+            query = `
+                UPDATE users_student
+                SET auth_code_attempt = auth_code_attempt + 1
+                WHERE uuid = $1;
+            `;
+        } else {
+            query = `
+                UPDATE users_company
+                SET auth_code_attempt = auth_code_attempt + 1
+                WHERE uuid = $1;
+            `;
+        }
+
         await DBPool.query(query, [UUID]);
 
         throw new DefaultError(StatusCodes.UNAUTHORIZED, MESSAGE.ERROR.UNAUTHORIZED(TITLE.AUTHENTICATION));
     };
-    
+
     /**
      * Get email from user/auth-UUID
      * @param UUID userUUID or authUUID
      * @param type UUID type
+     * @param isStudent
      * @returns Email
      */
     static async getEmail(
         UUID: UUID,
-        type: UUIDType
+        type: UUIDType,
+        isStudent: boolean,
     ): Promise<
         string
     > {
-        const userQuery = `
-            SELECT email
-            FROM users 
-            WHERE uuid = $1;
-        `;
+        let userQuery;
+        let authQuery;
+        if (isStudent) {
+            userQuery = `
+                SELECT email
+                FROM users_student 
+                WHERE uuid = $1;
+            `;
     
-        const authQuery = `
-            SELECT email
-            FROM users 
-            WHERE auth_uuid = $1;
-        `;
+            authQuery = `
+                SELECT email
+                FROM users_student
+                WHERE auth_uuid = $1;
+            `;
+        } else {
+            userQuery = `
+                SELECT email
+                FROM users_company 
+                WHERE uuid = $1;
+            `;
     
+            authQuery = `
+                SELECT email
+                FROM users_company
+                WHERE auth_uuid = $1;
+            `;
+        }
+
         const query = type === UUIDType.User ? userQuery : authQuery;
 
         const result = await DBPool.query(query, [UUID]);
-        
+
         const decryptedEmail = result.rows[0].email;
         return decryptedEmail ?? "";
     };
-    
+
     /**
      * Get company name
      * @param UUID userUUID
@@ -415,12 +524,12 @@ export class UserService {
             FROM users
             WHERE uuid = $1;
         `;
-    
+
         const result = await DBPool.query(query, [UUID]);
 
         return decrypt(result.rows[0].company);
     };
-    
+
     /**
      * Update user data
      * @param UUID userUUID
@@ -428,14 +537,14 @@ export class UserService {
     */
     static async update(
         UUID: UUID,
-        payload: UpdateUser
+        payload: UpdateUserCompanyType
     ): Promise<
         void
     > {
         if (!payload) {
             throw new DefaultError(StatusCodes.NOT_MODIFIED, "No values provided to update.");
         }
-        
+
         const fieldsToUpdate = {
             given_name: payload.givenName?.trimEnd().trimStart(),
             surname: payload.surname?.trimEnd().trimStart(),
@@ -450,14 +559,14 @@ export class UserService {
 
         const optionalClauses: string[] = [];
         const values: any[] = [UUID]; //First value ($1) is User UUID
-        
+
         Object.entries(fieldsToUpdate).forEach(([field, value]) => {
             if (value) {
                 optionalClauses.push(`${field} = $${optionalClauses.length + 2}`);
                 values.push(encrypt(value));
             }
         });
-        
+
         const query = `
             UPDATE users
             SET ${optionalClauses.join(", ")}
@@ -480,7 +589,7 @@ export class UserService {
             DELETE FROM users
             WHERE uuid = $1;
         `;
-    
+
         await DBPool.query(query, [UUID]);
     }
 

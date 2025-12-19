@@ -1,4 +1,4 @@
-import {z, ZodString} from "zod";
+import { z, ZodString } from "zod";
 import { FileType, fileTypes, SupportType, supportTypes } from "../enums";
 import { MESSAGE } from "../responseMessage";
 import { ENV } from "./envReader.util";
@@ -32,6 +32,9 @@ export class Schemas {
             .email({ message: MESSAGE.ERROR.EMAIL("email") })
             .max(70, { message: MESSAGE.ERROR.MAX_CHARACTERS(70, "email") });
 
+    static readonly boolean =
+        z.boolean({ message: MESSAGE.ERROR.BOOLEAN() })
+
     static readonly phone =
         z.string({ message: MESSAGE.ERROR.STRING("phone") })
             .min(5, { message: MESSAGE.ERROR.MIN_CHARACTERS(5, "phone") })
@@ -43,9 +46,76 @@ export class Schemas {
             .length(ENV.AUTH_CODE_LENGTH, { message: MESSAGE.ERROR.SPECIFIC_CHARACTER_LENGTH(ENV.AUTH_CODE_LENGTH, "code") })
             .regex(/^[A-Z0-9]+$/, { message: MESSAGE.ERROR.REGEX("code") });
 
-    static readonly user =
+    static readonly userStudent =
         z.object({
             email: this.email,
+            phone: this.phone
+                .optional(),
+            givenName: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(60, { message: MESSAGE.ERROR.MAX_CHARACTERS(60) })
+                .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            surname: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(60, { message: MESSAGE.ERROR.MAX_CHARACTERS(60) })
+                .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            birthdate: z.coerce.date(),
+            degree: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
+                .optional(),
+            tags: z.array(
+                z.number({ message: MESSAGE.ERROR.INT() })
+                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
+                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
+                { message: MESSAGE.ERROR.ARRAY() }
+            )
+                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+                .optional(),
+            jobPreferences: z.array(
+                z.number({ message: MESSAGE.ERROR.INT() })
+                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
+                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
+                { message: MESSAGE.ERROR.ARRAY() }
+            )
+                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+                .optional(),
+            languages: z.array(
+                z.number({ message: MESSAGE.ERROR.INT() })
+                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
+                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
+                { message: MESSAGE.ERROR.ARRAY() }
+            )
+                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+                .optional(),
+    });
+
+    static readonly userCompany =
+        z.object({
+            email: this.email,
+            phone: this.phone
+                .optional(),
+            company: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            description: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
+                .max(200, { message: MESSAGE.ERROR.MAX_CHARACTERS(200) })
+                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
+                .optional(),
             givenName: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
                 .max(60, { message: MESSAGE.ERROR.MAX_CHARACTERS(60) })
@@ -79,27 +149,7 @@ export class Schemas {
                 .max(30, { message: MESSAGE.ERROR.MAX_CHARACTERS(30) })
                 .regex(/^[a-zA-ZäöüÄÖÜß\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
-            phone: this.phone
-                .optional(),
-            tags: z.array( // STUDENT VALUE ONLY; Khanh THIS VALUE SHOULD BE OPTIONAL; OPTION VALUES BELONG TO THE BOTTOM
-                z.number({ message: MESSAGE.ERROR.INT() })
-                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
-                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }), // Should be configured according to the Frontend-Tag amount; Who gives a fuck...
-                { message: MESSAGE.ERROR.ARRAY() }
-            )
-                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
-                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
-                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
-                .optional(),
-            isStudent: z.boolean({ message: MESSAGE.ERROR.BOOLEAN() })
         });
-
-    static readonly company: ZodString =
-        z.string({ message: MESSAGE.ERROR.STRING() })
-            .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-            .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
-            .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
-            .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY });
 
     static readonly support =
         z.object({

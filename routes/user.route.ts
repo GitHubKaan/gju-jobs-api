@@ -5,7 +5,7 @@ import { checkFormat } from "../utils/format.util";
 import { UserService } from "../services/user.service";
 import { BlacklistService } from "../services/blacklist.service";
 import { getDeviceInfo } from "../utils/userAgent.util";
-import { NodeEnv, UUIDType } from "../enums";
+import { NodeEnv, TokenType, UserType, UUIDType } from "../enums";
 import { sendAuthMail } from "../mail/templates/auth.mail";
 import { Token } from "../utils/token.util";
 import { MESSAGE, TITLE } from "../responseMessage";
@@ -17,80 +17,44 @@ import { handleRequestCooldown } from "../utils/cooldown.util";
 import { sendGetRecoveryMail } from "../mail/templates/getRecovery.mail";
 import { sendLoginMail } from "../mail/templates/login.mail";
 import { sendRecoveryMail } from "../mail/templates/recovery.mail";
-import { UpdateUser, User } from "../types/user.type";
+import { UpdateUserStudentType, UserStudentType } from "../types/user.type";
 import { sendSignupMail } from "../mail/templates/signup.mail";
 import { Schemas } from "../utils/zod.util";
+import { UserStudentService } from "../services/userStudent.service";
 
-/**
- * Signup
- * @param payload Signup
- */
-export async function handleSignup(
-    req: Request<any, any, User, ParsedQs, Record<string, any>>,
-    res: Response
-) {
-    const payload: User = req.body;
-    checkFormat(payload, Schemas.user);
+ /**
+     * Login
+     * @param email
+     */
+    export async function handleLogin(
+        req: Request<any, any, {
+            email: string;
+            isStudent: boolean;
+        }, ParsedQs, Record<string, any>>,
+        res: Response
+    ) {
+        const { email, isStudent } = req.body;
+        checkFormat(email, Schemas.email);
+        checkFormat(isStudent, Schemas.boolean);
 
-    if (payload.isStudent) {
-        // zod check student
-    } else {
-        // zod check company
-        checkFormat(payload.company, Schemas.company);
+        const UUIDs = await UserService.getUUIDs(email, isStudent);
+        await handleRequestCooldown(UUIDs.UUID, isStudent);
+
+        const authCode = await UserService.addAuthCode(UUIDs.UUID, isStudent);
+        sendLoginMail(email, authCode);
+
+        const token = Token.auth(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
+
+        return res
+            .status(StatusCodes.OK)
+            .set("Authentication", `Bearer ${token.token}`)
+            .json({
+                description: MESSAGE.CONFIRMATION_EMAIL,
+                expires: token.expires,
+
+                ...((ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) && { authCode: authCode })
+            });
     }
-    
-    const UUIDs = await UserService.addUser(payload, payload.isStudent);
-    const authCode = await UserService.addAuthCode(UUIDs.UUID);
-    createUserUploadFolder(UUIDs.UUID);
-    
-    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
-    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
-    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
-    
-    sendSignupMail(payload.email, authCode);
-
-    const token = Token.auth(UUIDs.UUID, UUIDs.authUUID);
-
-    return res
-        .status(StatusCodes.OK)
-        .set("Authentication", `Bearer ${token.token}`)
-        .json({
-            description: MESSAGE.CONFIRMATION_EMAIL,
-            expires: token.expires,
-
-            ...((ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) && { authCode: authCode })
-        });
-}
-
-/**
- * Login
- * @param email
- */
-export async function handleLogin(
-    req: Request<any, any, { email: string; }, ParsedQs, Record<string, any>>,
-    res: Response
-) {
-    const { email } = req.body;
-    checkFormat(email, Schemas.email);
-
-    const UUIDs = await UserService.getUUIDs(email);
-    await handleRequestCooldown(UUIDs.UUID);
-
-    const authCode = await UserService.addAuthCode(UUIDs.UUID);
-    sendLoginMail(email, authCode);
-
-    const token = Token.auth(UUIDs.UUID, UUIDs.authUUID);
-
-    return res
-        .status(StatusCodes.OK)
-        .set("Authentication", `Bearer ${token.token}`)
-        .json({
-            description: MESSAGE.CONFIRMATION_EMAIL,
-            expires: token.expires,
-            
-            ...((ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) && { authCode: authCode })
-        });
-}
 
 /**
  * Authentication after login or signup
@@ -106,22 +70,22 @@ export async function handleAuth(
     const { code } = req.body;
     checkFormat(code, Schemas.authCode);
 
-    await UserService.hasRemainingAuthAttempts(req.userUUID);
-    const isValid = await UserService.isValidAuthCode(req.userUUID, code);
+    await UserService.hasRemainingAuthAttempts(req.userUUID, req.isStudent);
+    const isValid = await UserService.isValidAuthCode(req.userUUID, code, req.isStudent);
 
     if (!isValid) {
-        await UserService.addAuthAttempt(req.userUUID);
+        await UserService.addAuthAttempt(req.userUUID, req.isStudent);
     }
 
     await BlacklistService.add(req.token, req.tokenExp);
 
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User);
+    const email = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
     const deviceInfo = getDeviceInfo(req);
     sendAuthMail(email, deviceInfo.os, deviceInfo.browser);
 
     return res
         .status(StatusCodes.OK)
-        .set("Authorization", `Bearer ${Token.access(req.userUUID, req.authUUID)}`)
+        .set("Authorization", `Bearer ${Token.access(req.userUUID, req.authUUID, UserType.Student)}`)
         .json({ description: MESSAGE.SUCCESS(TITLE.AUTHENTICATION) });
 }
 
@@ -132,8 +96,8 @@ export async function handleGetDeleteUser(
     req: Request<any, void, void, ParsedQs, Record<string, any>>,
     res: Response
 ) {
-    const token = Token.deletion(req.userUUID, req.authUUID);
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User);
+    const token = Token.deletion(req.userUUID, req.authUUID, UserType.Student);
+    const email = await UserService.getEmail(req.userUUID, UUIDType.User, true);
     sendGetDeleteUserMail(email, token);
 
     if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
@@ -154,7 +118,7 @@ export async function handleDeleteUser(
 ) {
     await BlacklistService.add(req.token, req.tokenExp);
 
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User);
+    const email = await UserService.getEmail(req.userUUID, UUIDType.User, true);
     sendDeleteUserMail(email);
 
     deleteLocalUUIDFilepath(req.userUUID);
@@ -178,10 +142,10 @@ export async function handleGetRecovery(
     const { email } = req.body;
     checkFormat(email, Schemas.email);
 
-    const UUIDs = await UserService.getUUIDs(email);
-    await handleRequestCooldown(UUIDs.UUID);
+    const UUIDs = await UserService.getUUIDs(email, true);
+    await handleRequestCooldown(UUIDs.UUID, true);
 
-    const token = Token.recovery(UUIDs.UUID, UUIDs.authUUID);
+    const token = Token.recovery(UUIDs.UUID, UUIDs.authUUID, UserType.Student);
     sendGetRecoveryMail(email, token);
 
     if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
@@ -203,7 +167,7 @@ export async function handleRecovery(
     await BlacklistService.add(req.token, req.tokenExp);
 
     const newAuthUUID = await UserService.recover(req.authUUID);
-    const email = await UserService.getEmail(newAuthUUID, UUIDType.Auth);
+    const email = await UserService.getEmail(newAuthUUID, UUIDType.Auth, true);
 
     sendRecoveryMail(email);
 
@@ -235,11 +199,10 @@ export async function handleRetrieveUser(
  * @param payload UpdateUserPayload
  */
 export async function handleUpdateUser(
-    req: Request<any, any, UpdateUser, ParsedQs, Record<string, any>>,
+    req: Request<any, any, UpdateUserStudentType, ParsedQs, Record<string, any>>,
     res: Response
 ) {
-    const payload: UpdateUser = req.body;
-    checkFormat(payload, Schemas.user, true);
+    const payload: UpdateUserStudentType = req.body;
 
     await UserService.update(req.userUUID, payload);
 

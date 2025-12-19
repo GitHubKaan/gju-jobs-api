@@ -1,7 +1,7 @@
 import { UUID } from "crypto";
 import { StatusCodes } from "http-status-codes";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { TokenType } from "../enums";
+import { TokenType, UserType } from "../enums";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { ENV, getFrontendOrigin } from "./envReader.util";
 import { DefaultError, InternalError } from "./error.util";
@@ -24,12 +24,13 @@ export class Token {
      * @param authUUID Auth UUID
      * @returns Token and exiration date
      */
-    static auth(userUUID: UUID, authUUID: UUID): {token: string, expires: string} {
+    static auth(userUUID: UUID, authUUID: UUID, userType: UserType): {token: string, expires: string} {
         const token = jwt.sign(
             {
                 userUUID: userUUID,
                 authUUID: authUUID,
                 type: "auth",
+                userType: userType
             },
             ENV.AUTH_KEY,
             { 
@@ -52,12 +53,13 @@ export class Token {
      * @param authUUID Auth UUID
      * @returns Access token
      */
-    static access(userUUID: UUID, authUUID: UUID): string {
+    static access(userUUID: UUID, authUUID: UUID, userType: UserType): string {
         return jwt.sign(
             {
                 userUUID: userUUID,
                 authUUID: authUUID,
-                type: "access"
+                type: "access",
+                userType: userType
             },
             ENV.ACCESS_KEY,
             {
@@ -72,12 +74,13 @@ export class Token {
      * @param authUUID Auth UUID
      * @returns Recovery token
      */
-    static recovery(userUUID: UUID, authUUID: UUID): string {
+    static recovery(userUUID: UUID, authUUID: UUID, userType: UserType): string {
         return jwt.sign(
             {
                 userUUID: userUUID,
                 authUUID: authUUID,
-                type: "recovery"
+                type: "recovery",
+                userType: userType
             },
             ENV.RECOVERY_KEY,
             {
@@ -92,12 +95,13 @@ export class Token {
      * @param authUUID Auth UUID
      * @returns Deletion token
      */
-    static deletion(userUUID: UUID, authUUID: UUID): string {
+    static deletion(userUUID: UUID, authUUID: UUID, userType: UserType): string {
         return jwt.sign(
             {
                 userUUID: userUUID,
                 authUUID: authUUID,
-                type: "deletion"
+                type: "deletion",
+                userType: userType
             },
             ENV.DELETION_KEY,
             {

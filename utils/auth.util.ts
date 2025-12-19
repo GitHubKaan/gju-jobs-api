@@ -1,5 +1,5 @@
 import { UUID } from "crypto";
-import { TokenType } from "../enums";
+import { TokenType, UserType } from "../enums";
 import { StatusCodes } from "http-status-codes";
 import { DefaultError } from "./error.util";
 import { MESSAGE, TITLE } from "../responseMessage";
@@ -24,6 +24,7 @@ export async function authController(
     exp: number;
     userUUID: UUID;
     authUUID: UUID;
+    userType: UserType;
 }> {
     try {
         if (!token) {
@@ -35,15 +36,17 @@ export async function authController(
         Token.verify(extractedToken, type);
         
         const payload = Token.getPayload(extractedToken);
+        const isStudent = payload.userType === UserType.Student;
         
-        await UserService.isValidAuthUUID(payload.authUUID);
+        await UserService.isValidAuthUUID(payload.authUUID, isStudent);
         await BlacklistService.isTokenBlacklisted(extractedToken);
         
         return {
             type: payload.type,
             exp: payload.exp,
             userUUID: payload.userUUID,
-            authUUID: payload.authUUID
+            authUUID: payload.authUUID,
+            userType: payload.userType,
         };
     } catch (error: any) {
         throw new DefaultError(StatusCodes.UNAUTHORIZED, MESSAGE.ERROR.UNAUTHORIZED(TITLE.TOKEN));

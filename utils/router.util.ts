@@ -6,9 +6,10 @@ import { TokenType } from "../enums";
 import { uploadedImageHandler } from "./images.util";
 import { app } from "../Main";
 import { handleDeleteFile, handleRetrieveFile, handleRetrieveFiles, handleUploadFile } from "../routes/file.route";
-import { handleRetrieveUser, handleSignup, handleLogin, handleAuth, handleUpdateUser, handleGetRecovery, handleRecovery, handleGetDeleteUser, handleDeleteUser } from "../routes/user.route";
+import { handleRetrieveUser, handleAuth, handleUpdateUser, handleGetRecovery, handleRecovery, handleGetDeleteUser, handleDeleteUser, handleLogin } from "../routes/user.route";
 import { handleSendFrontendError, handleSupport } from "../routes/general.route";
 import { routeWrapper } from "../middlewares/wrapper.middleware";
+import { UserStudent } from "../routes/userStudent.routes";
 
 /**
  * Endpoint routes
@@ -32,22 +33,36 @@ export function routerHandler() {
         routeWrapper(handleSendFrontendError)
     );
     
+    // User Student
+    router.post(
+        "/user/signup/student",
+        rateLimiter(ENV.SIGNUP_WINDOW_MS, ENV.SIGNUP_LIMIT),
+        routeWrapper(UserStudent.handleSignup)
+    );
+
+
+    // User Company
+    /*
+    router.post(
+        "/user/signup/company",
+        rateLimiter(ENV.SIGNUP_WINDOW_MS, ENV.SIGNUP_LIMIT),
+        routeWrapper(handleCompanySignup)
+    );
+    */
+   
     // User
+        router.post(
+        "/user/login",
+        rateLimiter(ENV.LOGIN_WINDOW_MS, ENV.LOGIN_LIMIT),
+        routeWrapper(handleLogin)
+    );
+    
     router.get(
         "/user",
         auth(TokenType.Access),
         routeWrapper(handleRetrieveUser)
     );
-    router.post(
-        "/user/signup",
-        rateLimiter(ENV.SIGNUP_WINDOW_MS, ENV.SIGNUP_LIMIT),
-        routeWrapper(handleSignup)
-    );
-    router.post(
-        "/user/login",
-        rateLimiter(ENV.LOGIN_WINDOW_MS, ENV.LOGIN_LIMIT),
-        routeWrapper(handleLogin)
-    );
+
     router.post(
         "/user/auth",
         auth(TokenType.Auth),

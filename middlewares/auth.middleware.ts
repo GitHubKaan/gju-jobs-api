@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import { TokenType } from "../enums";
+import { TokenType, UserType } from "../enums";
 import { authController } from "../utils/auth.util";
 
 /**
@@ -19,11 +19,15 @@ export const auth = (
         
         const payload = await authController(token, type);
         
+        const isStudent = payload.userType === UserType.Student;
+        
         req.token = token;
         req.tokenType = payload.type;
         req.tokenExp = payload.exp;
         req.userUUID = payload.userUUID;
         req.authUUID = payload.authUUID;
+        req.userType = payload.userType;
+        req.isStudent = isStudent;
 
         next(); //Success
     } catch(error: any) {
