@@ -216,7 +216,7 @@ export class UserService {
         await DBPool.query(query, [UUID]);
     };
 
-    
+
 
     /**
  * Add new student user
@@ -281,14 +281,14 @@ export class UserService {
                 );
             }
 
-                await client.query(
-                    `
+            await client.query(
+                `
                         INSERT INTO users_company (uuid, user_uuid)
                         VALUES ($1, $2)
                     `,
-                    [uuidv4(), UUID]
-                );
-        
+                [uuidv4(), UUID]
+            );
+
 
             await client.query("COMMIT");
 
@@ -517,7 +517,7 @@ export class UserService {
                 FROM users_student 
                 WHERE uuid = $1;
             `;
-    
+
             authQuery = `
                 SELECT email
                 FROM users_student
@@ -529,7 +529,7 @@ export class UserService {
                 FROM users_company 
                 WHERE uuid = $1;
             `;
-    
+
             authQuery = `
                 SELECT email
                 FROM users_company
@@ -615,16 +615,26 @@ export class UserService {
     /**
      * Delete User and all its reference data
      * @param UUID userUUID
+     * @param isStudent
     */
     static async delete(
-        UUID: UUID
+        UUID: UUID,
+        isStudent: boolean
     ): Promise<
         void
     > {
-        const query = `
-            DELETE FROM users
-            WHERE uuid = $1;
-        `;
+        let query;
+        if (isStudent) {
+            query = `
+                DELETE FROM users_student
+                WHERE uuid = $1;
+            `;
+        } else {
+            query = `
+                DELETE FROM users_company
+                WHERE uuid = $1;
+            `;
+        }
 
         await DBPool.query(query, [UUID]);
     }
@@ -633,16 +643,17 @@ export class UserService {
      * Get all user UUIDs
      * @returns All user UUIDs
      */
-    static async getAllUsers(): Promise<
-        UUID[]
-    > {
+    static async getAllUsers(): Promise<UUID[]> {
         const query = `
-            SELECT uuid
-            FROM users
+            SELECT uuid FROM users
+            UNION
+            SELECT user_uuid AS uuid FROM users_student
+            UNION
+            SELECT user_uuid AS uuid FROM users_company
         `;
 
         const result = await DBPool.query(query);
-
-        return result.rows.map((row) => row.uuid);
+        return result.rows.map(row => row.uuid);
     }
+
 }

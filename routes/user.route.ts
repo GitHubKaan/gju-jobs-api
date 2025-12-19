@@ -5,11 +5,11 @@ import { checkFormat } from "../utils/format.util";
 import { UserService } from "../services/user.service";
 import { BlacklistService } from "../services/blacklist.service";
 import { getDeviceInfo } from "../utils/userAgent.util";
-import { NodeEnv, TokenType, UserType, UUIDType } from "../enums";
+import { NodeEnv, UserType, UUIDType } from "../enums";
 import { sendAuthMail } from "../mail/templates/auth.mail";
 import { Token } from "../utils/token.util";
 import { MESSAGE, TITLE } from "../responseMessage";
-import { createUserUploadFolder, deleteLocalUUIDFilepath } from "../utils/file.util";
+import { deleteLocalUUIDFilepath } from "../utils/file.util";
 import { sendDeleteUserMail } from "../mail/templates/deleteUser.mail";
 import { sendGetDeleteUserMail } from "../mail/templates/getDeleteUser.mail";
 import { ENV } from "../utils/envReader.util";
@@ -17,11 +17,9 @@ import { handleRequestCooldown } from "../utils/cooldown.util";
 import { sendGetRecoveryMail } from "../mail/templates/getRecovery.mail";
 import { sendLoginMail } from "../mail/templates/login.mail";
 import { sendRecoveryMail } from "../mail/templates/recovery.mail";
-import { UpdateUserCompanyType, UpdateUserStudentType, UserStudentType } from "../types/user.type";
-import { sendSignupMail } from "../mail/templates/signup.mail";
+import { UpdateUserCompanyType, UpdateUserStudentType } from "../types/user.type";
 import { Schemas } from "../utils/zod.util";
 import { UserStudentService } from "../services/userStudent.service";
-import { Schema } from "zod";
 
 /**
  * Authentication after login or signup
@@ -185,8 +183,8 @@ export async function handleGetDeleteUser(
     req: Request<any, void, void, ParsedQs, Record<string, any>>,
     res: Response
 ) {
-    const token = Token.deletion(req.userUUID, req.authUUID, UserType.Student);
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User, true);
+    const token = Token.deletion(req.userUUID, req.authUUID, req.isStudent ? UserType.Student : UserType.Company);
+    const email = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
     sendGetDeleteUserMail(email, token);
 
     if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
@@ -207,11 +205,11 @@ export async function handleDeleteUser(
 ) {
     await BlacklistService.add(req.token, req.tokenExp);
 
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User, true);
+    const email = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
     sendDeleteUserMail(email);
 
     deleteLocalUUIDFilepath(req.userUUID);
-    await UserService.delete(req.userUUID);
+    await UserService.delete(req.userUUID, req.isStudent);
 
     return res
         .status(StatusCodes.OK)

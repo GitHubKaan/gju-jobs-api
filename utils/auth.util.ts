@@ -32,7 +32,9 @@ export async function authController(
         }
         checkFormat(token, Schemas.token);
         
-        const extractedToken = token.replace("Bearer ", "");
+        // const extractedToken = token.replace("Bearer ", "")
+        const extractedToken = token.trim().replace(/^(Bearer\s+)+/i, ""); // Removes an infinite amount of "Bearer" infront of the Token -- Easier for Postman frontend team i guess...
+        
         Token.verify(extractedToken, type);
         
         const payload = Token.getPayload(extractedToken);
