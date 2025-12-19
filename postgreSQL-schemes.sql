@@ -7,18 +7,46 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT UNIQUE NOT NULL,
     given_name TEXT NOT NULL, -- Encrypted
     surname TEXT NOT NULL, -- Encrypted
-    company TEXT NOT NULL, -- Encrypted
+    company TEXT, -- Encrypted; Optional for students
     street TEXT NOT NULL, -- Encrypted
     street_number TEXT NOT NULL, -- Encrypted
     zip_code TEXT NOT NULL, -- Encrypted
     city TEXT NOT NULL, -- Encrypted
     country TEXT NOT NULL, -- Encrypted
     phone TEXT, -- Encrypted
+    is_student BOOLEAN DEFAULT FALSE,
     cooldown TIMESTAMP,
     auth_code TEXT, -- Hashed
     auth_code_created TIMESTAMP,
     auth_code_attempt SMALLINT NOT NULL DEFAULT 0,
     created TIMESTAMP DEFAULT NOW()
+);
+
+-- USERS_STUDENT
+CREATE TABLE users_student (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
+    user_uuid UUID NOT NULL,
+    CONSTRAINT fk_users_student_users
+        FOREIGN KEY (user_uuid)
+        REFERENCES users(uuid)
+        ON DELETE CASCADE
+);
+
+-- USER_STUDENT TAGS
+CREATE TABLE users_student_tags (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
+    user_uuid UUID NOT NULL,
+    tag INT NOT NULL
+);
+
+-- USERS_COMPANY
+CREATE TABLE users_company (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL ,
+    user_uuid UUID NOT NULL,
+    CONSTRAINT fk_users_company_users
+        FOREIGN KEY (user_uuid)
+        REFERENCES users(uuid)
+        ON DELETE CASCADE
 );
 
 -- TOKEN BLACKLIST

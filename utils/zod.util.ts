@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {z, ZodString} from "zod";
 import { FileType, fileTypes, SupportType, supportTypes } from "../enums";
 import { MESSAGE } from "../responseMessage";
 import { ENV } from "./envReader.util";
@@ -17,7 +17,7 @@ export class Schemas {
             .max(maximum, { message: MESSAGE.ERROR.MAX_ELEMENT(maximum, `${type}UUIDs`) })
             .refine((arr: string[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE(`${type}UUIDs`) });
 
-    static readonly Number = (value: string, minimum: number, maximum: number) => 
+    static readonly Number = (value: string, minimum: number, maximum: number) =>
         z.number({ message: MESSAGE.ERROR.INT(value) })
             .min(minimum, { message: MESSAGE.ERROR.MIN_INT(minimum, value) })
             .max(maximum, { message: MESSAGE.ERROR.MAX_INT(maximum, value) });
@@ -56,11 +56,6 @@ export class Schemas {
                 .max(60, { message: MESSAGE.ERROR.MAX_CHARACTERS(60) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
-            company: z.string({ message: MESSAGE.ERROR.STRING() })
-                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
-                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
-                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             street: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
                 .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
@@ -85,8 +80,26 @@ export class Schemas {
                 .regex(/^[a-zA-ZäöüÄÖÜß\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             phone: this.phone
-                .optional()
+                .optional(),
+            tags: z.array( // STUDENT VALUE ONLY; Khanh THIS VALUE SHOULD BE OPTIONAL; OPTION VALUES BELONG TO THE BOTTOM
+                z.number({ message: MESSAGE.ERROR.INT() })
+                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
+                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }), // Should be configured according to the Frontend-Tag amount; Who gives a fuck...
+                { message: MESSAGE.ERROR.ARRAY() }
+            )
+                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+                .optional(),
+            isStudent: z.boolean({ message: MESSAGE.ERROR.BOOLEAN() })
         });
+
+    static readonly company: ZodString =
+        z.string({ message: MESSAGE.ERROR.STRING() })
+            .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+            .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+            .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+            .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY });
 
     static readonly support =
         z.object({
@@ -108,8 +121,8 @@ export class Schemas {
         z.string({ message: MESSAGE.ERROR.STRING("errorMessage") })
             .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
             .max(10000, { message: MESSAGE.ERROR.MAX_CHARACTERS(10000) })
-            .regex(/^[a-zA-Z0-9_\s.,;:!?(){}\[\]<>'"`~\-_=+|\\/@&%*$^#]+$/, { message: MESSAGE.ERROR.REGEX() });
-            
+            .regex(/^[a-zA-Z0-9_\s.,;:!?(){}\[\]<>'"`~\-=+|\\/@&%*$^#]+$/, { message: MESSAGE.ERROR.REGEX() });
+
 
     static readonly fileType =
         z.string({ message: MESSAGE.ERROR.STRING("fileType") })

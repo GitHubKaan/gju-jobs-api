@@ -10,23 +10,23 @@ describe("User", () => {
     let recoveryToken: string;
     let deletionToken: string;
     let authCode: string;
-    
     test("[POST] Signup", async () => {
         const response = await request(app)
-            .post(`${getBackendPath()}/user/signup`)
-            .send({
-                email: "max@maxsoftware.com",
-                givenName: "Max",
-                surname: "Mustermann",
-                company: "Mustermann GmbH",
-                street: "Musterstraße",
-                streetNumber: "11B",
-                ZIPCode: 12105,
-                city: "Berlin",
-                country: "Germany",
-                phone: "+490123456789"
-            });
-
+        .post(`${getBackendPath()}/user/signup`)
+        .send({
+            email: "max@maxsoftware.com",
+            givenName: "Max",
+            surname: "Mustermann",
+            company: "Mustermann GmbH",
+            street: "Musterstraße",
+            streetNumber: "11B",
+            ZIPCode: 12105,
+            city: "Berlin",
+            country: "Germany",
+            phone: "+490123456789",
+            isStudent: true
+        });
+        
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("authCode");
         expect(response.headers.authentication.split(" ")[0]).toMatch("Bearer");
@@ -36,9 +36,9 @@ describe("User", () => {
         accessToken = await Testing.createAccessToken();
         
         const response = await request(app)
-            .get(`${getBackendPath()}/user`)
-            .set("Authorization", accessToken);
-
+        .get(`${getBackendPath()}/user`)
+        .set("Authorization", accessToken);
+        
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("user");
     });

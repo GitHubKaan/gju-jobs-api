@@ -32,9 +32,20 @@ export async function handleSignup(
     const payload: User = req.body;
     checkFormat(payload, Schemas.user);
 
-    const UUIDs = await UserService.addUser(payload);
+    if (payload.isStudent) {
+        // zod check student
+    } else {
+        // zod check company
+        checkFormat(payload.company, Schemas.company);
+    }
+    
+    const UUIDs = await UserService.addUser(payload, payload.isStudent);
     const authCode = await UserService.addAuthCode(UUIDs.UUID);
     createUserUploadFolder(UUIDs.UUID);
+    
+    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
+    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
+    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
     
     sendSignupMail(payload.email, authCode);
 
@@ -231,6 +242,10 @@ export async function handleUpdateUser(
     checkFormat(payload, Schemas.user, true);
 
     await UserService.update(req.userUUID, payload);
+
+    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
+    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
+    // SEPERATE REQUEST NEEDED FOR TAGS; IF TAGS ADDED, EACH ELEMENT SHOULD BE ADDED SEPERATELY -- FUNCTION NEEDED -- FOR KAAN
 
     return res
         .status(StatusCodes.OK)

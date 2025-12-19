@@ -10,7 +10,8 @@ interface BaseUser {
     city: string;
     country: string;
     phone?: string;
-};
+    isStudent: boolean;
+}
 export type User = BaseUser; //Make interface to type
 export type OptionalUser = Partial<BaseUser>; //Make all "BaseUser" values optional
 
