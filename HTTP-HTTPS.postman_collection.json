@@ -82,7 +82,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjhmMWI1ZTIxLTk2ZjItNDBjYS04YjhhLTk3ZDNkYTE2ZTQwNSIsImF1dGhVVUlEIjoiYjRjYWRlMjAtYmJmOS00ZTNlLWI2Y2EtZDRjNDMxNTRjZDczIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IkNPTVBBTlkiLCJpYXQiOjE3NjYxNTk2NzQsImV4cCI6MTc2NjE2MDU3NH0.LDpbO45b4dXC8fLYXPnfvgB-M-TWxzanWSo7ZJaBHaM",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IkNPTVBBTlkiLCJpYXQiOjE3NjYxNTk4ODcsImV4cCI6MTc2NjE2MDc4N30.iQUyTbrtQI5sDxh8bup-teMmVHIq50NayThaRZG3JV4",
 											"type": "string"
 										}
 									]
@@ -163,7 +163,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjhmMWI1ZTIxLTk2ZjItNDBjYS04YjhhLTk3ZDNkYTE2ZTQwNSIsImF1dGhVVUlEIjoiYjRjYWRlMjAtYmJmOS00ZTNlLWI2Y2EtZDRjNDMxNTRjZDczIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTY5MCwiZXhwIjoxNzgxNzExNjkwfQ.sBiaIIfMZ1obWFyKdmDkW4B5B20q3AXS0soJUCFZWow",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
 											"type": "string"
 										}
 									]
@@ -285,7 +285,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjU5MDI3NDE0LWE5YjEtNDgxNy1hMzk4LWUzZGRiZDU1NWY1MSIsImF1dGhVVUlEIjoiZmVjOTc3MzMtOTJjOC00NWZhLWI2M2EtYTM0ODZjMTcwYmI5IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTczOTEzOTEyMywiZXhwIjoxNzU0NjkxMTIzfQ.W_AywBiMaUpQaw5ua5qwfRtrM7epCd8cVeIQVjOORB0",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMDIxMjU0NWEtZDY3MC00YTgyLTkxMDctODkxZTljNWVkNWMyIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2NjE1Nzk2MiwiZXhwIjoxNzgxNzA5OTYyfQ.DLp21FoZ3d9X_BRRYBeRjuzkC3nJEsH471iMTyGGOAY",
 											"type": "string"
 										}
 									]

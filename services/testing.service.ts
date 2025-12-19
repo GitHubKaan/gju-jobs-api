@@ -12,18 +12,18 @@ export class TestingService {
         void
     > {
         const query = `
-            DELETE FROM users;
+            DELETE FROM users_student;
+            DELETE FROM users_company;
         `;
-        
+
         return new Promise((resolve, reject) => {
-            DBPool.query(query, [], (error: any, result: any) => {
+            DBPool.query(query, (error: any) => {
                 if (error) {
-                    return addInternalError(error, true, true);
+                    return reject(error);
                 }
-                
-                return resolve(); //Maybe there are no "affectedRows"
-            })
-        })
+                resolve();
+            });
+        });
     }
 
     /**

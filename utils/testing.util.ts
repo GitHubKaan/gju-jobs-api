@@ -1,7 +1,7 @@
 import request from "supertest";
 import { v4 as uuidv4 } from "uuid";
 import { app } from "../Main";
-import { getBackendPath } from "./envReader.util";
+import { ENV, getBackendPath } from "./envReader.util";
 
 export class Testing {
     /**
@@ -13,24 +13,22 @@ export class Testing {
         let authToken: string = "";
 
         const signupResponse = await request(app)
-            .post(`${getBackendPath()}/user/signup`)
+            .post(`${getBackendPath()}/user/signup/student`)
             .send({
-                email: `${uuidv4()}@maxsoftware.com`,
+                email: `felix@${ENV.ALLOWED_STUDENT_DOMAIN}`,
+                phone: "+490123456789",
                 givenName: "Max",
                 surname: "Mustermann",
-                company: "Mustermann GmbH",
-                street: "Musterstraße",
-                streetNumber: "11B",
-                ZIPCode: 12105,
-                city: "Berlin",
-                country: "Germany",
-                phone: "+490123456789",
-                isStudent: true,
+                birthdate: "1995-06-15",
+                degree: "MSc Computer Science",
+                tags: [1, 2, 3],
+                jobPreferences: [1, 2, 3],
+                languages: [1, 2, 3]
             });
 
             authCode = signupResponse.body.authCode;
             authToken = signupResponse.headers.authentication;
-
+        
         const authResponse = await request(app)
             .post(`${getBackendPath()}/user/auth`)
             .set("Authentication", authToken)

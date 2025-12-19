@@ -2,7 +2,7 @@ import request from "supertest";
 import { expect, test, describe } from "vitest";
 import { app } from "../Main";
 import { Testing } from "../utils/testing.util";
-import { getBackendPath } from "../utils/envReader.util";
+import { ENV, getBackendPath } from "../utils/envReader.util";
 
 describe("User", () => {
     let authToken: string;
@@ -10,21 +10,41 @@ describe("User", () => {
     let recoveryToken: string;
     let deletionToken: string;
     let authCode: string;
-    test("[POST] Signup", async () => {
+    test("[POST] Signup Student", async () => {
         const response = await request(app)
-        .post(`${getBackendPath()}/user/signup`)
+        .post(`${getBackendPath()}/user/signup/student`)
         .send({
-            email: "max@maxsoftware.com",
+            email: `max@${ENV.ALLOWED_STUDENT_DOMAIN}`,
+            phone: "+490123456789",
             givenName: "Max",
             surname: "Mustermann",
+            birthdate: "1995-06-15",
+            degree: "MSc Computer Science",
+            tags: [1, 2, 3],
+            jobPreferences: [1, 2, 3],
+            languages: [1, 2, 3]
+        });
+        
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("authCode");
+        expect(response.headers.authentication.split(" ")[0]).toMatch("Bearer");
+    });
+
+    test("[POST] Signup Company", async () => {
+        const response = await request(app)
+        .post(`${getBackendPath()}/user/signup/company`)
+        .send({
+            email: "max@maxsoftware.com",
+            phone: "+490123456789",
             company: "Mustermann GmbH",
+            description: "This is a test description.",
+            givenName: "Max",
+            surname: "Mustermann",
             street: "Musterstraße",
             streetNumber: "11B",
             ZIPCode: 12105,
             city: "Berlin",
-            country: "Germany",
-            phone: "+490123456789",
-            isStudent: true
+            country: "Germany"
         });
         
         expect(response.status).toBe(200);
@@ -36,8 +56,8 @@ describe("User", () => {
         accessToken = await Testing.createAccessToken();
         
         const response = await request(app)
-        .get(`${getBackendPath()}/user`)
-        .set("Authorization", accessToken);
+            .get(`${getBackendPath()}/user`)
+            .set("Authorization", accessToken);
         
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("user");
@@ -47,7 +67,8 @@ describe("User", () => {
         const response = await request(app)
             .get(`${getBackendPath()}/user/recovery`)
             .send({
-                email: "max@maxsoftware.com"
+                isStudent: true,
+                email: `max@${ENV.ALLOWED_STUDENT_DOMAIN}`,
             });
 
         expect(response.status).toBe(200);
@@ -68,7 +89,8 @@ describe("User", () => {
         const response = await request(app)
             .post(`${getBackendPath()}/user/login`)
             .send({
-                email: "max@maxsoftware.com"
+                isStudent: true,
+                email: `max@${ENV.ALLOWED_STUDENT_DOMAIN}`,
             });
 
         expect(response.status).toBe(200);
