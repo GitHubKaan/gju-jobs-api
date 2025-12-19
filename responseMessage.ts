@@ -87,6 +87,7 @@ export class MESSAGE {
         EMAIL: (value?: string): string => `${value ? `${value} ` : ""}must be a E-Mail Address.`,
         URL: (value?: string): string => `${value ? `${value} ` : ""}must be a URL.`,
         HOSTNAME: (value?: string): string => `${value ? `${value} ` : ""}must be a valid hostname.`,
-        UUID: (value?: string): string => `${value ? `${value} ` : ""}must be a UUID.`
+        UUID: (value?: string): string => `${value ? `${value} ` : ""}must be a UUID.`,
+        DOMAIN: (value?: string): string => `${value ? `${value} ` : ""}Domain not allowed`,
     };
 }

@@ -48,7 +48,13 @@ export class Schemas {
 
     static readonly userStudent =
         z.object({
-            email: this.email,
+            email: z.string({ message: MESSAGE.ERROR.STRING("email") })
+                .email({ message: MESSAGE.ERROR.EMAIL("email") })
+                .max(70, { message: MESSAGE.ERROR.MAX_CHARACTERS(70, "email") })
+                .refine(
+                (value) => value.toLowerCase().endsWith(`@${ENV.ALLOWED_STUDENT_DOMAIN}`),
+                { message: MESSAGE.ERROR.DOMAIN() }
+            ),
             phone: this.phone
                 .optional(),
             givenName: z.string({ message: MESSAGE.ERROR.STRING() })
