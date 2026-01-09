@@ -65,7 +65,7 @@ export async function handleRetrieveFile(
     checkFormat(UUID, Schemas.UUID("file"));
 
     const file = await FileService.getFile(UUID, req.userUUID);
-
+    
     const modifFile = {
         ...file,
         url: `${getBackendOrigin()}/${ENV.IMAGE_UPLOAD_PATH}/${req.userUUID}/${file.name}`

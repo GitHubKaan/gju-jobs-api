@@ -28,14 +28,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/support",
+									"raw": "{{baseURL}}support",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"support"
+										"{{baseURL}}support"
 									]
 								}
 							},
@@ -56,14 +51,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/send-frontend-error",
+									"raw": "{{baseURL}}send-frontend-error",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"send-frontend-error"
+										"{{baseURL}}send-frontend-error"
 									]
 								}
 							},
@@ -75,6 +65,86 @@
 					"name": "User",
 					"item": [
 						{
+							"name": "Student Signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"halddlsaddo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"birthdate\": \"1995-06-15\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}user/signup/student",
+									"host": [
+										"{{baseURL}}user"
+									],
+									"path": [
+										"signup",
+										"student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Company Signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"halawdlo33@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdawdwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}user/signup/company",
+									"host": [
+										"{{baseURL}}user"
+									],
+									"path": [
+										"signup",
+										"company"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"isStudent\": true, // Student login or company login?\r\n    \"email\": \"hallo2@turanics.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}user/login",
+									"host": [
+										"{{baseURL}}user"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Auth",
 							"request": {
 								"auth": {
@@ -82,7 +152,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IkNPTVBBTlkiLCJpYXQiOjE3NjYxNTk4ODcsImV4cCI6MTc2NjE2MDc4N30.iQUyTbrtQI5sDxh8bup-teMmVHIq50NayThaRZG3JV4",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjkzOGIwYjBlLWY5NTctNDJiNy05MzEzLTU1MDdjNmJiNDhmNiIsImF1dGhVVUlEIjoiMTg2ZWZjNWItNGMwMC00MmE3LWI5NTMtMTViYWFmMTFlY2ViIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3Njc1NTczNjQsImV4cCI6MTc2NzU1ODI2NH0.1KRcZL_-kOheR893cXPOE9uctg-BOnFLfNB7Mnc92lk",
 											"type": "string"
 										}
 									]
@@ -91,7 +161,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"386542\"\r\n}",
+									"raw": "{\r\n    \"code\": \"428604\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -99,14 +169,11 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/user/auth",
+									"raw": "{{baseURL}}user/auth",
 									"host": [
-										"{{baseURL}}"
+										"{{baseURL}}user"
 									],
 									"path": [
-										"api",
-										"v1",
-										"user",
 										"auth"
 									]
 								}
@@ -130,7 +197,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "// STUDENT\r\n/*\r\n{\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"birthdate\": \"2000-06-15\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\" // optional\r\n}\r\n*/\r\n\r\n// COMPANY\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}\r\n",
+									"raw": "// STUDENT\r\n/*\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\" // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}\r\n*/\r\n\r\n// COMPANY\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -138,14 +205,11 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/user/update",
+									"raw": "{{baseURL}}user/update",
 									"host": [
-										"{{baseURL}}"
+										"{{baseURL}}user"
 									],
 									"path": [
-										"api",
-										"v1",
-										"user",
 										"update"
 									]
 								}
@@ -163,7 +227,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjkzOGIwYjBlLWY5NTctNDJiNy05MzEzLTU1MDdjNmJiNDhmNiIsImF1dGhVVUlEIjoiMTg2ZWZjNWItNGMwMC00MmE3LWI5NTMtMTViYWFmMTFlY2ViIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2NzU1NzM4MCwiZXhwIjoxNzgzMTA5MzgwfQ.e7HomfoNbdkudfYhjQXnyP1p2h0kOEGiac5OiI4ZHmQ",
 											"type": "string"
 										}
 									]
@@ -180,53 +244,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/user",
+									"raw": "{{baseURL}}user",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Recovery",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMjM2NzExODAtOTBkYS00NzVkLTk4MzctNWY3NTk3NWM3ODA5IiwidHlwZSI6InJlY292ZXJ5IiwidXNlclR5cGUiOiJTVFVERU5UIiwiaWF0IjoxNzY2MTU3MTI1LCJleHAiOjE3NjYxNTgwMjV9.O5hmD8j5XOGaOSRfazFdhdfI00ZA3nZTXkqz1RlLQLo",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseURL}}/api/v1/user/recovery",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"recovery"
+										"{{baseURL}}user"
 									]
 								}
 							},
@@ -260,14 +280,47 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/user/recovery",
+									"raw": "{{baseURL}}user/recovery",
 									"host": [
-										"{{baseURL}}"
+										"{{baseURL}}user"
 									],
 									"path": [
-										"api",
-										"v1",
-										"user",
+										"recovery"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recovery",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMjM2NzExODAtOTBkYS00NzVkLTk4MzctNWY3NTk3NWM3ODA5IiwidHlwZSI6InJlY292ZXJ5IiwidXNlclR5cGUiOiJTVFVERU5UIiwiaWF0IjoxNzY2MTU3MTI1LCJleHAiOjE3NjYxNTgwMjV9.O5hmD8j5XOGaOSRfazFdhdfI00ZA3nZTXkqz1RlLQLo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}user/recovery",
+									"host": [
+										"{{baseURL}}user"
+									],
+									"path": [
 										"recovery"
 									]
 								}
@@ -302,104 +355,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/user/deletion",
+									"raw": "{{baseURL}}user/deletion",
 									"host": [
-										"{{baseURL}}"
+										"{{baseURL}}user"
 									],
 									"path": [
-										"api",
-										"v1",
-										"user",
 										"deletion"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Login",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"isStudent\": true, // Student login or company login?\r\n    \"email\": \"hallo2@turanics.com\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseURL}}/api/v1/user/login",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Student Signup",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"hallo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"birthdate\": \"1995-06-15\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"langauges\": [1, 2, 3, 4] // optional\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseURL}}/api/v1/user/signup/student",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"signup",
-										"student"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Company Signup",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"hallo3@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdawdwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseURL}}/api/v1/user/signup/company",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"signup",
-										"company"
 									]
 								}
 							},
@@ -413,7 +374,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjU5MDI3NDE0LWE5YjEtNDgxNy1hMzk4LWUzZGRiZDU1NWY1MSIsImF1dGhVVUlEIjoiZmVjOTc3MzMtOTJjOC00NWZhLWI2M2EtYTM0ODZjMTcwYmI5IiwidHlwZSI6ImRlbGV0aW9uIiwiaWF0IjoxNzM5MTM5MjE0LCJleHAiOjE3MzkxMzk1MTR9.4RTdX0gBQ91GdiXHrAzFgkpw7nKFOOzGTBrsTZOSCEk",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMDIxMjU0NWEtZDY3MC00YTgyLTkxMDctODkxZTljNWVkNWMyIiwidHlwZSI6ImRlbGV0aW9uIiwidXNlclR5cGUiOiJTVFVERU5UIiwiaWF0IjoxNzY2MTU3OTczLCJleHAiOjE3NjYxNTgyNzN9.Nsy1B61D7Q2NXT7ul8SnqTIbLoMNt9lM4pSGBR5Iw0M",
 											"type": "string"
 										}
 									]
@@ -430,14 +391,11 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/user/deletion",
+									"raw": "{{baseURL}}user/deletion",
 									"host": [
-										"{{baseURL}}"
+										"{{baseURL}}user"
 									],
 									"path": [
-										"api",
-										"v1",
-										"user",
 										"deletion"
 									]
 								}
@@ -457,7 +415,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjBjMDY3YTU5LTM1MGMtNGRmNC04ODlhLTkwZjlhMzY2MTkxYiIsImF1dGhVVUlEIjoiM2M2NGZmZmYtMGQ5Ni00MGRmLThmNTMtYjU1ZGUyN2JhYWI4IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc2NTgwNjc2MSwiZXhwIjoxNzgxMzU4NzYxfQ.-L3BY5HuJvxH_WjXeTy2N0G_9SZvax0Jl6mKb52wXFo",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
 											"type": "string"
 										}
 									]
@@ -470,19 +428,14 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/Users/kaan/Documents/Repositories/place-an-order-api/images/food/doener.jpg"
+											"src": "/Users/kaan/Documents/Repositories/place-an-order-api/images/food/falafel.jpg"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{baseURL}}/api/v1/file?type=PROFILE-PICTURE",
+									"raw": "{{baseURL}}file?type=PROFILE-PICTURE",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"file"
+										"{{baseURL}}file"
 									],
 									"query": [
 										{
@@ -510,14 +463,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/api/v1/file",
+									"raw": "{{baseURL}}file",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"file"
+										"{{baseURL}}file"
 									]
 								}
 							},
@@ -531,7 +479,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjIxMmI0ZjkxLTIwNDItNGQzNC05MzVhLTEyM2RjYTg1NWQzNSIsImF1dGhVVUlEIjoiZDc3NWQ3ZGMtZWE5MS00ZGI4LTk1YzEtNDUwNWIxYTExZmU4IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc2NTQ4MTI4MiwiZXhwIjoxNzgxMDMzMjgyfQ.fwzwjc7RT4y_bm9OD-Uoikv7M4QzC_pBw7K7PLrJj1U",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
 											"type": "string"
 										}
 									]
@@ -539,14 +487,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/api/v1/files",
+									"raw": "{{baseURL}}files",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"files"
+										"{{baseURL}}files"
 									]
 								}
 							},
@@ -568,14 +511,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/api/v1/file?UUID=de988c68-e711-4f24-8edf-d8ac856cb967",
+									"raw": "{{baseURL}}file?UUID=de988c68-e711-4f24-8edf-d8ac856cb967",
 									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"file"
+										"{{baseURL}}file"
 									],
 									"query": [
 										{
@@ -598,18 +536,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/upload/0c067a59-350c-4df4-889a-90f9a366191b/IE5R4I28WF4KCRZD.jpeg",
-									"protocol": "http",
+									"raw": "{{baseURL}}upload/16cb8f43-8fc7-4d77-916d-8b5efa50eaec/VWERKE5J7KKM7P19.jpeg",
 									"host": [
-										"localhost"
+										"{{baseURL}}upload"
 									],
-									"port": "4000",
 									"path": [
-										"api",
-										"v1",
-										"upload",
-										"0c067a59-350c-4df4-889a-90f9a366191b",
-										"IE5R4I28WF4KCRZD.jpeg"
+										"16cb8f43-8fc7-4d77-916d-8b5efa50eaec",
+										"VWERKE5J7KKM7P19.jpeg"
 									]
 								}
 							},
