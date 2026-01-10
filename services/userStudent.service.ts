@@ -31,8 +31,8 @@ export class UserStudentService {
                     phone,
                     given_name,
                     surname,
-                    birthdate,
-                    degree
+                    degree,
+                    program
                 )
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 ON CONFLICT (email) DO NOTHING;
@@ -48,8 +48,8 @@ export class UserStudentService {
             payload.phone ? encrypt(payload.phone) : null,
             encrypt(payload.givenName.trim()),
             encrypt(payload.surname.trim()),
-            encrypt(payload.birthdate.trim()),
             payload.degree ? encrypt(payload.degree.trim()) : null,
+            payload.program ? encrypt(payload.program.trim()) : null,
         ]);
 
         if (result.rowCount === 0) {
@@ -81,8 +81,8 @@ export class UserStudentService {
             phone: payload.phone?.trimEnd().trimStart(),
             given_name: payload.givenName?.trimEnd().trimStart(),
             surname: payload.surname?.trimEnd().trimStart(),
-            birthdate: payload.birthdate?.trimEnd().trimStart(),
             degree: payload.degree?.trimEnd().trimStart(),
+            program: payload.program?.trimEnd().trimStart(),
         };
 
         const optionalClauses: string[] = [];

@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS users_student (
     phone TEXT, -- Encrypted
     given_name TEXT NOT NULL, -- Encrypted
     surname TEXT NOT NULL, -- Encrypted
-    birthdate TEXT NOT NULL, -- Encrypted
     degree TEXT, -- Encrypted
+    program TEXT, -- Encrypted
     cooldown TIMESTAMP,
     auth_code TEXT, -- Hashed
     auth_code_created TIMESTAMP,
@@ -65,6 +65,8 @@ CREATE TABLE IF NOT EXISTS users_company (
     zip_code TEXT NOT NULL, -- Encrypted
     city TEXT NOT NULL, -- Encrypted
     country TEXT NOT NULL, -- Encrypted
+    size TEXT NOT NULL, -- Encrypted (company size - people amount)
+    industry TEXT NOT NULL, -- Encrypted
     cooldown TIMESTAMP,
     auth_code TEXT, -- Hashed
     auth_code_created TIMESTAMP,

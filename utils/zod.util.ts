@@ -67,8 +67,14 @@ export class Schemas {
                 .max(60, { message: MESSAGE.ERROR.MAX_CHARACTERS(60) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
-            birthdate: z.coerce.date(),
+            //birthdate: z.coerce.date(), -- removed
             degree: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
+                .optional(),
+            program: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
                 .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
@@ -118,8 +124,8 @@ export class Schemas {
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             description: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
-                .max(200, { message: MESSAGE.ERROR.MAX_CHARACTERS(200) })
-                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
+                //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
                 .optional(),
             givenName: z.string({ message: MESSAGE.ERROR.STRING() })
@@ -154,6 +160,16 @@ export class Schemas {
                 .min(3, { message: MESSAGE.ERROR.MIN_CHARACTERS(3) })
                 .max(30, { message: MESSAGE.ERROR.MAX_CHARACTERS(30) })
                 .regex(/^[a-zA-ZäöüÄÖÜß\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            size: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+                .regex(/^(?:\d+(?:[.,]\d+)?)(?:\s*-\s*(?:\d+(?:[.,]\d+)?))?$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            industry: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .regex(/^[a-zA-ZäöüÄÖÜß.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
         });
 

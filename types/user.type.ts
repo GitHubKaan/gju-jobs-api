@@ -26,8 +26,8 @@ interface BaseUserStudent {
     phone?: string;
     givenName: string;
     surname: string;
-    birthdate: string;
     degree?: string;
+    program?: string;
     tags?: number[],
     jobPreferences?: number[],
     langauges?: number[],
@@ -51,6 +51,8 @@ interface BaseUserCompany {
     ZIPCode: number;
     city: string;
     country: string;
+    size: string;
+    industry: string;
 }
 export type UserCompanyType = BaseUserCompany; //Make interface to type
 export type OptionalUserCompanyType = Partial<BaseUserCompany>; //Make all "BaseUser" values optional

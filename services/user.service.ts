@@ -128,8 +128,8 @@ export class UserService {
                 phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
                 givenName: decrypt(result.rows[0].given_name),
                 surname: decrypt(result.rows[0].surname),
-                birthdate: decrypt(result.rows[0].birthdate),
                 degree: result.rows[0].degree ? decrypt(result.rows[0].degree) : null,
+                program: result.rows[0].program ? decrypt(result.rows[0].program) : null,
             }
         } else {
             query = `
@@ -154,6 +154,8 @@ export class UserService {
                 ZIPCode: Number(decrypt(result.rows[0].zip_code)),
                 city: decrypt(result.rows[0].city),
                 country: decrypt(result.rows[0].country),
+                size: decrypt(result.rows[0].size),
+                industry: decrypt(result.rows[0].industry),
             }
         }
     };

@@ -8,7 +8,7 @@ export class Testing {
      * Create an account (and reset "accessToken")
      * @returns Access token
      */
-    static async createAccessToken(): Promise<string> {
+    static async createStudentAccessToken(): Promise<string> {
         let authCode: string = "";
         let authToken: string = "";
 
@@ -19,8 +19,8 @@ export class Testing {
                 phone: "+490123456789",
                 givenName: "Max",
                 surname: "Mustermann",
-                birthdate: "1995-06-15",
                 degree: "MSc Computer Science",
+                program: "Program name",
                 tags: [1, 2, 3],
                 jobPreferences: [1, 2, 3],
                 languages: [1, 2, 3]

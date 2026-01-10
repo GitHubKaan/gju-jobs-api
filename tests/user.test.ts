@@ -18,8 +18,8 @@ describe("User", () => {
             phone: "+490123456789",
             givenName: "Max",
             surname: "Mustermann",
-            birthdate: "1995-06-15",
             degree: "MSc Computer Science",
+            program: "Program name",
             tags: [1, 2, 3],
             jobPreferences: [1, 2, 3],
             languages: [1, 2, 3]
@@ -44,7 +44,9 @@ describe("User", () => {
             streetNumber: "11B",
             ZIPCode: 12105,
             city: "Berlin",
-            country: "Germany"
+            country: "Germany",
+            size: "100-500",
+            industry: "IT"
         });
         
         expect(response.status).toBe(200);
@@ -53,7 +55,7 @@ describe("User", () => {
     });
 
     test("[GET] Get user", async () => {
-        accessToken = await Testing.createAccessToken();
+        accessToken = await Testing.createStudentAccessToken();
         
         const response = await request(app)
             .get(`${getBackendPath()}/user`)
@@ -120,15 +122,18 @@ describe("User", () => {
             .patch(`${getBackendPath()}/user/update`)
             .set("Authorization", accessToken)
             .send({
+                phone: "+490123456789",
+                company: "Mustermann GmbH",
+                description: "This is a test description.",
                 givenName: "Max",
                 surname: "Mustermann",
-                company: "Mustermann GmbH",
                 street: "Musterstraße",
                 streetNumber: "11B",
                 ZIPCode: 12105,
                 city: "Berlin",
                 country: "Germany",
-                phone: "+490123456789"
+                size: "100-500",
+                industry: "IT"
             });
 
         expect(response.status).toBe(200);

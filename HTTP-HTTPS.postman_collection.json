@@ -71,7 +71,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"halddlsaddo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"birthdate\": \"1995-06-15\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
+									"raw": "{\r\n    \"email\": \"haldddlsaddo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -98,7 +98,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"halawdlo33@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdawdwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}",
+									"raw": "{\r\n    \"email\": \"halawsdlo33@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdaw;--232#*+dwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -152,7 +152,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjkzOGIwYjBlLWY5NTctNDJiNy05MzEzLTU1MDdjNmJiNDhmNiIsImF1dGhVVUlEIjoiMTg2ZWZjNWItNGMwMC00MmE3LWI5NTMtMTViYWFmMTFlY2ViIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3Njc1NTczNjQsImV4cCI6MTc2NzU1ODI2NH0.1KRcZL_-kOheR893cXPOE9uctg-BOnFLfNB7Mnc92lk",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjkyOGQ4ZGVlLWFhNmItNDNiZi04Njc3LWY5OTAxM2FhZGU3YiIsImF1dGhVVUlEIjoiNDNkN2NjNzAtYWY4My00NTUxLWI0YjEtZjM0MWNiYzAzYjQyIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3NjgwNzIyODEsImV4cCI6MTc2ODA3MzE4MX0.RAXU-g0a1D6QO7-oqi24OuV0h5f_V0vpzRcuBKNlf50",
 											"type": "string"
 										}
 									]
@@ -161,7 +161,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"428604\"\r\n}",
+									"raw": "{\r\n    \"code\": \"258802\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -197,7 +197,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "// STUDENT\r\n/*\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\" // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}\r\n*/\r\n\r\n// COMPANY\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\"\r\n}\r\n",
+									"raw": "// STUDENT\r\n/*\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}\r\n*/\r\n\r\n// COMPANY\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -227,7 +227,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjkzOGIwYjBlLWY5NTctNDJiNy05MzEzLTU1MDdjNmJiNDhmNiIsImF1dGhVVUlEIjoiMTg2ZWZjNWItNGMwMC00MmE3LWI5NTMtMTViYWFmMTFlY2ViIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2NzU1NzM4MCwiZXhwIjoxNzgzMTA5MzgwfQ.e7HomfoNbdkudfYhjQXnyP1p2h0kOEGiac5OiI4ZHmQ",
+											"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjkyOGQ4ZGVlLWFhNmItNDNiZi04Njc3LWY5OTAxM2FhZGU3YiIsImF1dGhVVUlEIjoiNDNkN2NjNzAtYWY4My00NTUxLWI0YjEtZjM0MWNiYzAzYjQyIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODA3MjMzMCwiZXhwIjoxNzgzNjI0MzMwfQ.B2Np4eiP0bABs785NjLZ6kaKpc00XFK6jwzX3l88cr8",
 											"type": "string"
 										}
 									]
