@@ -29,7 +29,7 @@ export class UserStudent {
         const authCode = await UserService.addAuthCode(newUser.UUID, true);
         createUserUploadFolder(newUser.UUID);
 
-        // Seperate function needed for Tags, job pereferences and langauges
+        // Separate function needed for Tags, job preferences and languages
 
         sendSignupMail(payload.email, authCode);
 

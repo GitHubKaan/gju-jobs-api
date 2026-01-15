@@ -23,6 +23,7 @@ export class UserStudentService {
     }> {
         const client: PoolClient = await DBPool.connect();
 
+        // insert student
         const query = `
                 INSERT INTO users_student (
                     uuid,
@@ -59,6 +60,66 @@ export class UserStudentService {
             );
         }
 
+        // insert tags
+        if (payload.tags?.length) {
+            const tagQuery = `
+                INSERT INTO users_student_tags (
+                    uuid,
+                    user_uuid,
+                    tag_id
+                )
+                VALUES ($1, $2, $3);
+            `;
+
+            for (const tagId of payload.tags) {
+                await client.query(tagQuery, [
+                    uuidv4(),
+                    UUID,
+                    tagId
+                ])
+            }
+        }
+
+        // insert job preferences
+        if (payload.jobPreferences?.length) {
+            const jobPrefQuery = `
+                INSERT INTO users_student_job_preferences (
+                    uuid,
+                    user_uuid,
+                    preference_id
+                )
+                VALUES ($1, $2, $3);
+            `;
+
+            for (const prefId of payload.jobPreferences) {
+                await client.query(jobPrefQuery, [
+                    uuidv4(),
+                    UUID,
+                    prefId
+                ])
+            }
+        }
+
+        // insert languages
+        if (payload.languages?.length) {
+            const langQuery = `
+                INSERT INTO users_student_languages (
+                    uuid,
+                    user_uuid,
+                    language_id
+                )
+                VALUES ($1, $2, $3);
+            `;
+
+            for (const langId of payload.languages) {
+                await client.query(langQuery, [
+                    uuidv4(),
+                    UUID,
+                    langId
+                ])
+            }
+        }
+
         return { UUID, authUUID }
     };
 
@@ -88,7 +149,7 @@ export class UserStudentService {
         const optionalClauses: string[] = [];
         const values: any[] = [UUID]; //First value ($1) is User UUID
 
-        Object.entries(fieldsToUpdate).forEach(([field, value]) => {
+        Object.entries(fieldsToUpdate).forEach(([field, value]): void => {
             if (value) {
                 optionalClauses.push(`${field} = $${optionalClauses.length + 2}`);
                 values.push(encrypt(value));

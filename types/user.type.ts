@@ -1,5 +1,5 @@
 /*
-// User TEMPALTE
+// User TEMPLATE
 interface BaseUser {
     email: string;
     givenName: string;
@@ -30,7 +30,7 @@ interface BaseUserStudent {
     program?: string;
     tags?: number[],
     jobPreferences?: number[],
-    langauges?: number[],
+    languages?: number[],
 }
 export type UserStudentType = BaseUserStudent; //Make interface to type
 export type OptionalUserStudentType = Partial<BaseUserStudent>; //Make all "BaseUser" values optional

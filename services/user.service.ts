@@ -1,6 +1,6 @@
 import { DBPool } from "../configs/postgreSQL.config";
 import { v4 as uuidv4 } from "uuid";
-import { decrypt, encrypt } from "../utils/encryption.util";
+import { decrypt } from "../utils/encryption.util";
 import { DefaultError } from "../utils/error.util";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { StatusCodes } from "http-status-codes";
@@ -8,9 +8,7 @@ import { ENV } from "../utils/envReader.util";
 import { UUID } from "crypto";
 import { UUIDType } from "../enums";
 import { randomString } from "../utils/stringGenerator.util";
-import { UpdateUserCompanyType, UserCompanyType, UserStudentType } from "../types/user.type";
 import { hashValue } from "../utils/hash.util";
-import { PoolClient } from "pg";
 
 export class UserService {
     /**
