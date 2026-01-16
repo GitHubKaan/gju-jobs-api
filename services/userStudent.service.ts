@@ -7,14 +7,7 @@ import { DefaultError } from "../utils/error.util";
 import { StatusCodes } from "http-status-codes";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { v4 as uuidv4 } from "uuid";
-import {
-    DELETE_JOB_PREFS_BY_USER_QUERY, DELETE_LANGS_BY_USER_QUERY,
-    DELETE_TAGS_BY_USER_QUERY,
-    INSERT_JOB_PREF_QUERY,
-    INSERT_LANG_QUERY,
-    INSERT_STUDENT_QUERY,
-    INSERT_TAG_QUERY
-} from "../queries/user-student.queries";
+import { UserStudentQueries } from "../queries/userStudent.queries";
 
 export class UserStudentService {
     /**
@@ -35,7 +28,7 @@ export class UserStudentService {
         const UUID: UUID = uuidv4() as UUID;
         const authUUID: UUID = uuidv4() as UUID;
 
-        const result: QueryResult = await client.query(INSERT_STUDENT_QUERY, [
+        const result: QueryResult = await client.query(UserStudentQueries.INSERT_STUDENT_QUERY, [
             UUID,
             authUUID,
             payload.email,
@@ -56,7 +49,7 @@ export class UserStudentService {
         // insert tags
         if (payload.tags?.length) {
             for (const tagId of payload.tags) {
-                await client.query(INSERT_TAG_QUERY, [
+                await client.query(UserStudentQueries.INSERT_TAG_QUERY, [
                     uuidv4(),
                     UUID,
                     tagId
@@ -67,7 +60,7 @@ export class UserStudentService {
         // insert job preferences
         if (payload.jobPreferences?.length) {
             for (const prefId of payload.jobPreferences) {
-                await client.query(INSERT_JOB_PREF_QUERY, [
+                await client.query(UserStudentQueries.INSERT_JOB_PREF_QUERY, [
                     uuidv4(),
                     UUID,
                     prefId
@@ -78,7 +71,7 @@ export class UserStudentService {
         // insert languages
         if (payload.languages?.length) {
             for (const langId of payload.languages) {
-                await client.query(INSERT_LANG_QUERY, [
+                await client.query(UserStudentQueries.INSERT_LANG_QUERY, [
                     uuidv4(),
                     UUID,
                     langId
@@ -136,12 +129,12 @@ export class UserStudentService {
         // update tags only if "tags" is present in the payload
         if (payload.tags !== undefined) {
             // delete old tags
-            await client.query(DELETE_TAGS_BY_USER_QUERY, [UUID]);
+            await client.query(UserStudentQueries.DELETE_TAGS_BY_USER_QUERY, [UUID]);
 
             // add new tags (if any)
             if (payload.tags.length > 0) {
                 for (const tagId of payload.tags) {
-                    await client.query(INSERT_TAG_QUERY, [
+                    await client.query(UserStudentQueries.INSERT_TAG_QUERY, [
                         uuidv4(),
                         UUID,
                         tagId,
@@ -152,11 +145,11 @@ export class UserStudentService {
 
         // update job preferences
         if (payload.jobPreferences !== undefined) {
-            await client.query(DELETE_JOB_PREFS_BY_USER_QUERY, [UUID]);
+            await client.query(UserStudentQueries.DELETE_JOB_PREFS_BY_USER_QUERY, [UUID]);
 
             if (payload.jobPreferences.length > 0) {
                 for (const prefId of payload.jobPreferences) {
-                    await client.query(INSERT_JOB_PREF_QUERY, [
+                    await client.query(UserStudentQueries.INSERT_JOB_PREF_QUERY, [
                         uuidv4(),
                         UUID,
                         prefId,
@@ -167,11 +160,11 @@ export class UserStudentService {
 
         // update languages
         if (payload.languages !== undefined) {
-            await client.query(DELETE_LANGS_BY_USER_QUERY, [UUID]);
+            await client.query(UserStudentQueries.DELETE_LANGS_BY_USER_QUERY, [UUID]);
 
             if (payload.languages.length > 0) {
                 for (const langId of payload.languages) {
-                    await client.query(INSERT_LANG_QUERY, [
+                    await client.query(UserStudentQueries.INSERT_LANG_QUERY, [
                         uuidv4(),
                         UUID,
                         langId,

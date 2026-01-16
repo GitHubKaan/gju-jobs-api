@@ -10,11 +10,7 @@ import { UUIDType } from "../enums";
 import { randomString } from "../utils/stringGenerator.util";
 import { hashValue } from "../utils/hash.util";
 import {QueryResult} from "pg";
-import {
-    SELECT_STUDENT_BY_UUID,
-    SELECT_JOB_PREF_BY_USER, SELECT_LANG_BY_USER,
-    SELECT_TAG_BY_USER
-} from "../queries/user-student.queries";
+import { UserStudentQueries } from "../queries/userStudent.queries";
 
 export class UserService {
     /**
@@ -116,22 +112,22 @@ export class UserService {
         any
     > {
         if (isStudent) {
-            const result: QueryResult = await DBPool.query(SELECT_STUDENT_BY_UUID, [UUID]);
+            const result: QueryResult = await DBPool.query(UserStudentQueries.SELECT_STUDENT_BY_UUID, [UUID]);
             if (result.rowCount === 0) {
                 return null;
             }
             const userRow = result.rows[0];
 
             // tags
-            const tagsResult: QueryResult = await DBPool.query(SELECT_TAG_BY_USER, [UUID]);
+            const tagsResult: QueryResult = await DBPool.query(UserStudentQueries.SELECT_TAG_BY_USER, [UUID]);
             const tags: number[] = tagsResult.rows.map(r => r.tag_id);
 
             // job preferences
-            const jobPrefResult: QueryResult = await DBPool.query(SELECT_JOB_PREF_BY_USER, [UUID]);
+            const jobPrefResult: QueryResult = await DBPool.query(UserStudentQueries.SELECT_JOB_PREF_BY_USER, [UUID]);
             const jobPreferences: number[] = jobPrefResult.rows.map(r => r.preference_id);
 
             // languages
-            const langResult: QueryResult = await DBPool.query(SELECT_LANG_BY_USER, [UUID]);
+            const langResult: QueryResult = await DBPool.query(UserStudentQueries.SELECT_LANG_BY_USER, [UUID]);
             const languages: number[] = langResult.rows.map(r => r.language_id);
 
             return {

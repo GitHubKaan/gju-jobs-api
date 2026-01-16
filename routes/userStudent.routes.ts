@@ -28,9 +28,7 @@ export class UserStudent {
         const newUser = await UserStudentService.add(payload);
         const authCode: string = await UserService.addAuthCode(newUser.UUID, true);
         createUserUploadFolder(newUser.UUID);
-
-        // Separate function needed for Tags, job preferences and languages
-
+        
         sendSignupMail(payload.email, authCode);
 
         const token = Token.auth(newUser.UUID, newUser.authUUID, UserType.Student);
