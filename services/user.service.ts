@@ -9,6 +9,7 @@ import { UUID } from "crypto";
 import { UUIDType } from "../enums";
 import { randomString } from "../utils/stringGenerator.util";
 import { hashValue } from "../utils/hash.util";
+import {QueryResult} from "pg";
 
 export class UserService {
     /**
@@ -30,7 +31,7 @@ export class UserService {
             LIMIT 1;
         `;
 
-        const result = await DBPool.query(query, [authUUID]);
+        const result: QueryResult = await DBPool.query(query, [authUUID]);
 
         if (result.rowCount && result.rowCount > 0) {
             return;
@@ -62,7 +63,7 @@ export class UserService {
         `;
        
 
-        const result = await DBPool.query(query, [email]);
+        const result: QueryResult = await DBPool.query(query, [email]);
 
         if (result.rowCount && result.rowCount > 0) {
             return {
@@ -92,7 +93,7 @@ export class UserService {
             WHERE uuid = $1;
         `;
 
-        const result = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(query, [UUID]);
 
         return result.rows[0].cooldown;
     };
@@ -117,7 +118,7 @@ export class UserService {
                 WHERE uuid = $1;
             `;
 
-            const result = await DBPool.query(query, [UUID]);
+            const result: QueryResult = await DBPool.query(query, [UUID]);
 
             return {
                 UUID: result.rows[0].uuid,
@@ -136,7 +137,7 @@ export class UserService {
                 WHERE uuid = $1;
             `;
 
-            const result = await DBPool.query(query, [UUID]);
+            const result: QueryResult = await DBPool.query(query, [UUID]);
 
             return {
                 UUID: result.rows[0].uuid,
@@ -224,8 +225,8 @@ export class UserService {
             WHERE uuid = $2;
         `;
 
-        const authCode = randomString("0", ENV.AUTH_CODE_LENGTH);
-        const hashedAuthCode = hashValue(authCode);
+        const authCode: string = randomString("0", ENV.AUTH_CODE_LENGTH);
+        const hashedAuthCode: string = hashValue(authCode);
 
         await DBPool.query(query, [hashedAuthCode, UUID]);
 
@@ -251,7 +252,7 @@ export class UserService {
             AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS};
         `;
 
-        const result = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(query, [UUID]);
 
         if (result.rowCount && result.rowCount > 0) {
             return;
@@ -285,8 +286,8 @@ export class UserService {
                 AND auth_code_created > NOW() - INTERVAL '${ENV.AUTH_EXP} seconds';
             `;
 
-        const hashedAuthCode = hashValue(authCode);
-        const result = await DBPool.query(query, [UUID, hashedAuthCode]);
+        const hashedAuthCode: string = hashValue(authCode);
+        const result: QueryResult = await DBPool.query(query, [UUID, hashedAuthCode]);
 
         if (result.rowCount && result.rowCount > 0) {
             return true;
@@ -343,9 +344,9 @@ export class UserService {
                 WHERE auth_uuid = $1;
             `;
 
-        const query = type === UUIDType.User ? userQuery : authQuery;
+        const query: string = type === UUIDType.User ? userQuery : authQuery;
 
-        const result = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(query, [UUID]);
 
         const decryptedEmail = result.rows[0].email;
         return decryptedEmail ?? "";
@@ -367,7 +368,7 @@ export class UserService {
             WHERE uuid = $1;
         `;
 
-        const result = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(query, [UUID]);
 
         return decrypt(result.rows[0].company);
     };
@@ -401,7 +402,7 @@ export class UserService {
             SELECT uuid FROM users_company
         `;
 
-        const result = await DBPool.query(query);
+        const result: QueryResult = await DBPool.query(query);
         return result.rows.map(row => row.uuid);
     }
 }

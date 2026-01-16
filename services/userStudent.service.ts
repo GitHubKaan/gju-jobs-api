@@ -1,12 +1,20 @@
 import { UUID } from "crypto";
 import { UpdateUserStudentType, UserStudentType } from "../types/user.type";
-import { PoolClient } from "pg";
+import {PoolClient, QueryResult} from "pg";
 import { DBPool } from "../configs/postgreSQL.config";
 import { encrypt } from "../utils/encryption.util";
 import { DefaultError } from "../utils/error.util";
 import { StatusCodes } from "http-status-codes";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { v4 as uuidv4 } from "uuid";
+import {
+    DELETE_JOB_PREFS_BY_USER_QUERY, DELETE_LANGS_BY_USER_QUERY,
+    DELETE_TAGS_BY_USER_QUERY,
+    INSERT_JOB_PREF_QUERY,
+    INSERT_LANG_QUERY,
+    INSERT_STUDENT_QUERY,
+    INSERT_TAG_QUERY
+} from "../queries/user-student.queries";
 
 export class UserStudentService {
     /**
@@ -24,25 +32,10 @@ export class UserStudentService {
         const client: PoolClient = await DBPool.connect();
 
         // insert student
-        const query = `
-                INSERT INTO users_student (
-                    uuid,
-                    auth_uuid,
-                    email,
-                    phone,
-                    given_name,
-                    surname,
-                    degree,
-                    program
-                )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                ON CONFLICT (email) DO NOTHING;
-            `;
-
         const UUID: UUID = uuidv4() as UUID;
         const authUUID: UUID = uuidv4() as UUID;
 
-        const result = await client.query(query, [
+        const result: QueryResult = await client.query(INSERT_STUDENT_QUERY, [
             UUID,
             authUUID,
             payload.email,
@@ -62,17 +55,8 @@ export class UserStudentService {
 
         // insert tags
         if (payload.tags?.length) {
-            const tagQuery = `
-                INSERT INTO users_student_tags (
-                    uuid,
-                    user_uuid,
-                    tag_id
-                )
-                VALUES ($1, $2, $3);
-            `;
-
             for (const tagId of payload.tags) {
-                await client.query(tagQuery, [
+                await client.query(INSERT_TAG_QUERY, [
                     uuidv4(),
                     UUID,
                     tagId
@@ -82,17 +66,8 @@ export class UserStudentService {
 
         // insert job preferences
         if (payload.jobPreferences?.length) {
-            const jobPrefQuery = `
-                INSERT INTO users_student_job_preferences (
-                    uuid,
-                    user_uuid,
-                    preference_id
-                )
-                VALUES ($1, $2, $3);
-            `;
-
             for (const prefId of payload.jobPreferences) {
-                await client.query(jobPrefQuery, [
+                await client.query(INSERT_JOB_PREF_QUERY, [
                     uuidv4(),
                     UUID,
                     prefId
@@ -102,17 +77,8 @@ export class UserStudentService {
 
         // insert languages
         if (payload.languages?.length) {
-            const langQuery = `
-                INSERT INTO users_student_languages (
-                    uuid,
-                    user_uuid,
-                    language_id
-                )
-                VALUES ($1, $2, $3);
-            `;
-
             for (const langId of payload.languages) {
-                await client.query(langQuery, [
+                await client.query(INSERT_LANG_QUERY, [
                     uuidv4(),
                     UUID,
                     langId
@@ -138,6 +104,9 @@ export class UserStudentService {
             throw new DefaultError(StatusCodes.NOT_MODIFIED, "No values provided to update.");
         }
 
+        const client: PoolClient = await DBPool.connect();
+
+        // update student
         const fieldsToUpdate = {
             phone: payload.phone?.trimEnd().trimStart(),
             given_name: payload.givenName?.trimEnd().trimStart(),
@@ -162,6 +131,53 @@ export class UserStudentService {
             WHERE uuid = $1;
         `;
 
-        await DBPool.query(query, values);
+        await client.query(query, values);
+
+        // update tags only if "tags" is present in the payload
+        if (payload.tags !== undefined) {
+            // delete old tags
+            await client.query(DELETE_TAGS_BY_USER_QUERY, [UUID]);
+
+            // add new tags (if any)
+            if (payload.tags.length > 0) {
+                for (const tagId of payload.tags) {
+                    await client.query(INSERT_TAG_QUERY, [
+                        uuidv4(),
+                        UUID,
+                        tagId,
+                    ]);
+                }
+            }
+        }
+
+        // update job preferences
+        if (payload.jobPreferences !== undefined) {
+            await client.query(DELETE_JOB_PREFS_BY_USER_QUERY, [UUID]);
+
+            if (payload.jobPreferences.length > 0) {
+                for (const prefId of payload.jobPreferences) {
+                    await client.query(INSERT_JOB_PREF_QUERY, [
+                        uuidv4(),
+                        UUID,
+                        prefId,
+                    ]);
+                }
+            }
+        }
+
+        // update languages
+        if (payload.languages !== undefined) {
+            await client.query(DELETE_LANGS_BY_USER_QUERY, [UUID]);
+
+            if (payload.languages.length > 0) {
+                for (const langId of payload.languages) {
+                    await client.query(INSERT_LANG_QUERY, [
+                        uuidv4(),
+                        UUID,
+                        langId,
+                    ]);
+                }
+            }
+        }
     }
 }

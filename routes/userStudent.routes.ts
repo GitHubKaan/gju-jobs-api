@@ -26,7 +26,7 @@ export class UserStudent {
         checkFormat(payload, Schemas.userStudent);
 
         const newUser = await UserStudentService.add(payload);
-        const authCode = await UserService.addAuthCode(newUser.UUID, true);
+        const authCode: string = await UserService.addAuthCode(newUser.UUID, true);
         createUserUploadFolder(newUser.UUID);
 
         // Separate function needed for Tags, job preferences and languages
