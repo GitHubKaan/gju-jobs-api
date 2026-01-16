@@ -37,7 +37,7 @@ export async function handleAuth(
     checkFormat(code, Schemas.authCode);
 
     await UserService.hasRemainingAuthAttempts(req.userUUID, req.isStudent);
-    const isValid = await UserService.isValidAuthCode(req.userUUID, code, req.isStudent);
+    const isValid: boolean = await UserService.isValidAuthCode(req.userUUID, code, req.isStudent);
 
     if (!isValid) {
         await UserService.addAuthAttempt(req.userUUID, req.isStudent);
@@ -45,11 +45,11 @@ export async function handleAuth(
 
     await BlacklistService.add(req.token, req.tokenExp);
 
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
+    const email: string = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
     const deviceInfo = getDeviceInfo(req);
     sendAuthMail(email, deviceInfo.os, deviceInfo.browser);
 
-    const accessToken = Token.access(req.userUUID, req.authUUID, req.isStudent ? UserType.Student : UserType.Company);
+    const accessToken: string = Token.access(req.userUUID, req.authUUID, req.isStudent ? UserType.Student : UserType.Company);
 
     return res
         .status(StatusCodes.OK)
@@ -75,7 +75,7 @@ export async function handleLogin(
     const UUIDs = await UserService.getUUIDs(email, isStudent);
     await handleRequestCooldown(UUIDs.UUID, isStudent);
 
-    const authCode = await UserService.addAuthCode(UUIDs.UUID, isStudent);
+    const authCode: string = await UserService.addAuthCode(UUIDs.UUID, isStudent);
     sendLoginMail(email, authCode);
 
     const token = Token.auth(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
@@ -148,7 +148,7 @@ export async function handleGetRecovery(
     const UUIDs = await UserService.getUUIDs(email, isStudent);
     await handleRequestCooldown(UUIDs.UUID, isStudent);
 
-    const token = Token.recovery(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
+    const token: string = Token.recovery(UUIDs.UUID, UUIDs.authUUID, isStudent ? UserType.Student : UserType.Company);
     sendGetRecoveryMail(email, token);
 
     if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
@@ -170,7 +170,7 @@ export async function handleRecovery(
     await BlacklistService.add(req.token, req.tokenExp);
 
     const newAuthUUID = await UserService.recover(req.authUUID, req.isStudent);
-    const email = await UserService.getEmail(newAuthUUID, UUIDType.Auth, req.isStudent);
+    const email: string = await UserService.getEmail(newAuthUUID, UUIDType.Auth, req.isStudent);
 
     sendRecoveryMail(email);
 
@@ -186,8 +186,8 @@ export async function handleGetDeleteUser(
     req: Request<any, void, void, ParsedQs, Record<string, any>>,
     res: Response
 ) {
-    const token = Token.deletion(req.userUUID, req.authUUID, req.isStudent ? UserType.Student : UserType.Company);
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
+    const token: string = Token.deletion(req.userUUID, req.authUUID, req.isStudent ? UserType.Student : UserType.Company);
+    const email: string = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
     sendGetDeleteUserMail(email, token);
 
     if (ENV.NODE_ENV === NodeEnv.Dev || ENV.NODE_ENV === NodeEnv.Testing) {
@@ -208,7 +208,7 @@ export async function handleDeleteUser(
 ) {
     await BlacklistService.add(req.token, req.tokenExp);
 
-    const email = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
+    const email: string = await UserService.getEmail(req.userUUID, UUIDType.User, req.isStudent);
     sendDeleteUserMail(email);
 
     deleteLocalUUIDFilepath(req.userUUID);

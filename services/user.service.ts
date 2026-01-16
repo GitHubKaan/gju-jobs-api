@@ -10,6 +10,11 @@ import { UUIDType } from "../enums";
 import { randomString } from "../utils/stringGenerator.util";
 import { hashValue } from "../utils/hash.util";
 import {QueryResult} from "pg";
+import {
+    SELECT_STUDENT_BY_UUID,
+    SELECT_JOB_PREF_BY_USER, SELECT_LANG_BY_USER,
+    SELECT_TAG_BY_USER
+} from "../queries/user-student.queries";
 
 export class UserService {
     /**
@@ -61,7 +66,7 @@ export class UserService {
             FROM ${isStudent ? "users_student" : "users_company"}
             WHERE email = $1;
         `;
-       
+
 
         const result: QueryResult = await DBPool.query(query, [email]);
 
@@ -110,28 +115,40 @@ export class UserService {
     ): Promise<
         any
     > {
-        let query;
         if (isStudent) {
-            query = `
-                SELECT *
-                FROM users_student
-                WHERE uuid = $1;
-            `;
+            const result: QueryResult = await DBPool.query(SELECT_STUDENT_BY_UUID, [UUID]);
+            if (result.rowCount === 0) {
+                return null;
+            }
+            const userRow = result.rows[0];
 
-            const result: QueryResult = await DBPool.query(query, [UUID]);
+            // tags
+            const tagsResult: QueryResult = await DBPool.query(SELECT_TAG_BY_USER, [UUID]);
+            const tags: number[] = tagsResult.rows.map(r => r.tag_id);
+
+            // job preferences
+            const jobPrefResult: QueryResult = await DBPool.query(SELECT_JOB_PREF_BY_USER, [UUID]);
+            const jobPreferences: number[] = jobPrefResult.rows.map(r => r.preference_id);
+
+            // languages
+            const langResult: QueryResult = await DBPool.query(SELECT_LANG_BY_USER, [UUID]);
+            const languages: number[] = langResult.rows.map(r => r.language_id);
 
             return {
-                UUID: result.rows[0].uuid,
-                authUUID: result.rows[0].auth_uuid,
-                email: result.rows[0].email,
-                phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
-                givenName: decrypt(result.rows[0].given_name),
-                surname: decrypt(result.rows[0].surname),
-                degree: result.rows[0].degree ? decrypt(result.rows[0].degree) : null,
-                program: result.rows[0].program ? decrypt(result.rows[0].program) : null,
-            }
+                UUID: userRow.uuid,
+                authUUID: userRow.auth_uuid,
+                email: userRow.email,
+                phone: userRow.phone ? decrypt(userRow.phone) : null,
+                givenName: decrypt(userRow.given_name),
+                surname: decrypt(userRow.surname),
+                degree: userRow.degree ? decrypt(userRow.degree) : null,
+                program: userRow.program ? decrypt(userRow.program) : null,
+                tags,
+                jobPreferences,
+                languages,
+            };
         } else {
-            query = `
+            const query = `
                 SELECT *
                 FROM users_company
                 WHERE uuid = $1;
@@ -289,10 +306,7 @@ export class UserService {
         const hashedAuthCode: string = hashValue(authCode);
         const result: QueryResult = await DBPool.query(query, [UUID, hashedAuthCode]);
 
-        if (result.rowCount && result.rowCount > 0) {
-            return true;
-        }
-        return false;
+        return (result.rowCount ?? 0) > 0;
     };
 
     /**
@@ -337,7 +351,7 @@ export class UserService {
                 FROM ${isStudent ? "users_student" : "users_company"} 
                 WHERE uuid = $1;
             `;
-    
+
             const authQuery = `
                 SELECT email
                 FROM ${isStudent ? "users_student" : "users_company"}

@@ -1,3 +1,28 @@
+// SELECT QUERIES
+export const SELECT_STUDENT_BY_UUID = `
+    SELECT *
+    FROM users_student
+    WHERE uuid = $1;
+`;
+
+export const SELECT_TAG_BY_USER = `
+    SELECT tag_id
+    FROM users_student_tags
+    WHERE user_uuid = $1;
+`;
+
+export const SELECT_JOB_PREF_BY_USER = `
+    SELECT preference_id
+    FROM users_student_job_preferences
+    WHERE user_uuid = $1;
+`;
+
+export const SELECT_LANG_BY_USER = `
+    SELECT language_id
+    FROM users_student_languages
+    WHERE user_uuid = $1;
+`;
+
 // INSERT QUERIES
 export const INSERT_STUDENT_QUERY: string = `
     INSERT INTO users_student (uuid,
