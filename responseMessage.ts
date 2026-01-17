@@ -30,6 +30,7 @@ export class MESSAGE {
 
     static readonly ERROR = {
         // General
+        GROUP_PERMISSION: "Your user-group has no access to this endpoint!",
         TOO_MANY_REQUESTS: "Too many requests, please wait.",
         FAULTY: "Faulty request format.",
         INTERNAL_ERROR: "An internal error accured.",

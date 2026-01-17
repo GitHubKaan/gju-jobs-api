@@ -2,15 +2,16 @@ import auth from "../middlewares/auth.middleware";
 import { Router } from "express";
 import { ENV, getBackendPath } from "./envReader.util";
 import { rateLimiter } from "../middlewares/rateLimiter.middleware";
-import { TokenType } from "../enums";
+import { TokenType, UserType } from "../enums";
 import { uploadedImageHandler } from "./images.util";
 import { app } from "../Main";
-import { handleDeleteFile, handleRetrieveFile, handleRetrieveFiles, handleUploadFile } from "../routes/file.route";
-import { handleRetrieveUser, handleAuth, handleUpdateUser, handleGetRecovery, handleRecovery, handleGetDeleteUser, handleDeleteUser, handleLogin } from "../routes/user.route";
-import { handleSendFrontendError, handleSupport } from "../routes/general.route";
 import { routeWrapper } from "../middlewares/wrapper.middleware";
 import { UserStudent } from "../routes/userStudent.routes";
 import { UserCompany } from "../routes/userCompany.routes";
+import { GeneralRoute } from "../routes/general.route";
+import { UserRoute } from "../routes/user.route";
+import { FileRoute } from "../routes/file.route";
+import { JobsRoute } from "../routes/jobs.route";
 
 /**
  * Endpoint routes
@@ -26,12 +27,12 @@ export function routerHandler() {
     router.post(
         "/support",
         rateLimiter(ENV.SUPPORT_WINDOW_MS, ENV.SUPPORT_LIMIT),
-        routeWrapper(handleSupport)
+        routeWrapper(GeneralRoute.handleSupport)
     );
     router.post(
         "/send-frontend-error",
         rateLimiter(ENV.SEND_FRONTEND_ERROR_WINDOW_MS, ENV.SEND_FRONTEND_ERROR_LIMIT),
-        routeWrapper(handleSendFrontendError)
+        routeWrapper(GeneralRoute.handleSendFrontendError)
     );
     
     // User Student
@@ -52,72 +53,93 @@ export function routerHandler() {
     router.post(
         "/user/login",
         rateLimiter(ENV.LOGIN_WINDOW_MS, ENV.LOGIN_LIMIT),
-        routeWrapper(handleLogin)
+        routeWrapper(UserRoute.handleLogin)
     );
 
     router.get(
         "/user",
         auth(TokenType.Access),
-        routeWrapper(handleRetrieveUser)
+        routeWrapper(UserRoute.handleRetrieveUser)
     );
 
     router.post(
         "/user/auth",
         auth(TokenType.Auth),
-        routeWrapper(handleAuth)
+        routeWrapper(UserRoute.handleAuth)
     );
     
     router.patch(
         "/user/update",
         auth(TokenType.Access),
-        routeWrapper(handleUpdateUser)
+        routeWrapper(UserRoute.handleUpdateUser)
     );
     
     router.get(
         "/user/recovery",
         rateLimiter(ENV.GET_RECOVERY_WINDOW_MS, ENV.GET_RECOVERY_LIMIT),
-        routeWrapper(handleGetRecovery)
+        routeWrapper(UserRoute.handleGetRecovery)
     );
     router.post(
         "/user/recovery",
         auth(TokenType.Recovery),
-        routeWrapper(handleRecovery)
+        routeWrapper(UserRoute.handleRecovery)
     );
     
     router.get(
         "/user/deletion",
         rateLimiter(ENV.GET_DELETE_WINDOW_MS, ENV.GET_DELETE_LIMIT),
         auth(TokenType.Access),
-        routeWrapper(handleGetDeleteUser)
+        routeWrapper(UserRoute.handleGetDeleteUser)
     );
     router.delete(
         "/user/deletion",
         auth(TokenType.Deletion),
-        routeWrapper(handleDeleteUser)
+        routeWrapper(UserRoute.handleDeleteUser)
     );
 
     // File
     router.get(
         "/files",
-        auth(TokenType.Access),
-        routeWrapper(handleRetrieveFiles)
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(FileRoute.handleRetrieveFiles)
     );
     router.get(
         "/file",
-        auth(TokenType.Access),
-        routeWrapper(handleRetrieveFile)
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(FileRoute.handleRetrieveFile)
     );
     router.post(
         "/file",
-        auth(TokenType.Access),
-        routeWrapper(handleUploadFile)
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(FileRoute.handleUploadFile)
     );
     router.delete(
         "/file",
-        auth(TokenType.Access),
-        routeWrapper(handleDeleteFile)
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(FileRoute.handleDeleteFile)
     );
     
+    // Jobs
+    router.post(
+        "/jobs/create",
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(JobsRoute.handleCreate)
+    );
+    router.patch(
+        "/jobs/update",
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(JobsRoute.handleUpdate)
+    );
+    router.delete(
+        "/jobs/delete",
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(JobsRoute.handleDelete)
+    );
+    router.get(
+        "/jobs",
+        routeWrapper(JobsRoute.handleRetrieve)
+    );
+
     // Image
     app.use(
         `${getBackendPath()}/${ENV.IMAGE_UPLOAD_PATH}`, // If changed, do not forget to edit timeout.middleware.ts also

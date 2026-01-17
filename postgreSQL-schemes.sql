@@ -74,6 +74,25 @@ CREATE TABLE IF NOT EXISTS users_company (
     created TIMESTAMP DEFAULT NOW()
 );
 
+-- []==============================[ JOBS ]==============================[]
+CREATE TABLE IF NOT EXISTS jobs (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL,
+    user_uuid UUID NOT NULL, -- company user uuid
+    title TEXT NOT NULL, -- job title
+    description TEXT NOT NULL, -- job description
+    position TEXT NOT NULL, -- what kind of job position? e.g. INTERN, SENIOR etc.
+    exp TIMESTAMP, -- OPTIONAL | job expiration date
+    created TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS jobs_tags (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL,
+    job_uuid UUID NOT NULL, -- job uuid
+    tag_id INT NOT NULL,
+    created TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (job_uuid) REFERENCES jobs(uuid) ON DELETE CASCADE
+);
+
 -- []==============================[ STUFF ]==============================[]
 -- TOKEN BLACKLIST
 CREATE TABLE IF NOT EXISTS token_blacklist (
