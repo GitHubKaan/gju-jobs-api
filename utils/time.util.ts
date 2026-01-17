@@ -56,14 +56,3 @@ export function unixSecondsToDbTimestamp(unixSeconds: number): string {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${microseconds}`;
 }
-
-// Check if timestamp is in the future (at least day-wise -- sec, hours dont matter)
-export function timeIsInFuture(unixSeconds: number): boolean {
-    const inputDate = new Date(unixSeconds * 1000);
-    const today = new Date();
-
-    inputDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
-    return inputDate.getTime() >= today.getTime();
-}

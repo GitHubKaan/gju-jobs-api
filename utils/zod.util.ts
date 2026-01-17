@@ -72,10 +72,21 @@ export class Schemas {
                 .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
                 .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
-            exp: z.number({ message: MESSAGE.ERROR.SPECIFIC_INT_LENGTH(10) }) // TIMESTAMP IN SECONDS
-                .min(1000000000, { message: MESSAGE.ERROR.MIN_INT(1000000000) })
-                .max(9999999999, { message: MESSAGE.ERROR.MAX_INT(9999999999) })
-                .optional(),
+            exp: z.number()
+                .min(1000000000)
+                .max(9999999999)
+                .refine((unixSeconds) => {
+                    const inputDate = new Date(unixSeconds * 1000);
+                    const today = new Date();
+
+                    inputDate.setHours(0, 0, 0, 0);
+                    today.setHours(0, 0, 0, 0);
+
+                    return inputDate.getTime() >= today.getTime();
+                }, {
+                    message: MESSAGE.ERROR.TIMESTAMP_FUTURE,
+                })
+                .optional()
         });
 
     static readonly userStudent =
