@@ -11,11 +11,11 @@ import { UserStudentQueries } from "../queries/userStudent.queries";
 
 export class UserStudentService {
     /**
-         * Add new student user
-         * @param payload Signup payload
-         * @returns UUID (userUUID) & authUUID
-         * @throws {DefaultError} Already existing email
-        */
+     * Add new student user
+     * @param payload Signup payload
+     * @returns UUID (userUUID) & authUUID
+     * @throws {DefaultError} Already existing email
+    */
     static async add(
         payload: UserStudentType,
     ): Promise<{

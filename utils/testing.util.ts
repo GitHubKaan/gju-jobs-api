@@ -40,5 +40,43 @@ export class Testing {
         return accessToken;
     }
 
- 
+    /**
+     * Create an account (and reset "accessToken")
+     * @returns Access token
+     */
+    static async createCompanyAccessToken(): Promise<string> {
+        let authCode: string = "";
+        let authToken: string = "";
+
+        const signupResponse = await request(app)
+            .post(`${getBackendPath()}/user/signup/company`)
+            .send({
+                email: "moritz@moritzsoftware.com",
+                phone: "+490123456789",
+                company: "Mustermann GmbH",
+                description: "This is a test description.",
+                givenName: "Moritz",
+                surname: "Mustermann",
+                street: "Musterstraße",
+                streetNumber: "11B",
+                ZIPCode: 12105,
+                city: "Berlin",
+                country: "Germany",
+                size: "100-500",
+                industry: "IT"
+            });
+
+            authCode = signupResponse.body.authCode;
+            authToken = signupResponse.headers.authentication;
+        
+        const authResponse = await request(app)
+            .post(`${getBackendPath()}/user/auth`)
+            .set("Authentication", authToken)
+            .send({
+                code: authCode
+            });
+        
+        const accessToken = authResponse.headers.authorization.split(" ")[1];
+        return accessToken;
+    }
 }

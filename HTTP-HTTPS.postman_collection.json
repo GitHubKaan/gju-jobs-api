@@ -580,7 +580,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    \"tags\": [1, 2, 3, 4],\n    \"position\": \"INTERN\",\n    \"exp\": 4684984621 // optional\n}",
+                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    \"tags\": [1, 2, 3, 4],\n    \"position\": \"INTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
                   "options": {
                     "raw": {
                       "language": "json"

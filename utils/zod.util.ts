@@ -46,6 +46,38 @@ export class Schemas {
             .length(ENV.AUTH_CODE_LENGTH, { message: MESSAGE.ERROR.SPECIFIC_CHARACTER_LENGTH(ENV.AUTH_CODE_LENGTH, "code") })
             .regex(/^[A-Z0-9]+$/, { message: MESSAGE.ERROR.REGEX("code") });
 
+     static readonly job =
+        z.object({
+            title: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            description: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
+                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
+                //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            tags: z.array(
+                z.number({ message: MESSAGE.ERROR.INT() })
+                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
+                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
+                    { message: MESSAGE.ERROR.ARRAY() }
+                )
+                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() }),
+            position: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+                .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
+            exp: z.number({ message: MESSAGE.ERROR.SPECIFIC_INT_LENGTH(10) }) // TIMESTAMP IN SECONDS
+                .min(1000000000, { message: MESSAGE.ERROR.MIN_INT(1000000000) })
+                .max(9999999999, { message: MESSAGE.ERROR.MAX_INT(9999999999) })
+                .optional(),
+        });
+
     static readonly userStudent =
         z.object({
             email: z.string({ message: MESSAGE.ERROR.STRING("email") })

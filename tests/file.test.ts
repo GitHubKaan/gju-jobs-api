@@ -11,7 +11,7 @@ describe("File", () => {
     let UUID: string;
 
     test("[POST] Upload file", async () => {
-        accessToken = await Testing.createStudentAccessToken();
+        accessToken = await Testing.createCompanyAccessToken();
         const filePath = path.join(__dirname, "../images", "placeholder.png");
 
         const response = await request(app)

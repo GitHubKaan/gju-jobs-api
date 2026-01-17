@@ -13,6 +13,7 @@ export class TITLE {
     static readonly HELP_CALL = "Help call";
     static readonly SUPPORT_REQUEST = "Support request";
     static readonly ERROR = "Error";
+    static readonly JOB = "Job";
 }
 
 export class MESSAGE {

@@ -38,3 +38,32 @@ export function toTimestamp(time: number, database?: boolean): string {
     }
     return timestamp.toLocaleString();
 }
+
+// Timestamp to unix for db
+export function unixSecondsToDbTimestamp(unixSeconds: number): string {
+    const date = new Date(unixSeconds * 1000);
+
+    const pad = (n: number, width = 2) => n.toString().padStart(width, "0");
+
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+        
+    const microseconds = pad(date.getMilliseconds(), 3) + "000";
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${microseconds}`;
+}
+
+// Check if timestamp is in the future (at least day-wise -- sec, hours dont matter)
+export function timeIsInFuture(unixSeconds: number): boolean {
+    const inputDate = new Date(unixSeconds * 1000);
+    const today = new Date();
+
+    inputDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return inputDate.getTime() >= today.getTime();
+}

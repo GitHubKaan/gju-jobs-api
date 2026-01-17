@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import { ParsedQs } from "qs";
 import { CreateJob, DeleteJob, UpdateJob } from "../types/jobs.type";
+import { checkFormat } from "../utils/format.util";
+import { Schemas } from "../utils/zod.util";
+import { JobsService } from "../services/jobs.service";
+import { StatusCodes } from "http-status-codes";
+import { MESSAGE, TITLE } from "../responseMessage";
+import { timeIsInFuture } from "../utils/time.util";
+import { DefaultError } from "../utils/error.util";
 
 export class JobsRoute {
     /**
@@ -10,7 +17,21 @@ export class JobsRoute {
         req: Request<any, any, CreateJob, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        
+        const payload: CreateJob = req.body;
+        checkFormat(payload, Schemas.job);
+
+        if (payload.exp && !timeIsInFuture(payload.exp)) {
+            throw new DefaultError(StatusCodes.CONFLICT, "Timestamp needs to be in the future.");
+        }
+
+        const jobUUID = await JobsService.add(req.userUUID, payload);
+
+        return res
+            .status(StatusCodes.OK)
+            .json({
+                description: MESSAGE.ADDED(TITLE.JOB),
+                uuid: jobUUID
+            });
     }
 
     /**
@@ -20,7 +41,7 @@ export class JobsRoute {
         req: Request<any, any, UpdateJob, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        
+
     }
 
     /**
@@ -30,7 +51,7 @@ export class JobsRoute {
         req: Request<any, any, DeleteJob, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        
+
     }
 
     /**
@@ -40,6 +61,6 @@ export class JobsRoute {
         req: Request<any, any, any, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        
+
     }
 }
