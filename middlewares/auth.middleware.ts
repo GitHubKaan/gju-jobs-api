@@ -23,7 +23,6 @@ export const auth = (
         const token = (req.headers.authentication || req.headers.authorization) as string; //Not that important
         
         const payload = await authController(token, type);
-        
         const isStudent = payload.userType === UserType.Student;
         
         // Group Restriction checks

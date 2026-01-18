@@ -11,6 +11,7 @@ import { randomString } from "../utils/stringGenerator.util";
 import { hashValue } from "../utils/hash.util";
 import {QueryResult} from "pg";
 import { UserStudentQueries } from "../queries/userStudent.queries";
+import { UserQueries } from "../queries/user.queries";
 
 export class UserService {
     /**
@@ -25,18 +26,9 @@ export class UserService {
     ): Promise<
         void
     > {
-        const query = `
-            SELECT 1
-            FROM ${isStudent ? "users_student" : "users_company"}
-            WHERE auth_uuid = $1
-            LIMIT 1;
-        `;
+        const result: QueryResult = await DBPool.query(UserQueries.isValidAuthUUID(isStudent), [authUUID]);
 
-        const result: QueryResult = await DBPool.query(query, [authUUID]);
-
-        if (result.rowCount && result.rowCount > 0) {
-            return;
-        }
+        if (result.rowCount && result.rowCount > 0) return;
 
         throw new DefaultError(StatusCodes.UNAUTHORIZED, MESSAGE.ERROR.UNAUTHORIZED(TITLE.TOKEN));
     };
@@ -55,16 +47,7 @@ export class UserService {
         UUID: UUID,
         authUUID: UUID
     }> {
-        const query = `
-            SELECT
-                uuid,
-                auth_uuid
-            FROM ${isStudent ? "users_student" : "users_company"}
-            WHERE email = $1;
-        `;
-
-
-        const result: QueryResult = await DBPool.query(query, [email]);
+        const result: QueryResult = await DBPool.query(UserQueries.getUUIDs(isStudent), [email]);
 
         if (result.rowCount && result.rowCount > 0) {
             return {
@@ -88,13 +71,7 @@ export class UserService {
     ): Promise<
         string | null
     > {
-        const query = `
-            SELECT cooldown
-            FROM ${isStudent ? "users_student" : "users_company"}
-            WHERE uuid = $1;
-        `;
-
-        const result: QueryResult = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(UserQueries.getCooldown(isStudent), [UUID]);
 
         return result.rows[0].cooldown;
     };
@@ -112,22 +89,22 @@ export class UserService {
         any
     > {
         if (isStudent) {
-            const result: QueryResult = await DBPool.query(UserStudentQueries.SELECT_STUDENT_BY_UUID, [UUID]);
+            const result: QueryResult = await DBPool.query(UserStudentQueries.selectStudentByUUID, [UUID]);
             if (result.rowCount === 0) {
                 return null;
             }
             const userRow = result.rows[0];
 
             // tags
-            const tagsResult: QueryResult = await DBPool.query(UserStudentQueries.SELECT_TAG_BY_USER, [UUID]);
+            const tagsResult: QueryResult = await DBPool.query(UserStudentQueries.selectTagByUser, [UUID]);
             const tags: number[] = tagsResult.rows.map(r => r.tag_id);
 
             // job preferences
-            const jobPrefResult: QueryResult = await DBPool.query(UserStudentQueries.SELECT_JOB_PREF_BY_USER, [UUID]);
+            const jobPrefResult: QueryResult = await DBPool.query(UserStudentQueries.selectJobPrefByUser, [UUID]);
             const jobPreferences: number[] = jobPrefResult.rows.map(r => r.preference_id);
 
             // languages
-            const langResult: QueryResult = await DBPool.query(UserStudentQueries.SELECT_LANG_BY_USER, [UUID]);
+            const langResult: QueryResult = await DBPool.query(UserStudentQueries.selectLangByUser, [UUID]);
             const languages: number[] = langResult.rows.map(r => r.language_id);
 
             return {
@@ -144,13 +121,7 @@ export class UserService {
                 languages,
             };
         } else {
-            const query = `
-                SELECT *
-                FROM users_company
-                WHERE uuid = $1;
-            `;
-
-            const result: QueryResult = await DBPool.query(query, [UUID]);
+            const result: QueryResult = await DBPool.query(UserQueries.getUser, [UUID]);
 
             return {
                 UUID: result.rows[0].uuid,
@@ -183,13 +154,7 @@ export class UserService {
     ): Promise<
         void
     > {
-        const query = `
-            UPDATE ${isStudent ? "users_student" : "users_company"}
-            SET cooldown = NOW()
-            WHERE uuid = $1;
-        `;
-
-        await DBPool.query(query, [UUID]);
+        await DBPool.query(UserQueries.setCooldown(isStudent), [UUID]);
     };
 
     /**
@@ -204,15 +169,9 @@ export class UserService {
     ): Promise<
         UUID
     > {
-        const query = `
-            UPDATE ${isStudent ? "users_student" : "users_company"}
-            SET auth_uuid = $1
-            WHERE auth_uuid = $2;
-        `;
-
         const newAuthUUID = uuidv4() as UUID;
 
-        await DBPool.query(query, [newAuthUUID, authUUID]);
+        await DBPool.query(UserQueries.recover(isStudent), [newAuthUUID, authUUID]);
 
         return newAuthUUID;
     };
@@ -229,19 +188,10 @@ export class UserService {
     ): Promise<
         string
     > {
-        const query = `
-            UPDATE ${isStudent ? "users_student" : "users_company"}
-            SET
-                auth_code = $1,
-                auth_code_created = NOW(),
-                auth_code_attempt = 0
-            WHERE uuid = $2;
-        `;
-
         const authCode: string = randomString("0", ENV.AUTH_CODE_LENGTH);
         const hashedAuthCode: string = hashValue(authCode);
 
-        await DBPool.query(query, [hashedAuthCode, UUID]);
+        await DBPool.query(UserQueries.addAuthCode(isStudent), [hashedAuthCode, UUID]);
 
         return authCode;
     };
@@ -258,18 +208,9 @@ export class UserService {
     ): Promise<
         void
     > {
-        const query = `
-            SELECT *
-            FROM ${isStudent ? "users_student" : "users_company"}
-            WHERE uuid = $1
-            AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS};
-        `;
+        const result: QueryResult = await DBPool.query(UserQueries.hasRemainingAuthAttempts(isStudent), [UUID]);
 
-        const result: QueryResult = await DBPool.query(query, [UUID]);
-
-        if (result.rowCount && result.rowCount > 0) {
-            return;
-        }
+        if (result.rowCount && result.rowCount > 0) return;
 
         throw new DefaultError(StatusCodes.CONFLICT, MESSAGE.ERROR.ATTEMPTS_USED_UP(TITLE.AUTHENTICATION)); //No more attempts left
     };
@@ -288,19 +229,8 @@ export class UserService {
     ): Promise<
         boolean
     > {
-        const query = `
-                UPDATE ${isStudent ? "users_student" : "users_company"}
-                SET
-                    auth_code = NULL,
-                    auth_code_attempt = 0,
-                    auth_code_created = NULL
-                WHERE uuid = $1
-                AND auth_code = $2
-                AND auth_code_created > NOW() - INTERVAL '${ENV.AUTH_EXP} seconds';
-            `;
-
         const hashedAuthCode: string = hashValue(authCode);
-        const result: QueryResult = await DBPool.query(query, [UUID, hashedAuthCode]);
+        const result: QueryResult = await DBPool.query(UserQueries.isValidAuthCode(isStudent), [UUID, hashedAuthCode]);
 
         return (result.rowCount ?? 0) > 0;
     };
@@ -316,14 +246,8 @@ export class UserService {
         isStudent: boolean,
     ): Promise<
         void
-    > {
-        const query = `
-                UPDATE ${isStudent ? "users_student" : "users_company"}
-                SET auth_code_attempt = auth_code_attempt + 1
-                WHERE uuid = $1;
-            `;
-
-        await DBPool.query(query, [UUID]);
+    > { 
+        await DBPool.query(UserQueries.addAuthAttempt(isStudent), [UUID]);
 
         throw new DefaultError(StatusCodes.UNAUTHORIZED, MESSAGE.ERROR.UNAUTHORIZED(TITLE.AUTHENTICATION));
     };
@@ -342,21 +266,9 @@ export class UserService {
     ): Promise<
         string
     > {
-            const userQuery = `
-                SELECT email
-                FROM ${isStudent ? "users_student" : "users_company"} 
-                WHERE uuid = $1;
-            `;
+        const column = type === UUIDType.User ? "uuid" : "auth_uuid";
 
-            const authQuery = `
-                SELECT email
-                FROM ${isStudent ? "users_student" : "users_company"}
-                WHERE auth_uuid = $1;
-            `;
-
-        const query: string = type === UUIDType.User ? userQuery : authQuery;
-
-        const result: QueryResult = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(UserQueries.getEmail(isStudent, column), [UUID]);
 
         const decryptedEmail = result.rows[0].email;
         return decryptedEmail ?? "";
@@ -372,13 +284,7 @@ export class UserService {
     ): Promise<
         string
     > {
-        const query = `
-            SELECT company
-            FROM users_company
-            WHERE uuid = $1;
-        `;
-
-        const result: QueryResult = await DBPool.query(query, [UUID]);
+        const result: QueryResult = await DBPool.query(UserQueries.getCompany, [UUID]);
 
         return decrypt(result.rows[0].company);
     };
@@ -394,25 +300,14 @@ export class UserService {
     ): Promise<
         void
     > {
-        const query = `
-                DELETE FROM ${isStudent ? "users_student" : "users_company"}
-                WHERE uuid = $1;
-            `;
-
-        await DBPool.query(query, [UUID]);
+        await DBPool.query(UserQueries.delete(isStudent), [UUID]);
     }
 
    /**
      * Get all user UUIDs (students + companies)
      */
     static async getAllUsers(): Promise<UUID[]> {
-        const query = `
-            SELECT uuid FROM users_student
-            UNION
-            SELECT uuid FROM users_company
-        `;
-
-        const result: QueryResult = await DBPool.query(query);
+        const result: QueryResult = await DBPool.query(UserQueries.getAllUsers);
         return result.rows.map(row => row.uuid);
     }
 }

@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { UUID } from "crypto";
 import { DBPool } from "../configs/postgreSQL.config";
+import { InternalError } from "../utils/error.util";
+import { InternalErrorQueries } from "../queries/internalError.queries";
 
 export class InternalErrorService {
     /**
@@ -15,13 +17,8 @@ export class InternalErrorService {
     ): Promise<
         UUID
     > {
-        let query = `
-            INSERT INTO internal_errors (uuid, backend, error)
-            VALUES ($1, $2, $3);
-        `;
-
         const UUID = uuidv4() as UUID;
-        const result = await DBPool.query(query, [UUID, backend, cause]);
+        const result = await DBPool.query(InternalErrorQueries.create, [UUID, backend, cause]);
 
         if (result.rows.length > 0) { //Should not be "result.rowCount"
             return result.rows[0].uuid;
@@ -40,13 +37,7 @@ export class InternalErrorService {
     ): Promise<
         UUID | undefined
     > {
-        let query = `
-            SELECT uuid FROM internal_errors 
-            WHERE error = $1
-            LIMIT 1;
-        `;
-        
-        const result = await DBPool.query(query, [cause]);
+        const result = await DBPool.query(InternalErrorQueries.isDuplicate, [cause]);
         
         if (result.rowCount && result.rowCount > 0) {
             return result.rows[0].uuid;

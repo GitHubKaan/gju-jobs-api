@@ -5,6 +5,7 @@ import { Token } from "../utils/token.util";
 import { addInternalError } from "../utils/internalError.util";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { hashValue } from "../utils/hash.util";
+import { BlacklistQueries } from "../queries/blacklist.queries";
 
 export class BlacklistService {
     /**
@@ -17,14 +18,8 @@ export class BlacklistService {
     ): Promise<
         void
     > {
-        const query = `
-            INSERT INTO token_blacklist (token, expires)
-            VALUES ($1, $2)
-            ON CONFLICT (token) DO NOTHING;
-        `;
-
         const hashedToken = hashValue(token);
-        const result = await DBPool.query(query, [hashedToken, Token.expToTimestamp(exp)]);
+        const result = await DBPool.query(BlacklistQueries.add, [hashedToken, Token.expToTimestamp(exp)]);
 
         if (result.rowCount && result.rowCount > 0) { //Hashed-Token not blacklisted (...will be now)
             return;
@@ -43,14 +38,8 @@ export class BlacklistService {
     ): Promise<
         void
     > {
-        const query = `
-            SELECT *
-            FROM token_blacklist
-            WHERE token = $1;
-        `
-
         const hashedToken = hashValue(token);
-        const result = await DBPool.query(query, [hashedToken]);
+        const result = await DBPool.query(BlacklistQueries.isTokenBlacklisted, [hashedToken]);
 
         if (result.rowCount && result.rowCount > 0) {
             throw new DefaultError(StatusCodes.UNAUTHORIZED, MESSAGE.ERROR.UNAUTHORIZED(TITLE.TOKEN));
@@ -61,12 +50,7 @@ export class BlacklistService {
      * Delete expired tokens
      */
     static async cleanupBlacklistedTokens() {
-        const query = `
-            DELETE FROM token_blacklist
-            WHERE expires < NOW();
-        `;
-
-        DBPool.query(query, (error: any, result: any) => {
+        DBPool.query(BlacklistQueries.cleanupBlacklistedTokens, (error: any, result: any) => {
             if (error) {
                 addInternalError(error, true, true);
             }

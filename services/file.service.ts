@@ -6,6 +6,7 @@ import { FileType } from "../enums";
 import { DBPool } from "../configs/postgreSQL.config";
 import { UUID } from "crypto";
 import { File } from "../types/file.type";
+import { FileQueries } from "../queries/file.queries";
 
 export class FileService {
     /**
@@ -20,14 +21,7 @@ export class FileService {
     ): Promise<
         number
     > {
-        let query = `
-            SELECT COUNT(*) AS total_entries
-            FROM uploads
-            WHERE user_uuid = $1
-            AND type = $2;
-        `;
-        
-        const result = await DBPool.query(query, [userUUID, type]);
+        const result = await DBPool.query(FileQueries.getUploadedAmount, [userUUID, type]);
 
         return result.rows[0].total_entries;
     };
@@ -46,18 +40,8 @@ export class FileService {
     ): Promise<
         UUID
     > {
-        const query = `
-            INSERT INTO uploads (
-                user_uuid,
-                uuid,
-                name,
-                type
-            )
-            VALUES ($1, $2, $3, $4);
-        `;
-    
         const fileUUID = uuidv4() as UUID;
-        await DBPool.query(query, [userUUID, fileUUID, fileName, type]);
+        await DBPool.query(FileQueries.add, [userUUID, fileUUID, fileName, type]);
 
         return fileUUID;
     };
@@ -73,17 +57,7 @@ export class FileService {
     ): Promise<
         File[]
     > {
-        const query = `
-            SELECT
-                uuid AS "UUID",
-                name,
-                type
-            FROM uploads
-            WHERE user_uuid = $1
-            ORDER BY type;
-        `;
-        
-        const result = await DBPool.query(query, [userUUID]);
+        const result = await DBPool.query(FileQueries.getFiles, [userUUID]);
 
         if (result.rowCount && result.rowCount > 0) {
             return result.rows as File[];
@@ -105,16 +79,7 @@ export class FileService {
     ): Promise<
         File
     > {
-        const query = `
-            SELECT
-                name,
-                type
-            FROM uploads
-            WHERE uuid = $1
-            AND user_uuid = $2;
-        `;
-        
-        const result = await DBPool.query(query, [UUID, userUUID]);
+        const result = await DBPool.query(FileQueries.getFile, [UUID, userUUID]);
 
         if (result.rowCount && result.rowCount > 0) {
             return result.rows[0];
@@ -135,14 +100,7 @@ export class FileService {
     ): Promise<
         void
     > {
-        const query = `
-            SELECT * 
-            FROM uploads 
-            WHERE user_uuid = $1
-            AND uuid = $2;
-        `;
-        
-        const result = await DBPool.query(query, [userUUID, UUID]);
+        const result = await DBPool.query(FileQueries.hasPermission, [userUUID, UUID]);
 
         if (result.rowCount && result.rowCount > 0) {
             return;
@@ -161,13 +119,7 @@ export class FileService {
     ): Promise<
         string
     > {
-        const query = `
-            SELECT name
-            FROM uploads
-            WHERE uuid = $1;
-        `;
-
-        const result = await DBPool.query(query, [UUID]);
+        const result = await DBPool.query(FileQueries.getFilename, [UUID]);
         
         if (result.rowCount && result.rowCount > 0) {
             return result.rows[0].name;
@@ -189,13 +141,7 @@ export class FileService {
     ): Promise<
         void
     > {
-        let query = `
-            DELETE FROM uploads
-            WHERE uuid = $1
-            AND user_uuid = $2;
-        `;
-        
-        const result = await DBPool.query(query, [UUID, userUUID]);
+        const result = await DBPool.query(FileQueries.delete, [UUID, userUUID]);
 
         if (result.rowCount && result.rowCount > 0) {
             return;
@@ -214,14 +160,7 @@ export class FileService {
     ): Promise<
         File | undefined
     > {
-        const query = `
-            SELECT *
-            FROM uploads
-            WHERE user_uuid = $1
-            AND type = $2;
-        `;
-    
-        const result = await DBPool.query(query, [userUUID, FileType.ProfilePicture]);
+        const result = await DBPool.query(FileQueries.getProfilePicture, [userUUID, FileType.ProfilePicture]);
         
         if (result.rows.length > 0 && result.rows[0]) { //Because profile picture is optional
             return {

@@ -1,4 +1,5 @@
 import { DBPool } from "../configs/postgreSQL.config";
+import { TestingQueries } from "../queries/testing.queries";
 import { CONSOLE } from "../utils/console.util";
 import { addInternalError } from "../utils/internalError.util";
 
@@ -11,13 +12,8 @@ export class TestingService {
     ): Promise<
         void
     > {
-        const query = `
-            DELETE FROM users_student;
-            DELETE FROM users_company;
-        `;
-
         return new Promise((resolve, reject) => {
-            DBPool.query(query, (error: any) => {
+            DBPool.query(TestingQueries.deleteTestingTables, (error: any) => {
                 if (error) {
                     return reject(error);
                 }
@@ -30,16 +26,10 @@ export class TestingService {
      * Check if database connection is successfull
      */
     static async checkDBStatus(): Promise<void> {
-        const query = `
-            SELECT version()
-        `;
-    
         try {
-            const result = await DBPool.query(query);
+            const result = await DBPool.query(TestingQueries.checkDBStatus);
             
-            if (!result || result.rows.length === 0) {
-                throw(new Error("Database offline."));
-            }
+            if (!result || result.rows.length === 0) throw(new Error("Database offline."));
     
             CONSOLE.SUCCESS("Database is online.");
         } catch (error: any) {

@@ -28,7 +28,7 @@ export class UserStudentService {
         const UUID: UUID = uuidv4() as UUID;
         const authUUID: UUID = uuidv4() as UUID;
 
-        const result: QueryResult = await client.query(UserStudentQueries.INSERT_STUDENT_QUERY, [
+        const result: QueryResult = await client.query(UserStudentQueries.insertStudentQuery, [
             UUID,
             authUUID,
             payload.email,
@@ -49,7 +49,7 @@ export class UserStudentService {
         // insert tags
         if (payload.tags?.length) {
             for (const tagId of payload.tags) {
-                await client.query(UserStudentQueries.INSERT_TAG_QUERY, [
+                await client.query(UserStudentQueries.insertTagQuery, [
                     uuidv4(),
                     UUID,
                     tagId
@@ -60,7 +60,7 @@ export class UserStudentService {
         // insert job preferences
         if (payload.jobPreferences?.length) {
             for (const prefId of payload.jobPreferences) {
-                await client.query(UserStudentQueries.INSERT_JOB_PREF_QUERY, [
+                await client.query(UserStudentQueries.insertJobPrefQuery, [
                     uuidv4(),
                     UUID,
                     prefId
@@ -71,7 +71,7 @@ export class UserStudentService {
         // insert languages
         if (payload.languages?.length) {
             for (const langId of payload.languages) {
-                await client.query(UserStudentQueries.INSERT_LANG_QUERY, [
+                await client.query(UserStudentQueries.insertLangQuery, [
                     uuidv4(),
                     UUID,
                     langId
@@ -117,24 +117,20 @@ export class UserStudentService {
                 values.push(encrypt(value));
             }
         });
+        const joinedOptionalClauses = optionalClauses.join(", ");
 
-        const query = `
-            UPDATE users_student
-            SET ${optionalClauses.join(", ")}
-            WHERE uuid = $1;
-        `;
 
-        await client.query(query, values);
+        await client.query(UserStudentQueries.update(joinedOptionalClauses), values);
 
         // update tags only if "tags" is present in the payload
         if (payload.tags !== undefined) {
             // delete old tags
-            await client.query(UserStudentQueries.DELETE_TAGS_BY_USER_QUERY, [UUID]);
+            await client.query(UserStudentQueries.deleteTagsByUserQuery, [UUID]);
 
             // add new tags (if any)
             if (payload.tags.length > 0) {
                 for (const tagId of payload.tags) {
-                    await client.query(UserStudentQueries.INSERT_TAG_QUERY, [
+                    await client.query(UserStudentQueries.insertTagQuery, [
                         uuidv4(),
                         UUID,
                         tagId,
@@ -145,11 +141,11 @@ export class UserStudentService {
 
         // update job preferences
         if (payload.jobPreferences !== undefined) {
-            await client.query(UserStudentQueries.DELETE_JOB_PREFS_BY_USER_QUERY, [UUID]);
+            await client.query(UserStudentQueries.deleteJobPrefsByUserQuery, [UUID]);
 
             if (payload.jobPreferences.length > 0) {
                 for (const prefId of payload.jobPreferences) {
-                    await client.query(UserStudentQueries.INSERT_JOB_PREF_QUERY, [
+                    await client.query(UserStudentQueries.insertJobPrefQuery, [
                         uuidv4(),
                         UUID,
                         prefId,
@@ -160,11 +156,11 @@ export class UserStudentService {
 
         // update languages
         if (payload.languages !== undefined) {
-            await client.query(UserStudentQueries.DELETE_LANGS_BY_USER_QUERY, [UUID]);
+            await client.query(UserStudentQueries.deleteLangsByUserQuery, [UUID]);
 
             if (payload.languages.length > 0) {
                 for (const langId of payload.languages) {
-                    await client.query(UserStudentQueries.INSERT_LANG_QUERY, [
+                    await client.query(UserStudentQueries.insertLangQuery, [
                         uuidv4(),
                         UUID,
                         langId,

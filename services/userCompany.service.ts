@@ -7,6 +7,7 @@ import { DefaultError } from "../utils/error.util";
 import { StatusCodes } from "http-status-codes";
 import { MESSAGE, TITLE } from "../responseMessage";
 import { v4 as uuidv4 } from "uuid";
+import { UserCompanyQueries } from "../queries/userCompany.queries";
 
 export class UserCompanyService {
     /**
@@ -23,32 +24,10 @@ export class UserCompanyService {
     }> {
         const client: PoolClient = await DBPool.connect();
 
-        const query = `
-                INSERT INTO users_company (
-                    uuid,
-                    auth_uuid,
-                    email,
-                    phone,
-                    company,
-                    description,
-                    given_name,
-                    surname,
-                    street,
-                    street_number,
-                    zip_code,
-                    city,
-                    country,
-                    size,
-                    industry
-                )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
-                ON CONFLICT (email) DO NOTHING;
-            `;
-
         const UUID: UUID = uuidv4() as UUID;
         const authUUID: UUID = uuidv4() as UUID;
 
-        const result = await client.query(query, [
+        const result = await client.query(UserCompanyQueries.add, [
             UUID,
             authUUID,
             payload.email,
@@ -113,13 +92,8 @@ export class UserCompanyService {
                 values.push(encrypt(value));
             }
         });
+        const joinedOptionalClauses = optionalClauses.join(", ");
 
-        const query = `
-            UPDATE users_company
-            SET ${optionalClauses.join(", ")}
-            WHERE uuid = $1;
-        `;
-
-        await DBPool.query(query, values);
+        await DBPool.query(joinedOptionalClauses, values);
     }
 }
