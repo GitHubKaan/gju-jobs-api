@@ -162,12 +162,11 @@ export class JobsService {
             if (!jobsMap.has(jobUUID)) {
                 jobsMap.set(jobUUID, {
                     uuid: jobUUID,
-                    userUUID: row.user_uuid,
                     title: row.title,
                     description: row.description,
                     position: row.position,
                     exp: row.exp ? formatDBTimestamp(row.exp) : undefined,
-                    created: row.created,
+                    created: row.created ? formatDBTimestamp(row.created) : undefined,
                     tags: [],
                 });
             }
