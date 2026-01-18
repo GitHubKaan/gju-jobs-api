@@ -23,8 +23,8 @@ export async function SSLHandler(): Promise<http.Server | https.Server> {
     }
 
     if (ENV.API_HTTPS) {
-        const certPath = path.join(__dirname, ENV.CERT_PATH);
-        const keyPath = path.join(__dirname, ENV.KEY_PATH);
+        const certPath = path.join(__dirname, "../certificates/cert.pem");
+        const keyPath = path.join(__dirname, "../certificates/key.pem");
         
         /* 
             Bugfix for certification issue -- enable this and try if it will fix it

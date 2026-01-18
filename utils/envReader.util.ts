@@ -81,10 +81,6 @@ export class ENV {
 
     static readonly BLACKLIST_CLEANUP_INTERVAL: number = envAudit("BLACKLIST_CLEANUP_INTERVAL", EnvType.Number);
 
-    // SSL
-    static readonly CERT_PATH: string = envAudit("CERT_PATH", EnvType.String);
-    static readonly KEY_PATH: string = envAudit("KEY_PATH", EnvType.String);
-
     // ENCRYPTION
     static readonly ENCRYPTION_KEY: string = envAudit("ENCRYPTION_KEY", EnvType.String, { exactLength: 64, allowedCharacters: /^[a-z0-9]*$/ });
     static readonly HASH_KEY: string = envAudit("HASH_KEY", EnvType.String, { exactLength: 64, allowedCharacters: /^[a-z0-9]*$/ });
