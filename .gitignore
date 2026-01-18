@@ -5,6 +5,8 @@
 certificates/cert.pem
 certificates/key.pem
 
+user_data
+
 node_modules
 
 .DS_Store

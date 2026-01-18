@@ -29,7 +29,6 @@ export function startupLog(success?: boolean) {
         return;
     }
 
-    console.log(`\nThis software is proprietary and confidential. Unauthorized use, reproduction, or distribution is strictly prohibited.\n`);
-    console.log(`GJU Jobs API (v${ENV.VERSION})\nMade by Kaan, Dilan and Khanh\n`);
+    console.log(`\nGJU Jobs API (v${ENV.VERSION})\nMade by Kaan, Dilan and Khanh\n`);
     console.log(`Endpoints: ${getBackendOrigin()}\n`);
 }
