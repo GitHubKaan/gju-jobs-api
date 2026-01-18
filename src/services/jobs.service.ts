@@ -150,6 +150,7 @@ export class JobsService {
             // Store company info
             if (!companyInfoMap.has(row.company_uuid)) {
                 companyInfoMap.set(row.company_uuid, {
+                    email: row.email,
                     company: decrypt(row.company),
                     size: decrypt(row.size),
                     industry: decrypt(row.industry),

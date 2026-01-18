@@ -51,6 +51,7 @@ export class JobsQueries {
             j.created,
             jt.tag_id,
             uc.uuid as company_uuid,
+            uc.email,
             uc.company,
             uc.size,
             uc.industry,
