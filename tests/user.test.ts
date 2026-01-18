@@ -1,8 +1,8 @@
 import request from "supertest";
 import { expect, test, describe } from "vitest";
 import { app } from "../Main";
-import { Testing } from "../utils/testing.util";
-import { ENV, getBackendPath } from "../utils/envReader.util";
+import { Testing } from "../src/utils/testing.util";
+import { ENV, getBackendPath } from "../src/utils/envReader.util";
 
 describe("User", () => {
     let authToken: string;

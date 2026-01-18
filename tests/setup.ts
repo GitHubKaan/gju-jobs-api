@@ -1,6 +1,6 @@
 import { afterAll, beforeAll } from "vitest";
-import { TestingService } from "../services/testing.service";
-import { deleteTestingFiles } from "../utils/file.util";
+import { TestingService } from "../src/services/testing.service";
+import { deleteTestingFiles } from "../src/utils/file.util";
 
 beforeAll(async () => {
     await TestingService.deleteTestingTables();

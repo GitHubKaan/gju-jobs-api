@@ -1,8 +1,8 @@
 import request from "supertest";
 import { expect, test, describe } from "vitest";
-import { Testing } from "../utils/testing.util";
+import { Testing } from "../src/utils/testing.util";
 import { app } from "../Main";
-import { getBackendPath } from "../utils/envReader.util";
+import { getBackendPath } from "../src/utils/envReader.util";
 
 describe("File", () => {
     let accessToken: string;

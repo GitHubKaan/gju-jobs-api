@@ -1,7 +1,7 @@
-import { UUID } from "crypto";
+import { UUID } from "node:crypto";
 import express from "express";
 import { TokenType } from "../enums/token.enum";
-import { UserType } from "./enums";
+import { UserType } from "./src/enums";
 
 //Global types
 declare global {
@@ -13,7 +13,7 @@ declare global {
             
             userUUID: UUID;
             authUUID: UUID;
-            userType: UserType;
+            
             isStudent: boolean;
         }
     }

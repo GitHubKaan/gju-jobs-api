@@ -1,10 +1,10 @@
 import request from "supertest";
 import { expect, test, describe } from "vitest";
-import path from "path";
-import { Testing } from "../utils/testing.util";
+import path from "node:path";
+import { Testing } from "../src/utils/testing.util";
+import { FileType } from "../src/enums";
+import { getBackendPath } from "../src/utils/envReader.util";
 import { app } from "../Main";
-import { FileType } from "../enums";
-import { getBackendPath } from "../utils/envReader.util";
 
 describe("File", () => {
     let accessToken: string;

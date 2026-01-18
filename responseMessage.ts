@@ -1,4 +1,4 @@
-import { FileType } from "./enums";
+import { FileType } from "./src/enums";
 
 export class TITLE {
     static readonly USER = "User";
