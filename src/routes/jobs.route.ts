@@ -38,7 +38,7 @@ export class JobsRoute {
         const payload = req.body;
         checkFormat(payload, Schemas.job, true);
         checkFormat(payload.jobUUID, Schemas.UUID(TITLE.JOB));
-        
+
         await JobsService.update(req.userUUID, payload);
 
         return res
@@ -53,7 +53,14 @@ export class JobsRoute {
         req: Request<any, any, DeleteJob, ParsedQs, Record<string, any>>,
         res: Response
     ) {
+        const { jobUUID } = req.body;
+        checkFormat(jobUUID, Schemas.UUID(TITLE.JOB));
 
+        await JobsService.delete(req.userUUID, jobUUID);
+
+        return res
+            .status(StatusCodes.OK)
+            .json({ description: MESSAGE.DELETED(TITLE.JOB) });
     }
 
     /**

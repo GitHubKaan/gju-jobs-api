@@ -31,4 +31,10 @@ export class JobsQueries {
         DELETE FROM jobs_tags
         WHERE job_uuid = $1;
     `;
+
+    public static readonly delete = `
+        DELETE FROM jobs
+        WHERE uuid = $1
+        AND user_uuid = $2;
+    `;
 }

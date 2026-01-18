@@ -54,6 +54,7 @@ export class JobsService {
      * Update a job
      * @param userUUID
      * @param payload UpdateJob
+     * @throws {DefaultError} Job not found (maybe unauthorized access to jobUUID)
      */
     static async update(
         userUUID: UUID,
@@ -83,7 +84,7 @@ export class JobsService {
 
         const result = await DBPool.query(JobsQueries.update(joinedOptionalClauses), values);
         
-        if (result.rowCount === 0) throw new DefaultError(StatusCodes.NOT_FOUND, MESSAGE.ERROR.NOT_FOUND(TITLE.JOB)); // userUUID and jobUUID probaply dont match
+        if (result.rowCount === 0) throw new DefaultError(StatusCodes.NOT_FOUND, MESSAGE.ERROR.NOT_FOUND(TITLE.JOB)); // userUUID and jobUUID probaply do not match
 
         // --- Update tags ---
         if (payload.tags) {
@@ -107,4 +108,21 @@ export class JobsService {
             }
         }
     };
+
+    /**
+     * Delete job
+     * @param userUUID
+     * @param jobUUID
+     * @throws {DefaultError} Job not found (maybe unauthorized access to jobUUID)
+    */
+    static async delete(
+        userUUID: UUID,
+        jobUUID: UUID
+    ): Promise<
+        void
+    > {
+        const result = await DBPool.query(JobsQueries.delete, [jobUUID, userUUID]);
+
+        if (result.rowCount === 0) throw new DefaultError(StatusCodes.NOT_FOUND, MESSAGE.ERROR.NOT_FOUND(TITLE.JOB)); // userUUID and jobUUID probaply do not match
+    }
 }

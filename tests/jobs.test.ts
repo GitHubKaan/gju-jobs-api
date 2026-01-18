@@ -43,4 +43,15 @@ describe("File", () => {
                 
         expect(response.status).toBe(200);
     });
+
+    test("[DELETE] Delete job", async () => {
+        const response = await request(app)
+            .delete(`${getBackendPath()}/jobs/delete`)
+            .set("Authorization", accessToken)
+            .send({
+                jobUUID: jobUUID
+            });
+    
+        expect(response.status).toBe(200);
+    });
 });

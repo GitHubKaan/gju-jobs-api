@@ -1,4 +1,4 @@
-# GJU Job API
+# GJU Jobs API
 Made by Kaan, Dilan and Khanh
 
 ## Setup:

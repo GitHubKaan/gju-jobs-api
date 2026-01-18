@@ -17,6 +17,6 @@ export type UpdateJob = Partial<BaseCreateJob> & {
 
 // Delete Job
 interface BaseDeleteJob {
-    uuid: UUID, // job UUID
+    jobUUID: UUID, // job UUID
 };
 export type DeleteJob = BaseDeleteJob;
