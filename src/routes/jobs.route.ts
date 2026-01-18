@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ParsedQs } from "qs";
-import { CreateJob, DeleteJob, UpdateJob } from "../types/jobs.type";
+import { CreateJob, DeleteJob, RetrieveJobs, UpdateJob } from "../types/jobs.type";
 import { checkFormat } from "../utils/format.util";
 import { Schemas } from "../utils/zod.util";
 import { JobsService } from "../services/jobs.service";
@@ -67,9 +67,43 @@ export class JobsRoute {
      * Retrieve
      */
     static async handleRetrieve(
-        req: Request<any, any, any, ParsedQs, Record<string, any>>,
+        req: Request<any, any, RetrieveJobs, ParsedQs, Record<string, any>>,
         res: Response
     ) {
+        const payload = req.query;
 
+        // Parse and validate query parameters
+        const page = payload.page ? Number(payload.page as string) : 1;
+        const pageSize = payload.pageSize ? Number(payload.pageSize as string) : 10;
+        
+        let tags: number[] | undefined;
+        if (payload.tags) {
+            tags = JSON.parse(payload.tags as string) as number[];
+            checkFormat(tags, Schemas.tags);
+        }
+
+        payload.sort && checkFormat(payload.sort as string, Schemas.jobsSortType);
+        checkFormat(page, Schemas.Number("page", 1, 10000)); // Min page 1
+        checkFormat(pageSize, Schemas.Number("pageSize", 1, 100)); // Min 1, Max 100 elements per page
+
+        const retrievePayload: RetrieveJobs = {
+            tags,
+            sort: payload.sort as any,
+            page,
+            pageSize,
+        };
+
+        const { companyInfo, jobs } = await JobsService.retrieve(retrievePayload);
+
+        // Convert companyInfo Map to array
+        const companyInfoArray = Array.from(companyInfo.values());
+
+        return res
+            .status(StatusCodes.OK)
+            .json({
+                description: MESSAGE.RETRIEVED(TITLE.JOBS),
+                companyInfo: companyInfoArray,
+                jobs: jobs
+            });
     }
 }

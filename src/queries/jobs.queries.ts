@@ -1,3 +1,5 @@
+import { RetrieveJobs } from "../types/jobs.type";
+
 export class JobsQueries {
     public static readonly add = `
         INSERT INTO jobs (
@@ -36,5 +38,26 @@ export class JobsQueries {
         DELETE FROM jobs
         WHERE uuid = $1
         AND user_uuid = $2;
+    `;
+
+    public static readonly retrieve = `
+        SELECT 
+            j.uuid,
+            j.user_uuid,
+            j.title,
+            j.description,
+            j.position,
+            j.exp,
+            j.created,
+            jt.tag_id,
+            uc.uuid as company_uuid,
+            uc.company,
+            uc.size,
+            uc.industry,
+            uc.country
+        FROM jobs j
+        LEFT OUTER JOIN jobs_tags jt ON j.uuid = jt.job_uuid
+        INNER JOIN users_company uc ON j.user_uuid = uc.uuid
+        WHERE (j.exp IS NULL OR j.exp > NOW())
     `;
 }

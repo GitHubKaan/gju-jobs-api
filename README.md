@@ -1,5 +1,6 @@
 # GJU Jobs API
 Made by Kaan, Dilan and Khanh
+Project Lead: Silvio Peikert
 
 ## Setup:
 1. Create .env, .env.production, .env.testing file, use .env.example as a template and configure

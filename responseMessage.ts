@@ -14,6 +14,7 @@ export class TITLE {
     static readonly SUPPORT_REQUEST = "Support request";
     static readonly ERROR = "Error";
     static readonly JOB = "Job";
+    static readonly JOBS = "Jobs";
 }
 
 export class MESSAGE {

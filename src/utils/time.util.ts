@@ -39,7 +39,7 @@ export function toTimestamp(time: number, database?: boolean): string {
     return timestamp.toLocaleString();
 }
 
-// Timestamp to unix for db
+// Unix-seconds timestamp to unix for db
 export function unixSecondsToDbTimestamp(unixSeconds: number): string {
     const date = new Date(unixSeconds * 1000);
 
@@ -55,4 +55,23 @@ export function unixSecondsToDbTimestamp(unixSeconds: number): string {
     const microseconds = pad(date.getMilliseconds(), 3) + "000";
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${microseconds}`;
+}
+
+// Make database timestamp to a readable timestamp
+export function formatDBTimestamp(timestamp: string): string {
+    const date = new Date(timestamp);
+    
+    if (isNaN(date.getTime())) return "Ungültiges Datum";
+
+    const pad = (n: number) => n.toString().padStart(2, "0");
+
+    const day = pad(date.getUTCDate());
+    const month = pad(date.getUTCMonth() + 1); // Monate starten bei 0
+    const year = date.getUTCFullYear();
+
+    const hours = pad(date.getUTCHours());
+    const minutes = pad(date.getUTCMinutes());
+    const seconds = pad(date.getUTCSeconds());
+
+    return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 }

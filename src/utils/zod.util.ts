@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FileType, fileTypes, SupportType, supportTypes } from "../enums";
+import { FileType, fileTypes, JobsSortType, SupportType, supportTypes } from "../enums";
 import { MESSAGE } from "../../responseMessage";
 import { ENV } from "./envReader.util";
 
@@ -16,6 +16,10 @@ export class Schemas {
             .min(minimum, { message: MESSAGE.ERROR.MIN_ELEMENT(minimum, `${type}UUIDs`) })
             .max(maximum, { message: MESSAGE.ERROR.MAX_ELEMENT(maximum, `${type}UUIDs`) })
             .refine((arr: string[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE(`${type}UUIDs`) });
+    
+    static readonly jobsSortType = z.nativeEnum(JobsSortType, {
+        message: MESSAGE.ERROR.DECISION(`${Object.values(JobsSortType)}`),
+    })
 
     static readonly Number = (value: string, minimum: number, maximum: number) =>
         z.number({ message: MESSAGE.ERROR.INT(value) })
@@ -46,7 +50,16 @@ export class Schemas {
             .length(ENV.AUTH_CODE_LENGTH, { message: MESSAGE.ERROR.SPECIFIC_CHARACTER_LENGTH(ENV.AUTH_CODE_LENGTH, "code") })
             .regex(/^[A-Z0-9]+$/, { message: MESSAGE.ERROR.REGEX("code") });
 
-     static readonly job =
+    static readonly tags = z.array(
+        z.number({ message: MESSAGE.ERROR.INT() })
+            .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
+            .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
+            { message: MESSAGE.ERROR.ARRAY() }
+        )
+        .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+        .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() });
+    
+    static readonly job =
         z.object({
             title: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
@@ -58,14 +71,8 @@ export class Schemas {
                 .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
                 //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
-            tags: z.array(
-                z.number({ message: MESSAGE.ERROR.INT() })
-                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
-                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
-                    { message: MESSAGE.ERROR.ARRAY() }
-                )
-                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
-                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() }),
+            tags: this.tags
+                .optional(),
             position: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
                 .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
@@ -122,32 +129,11 @@ export class Schemas {
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
                 .optional(),
-            tags: z.array(
-                z.number({ message: MESSAGE.ERROR.INT() })
-                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
-                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
-                { message: MESSAGE.ERROR.ARRAY() }
-            )
-                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
-                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+            tags: this.tags
                 .optional(),
-            jobPreferences: z.array(
-                z.number({ message: MESSAGE.ERROR.INT() })
-                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
-                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
-                { message: MESSAGE.ERROR.ARRAY() }
-            )
-                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
-                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+            jobPreferences: this.tags
                 .optional(),
-            languages: z.array(
-                z.number({ message: MESSAGE.ERROR.INT() })
-                    .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
-                    .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
-                { message: MESSAGE.ERROR.ARRAY() }
-            )
-                .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
-                .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
+            languages: this.tags
                 .optional(),
     });
 

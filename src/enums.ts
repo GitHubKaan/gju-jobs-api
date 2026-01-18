@@ -53,3 +53,9 @@ export enum UserType {
     Student = "STUDENT",
     Company = "COMPANY"
 }
+
+export enum JobsSortType {
+    Newest = "NEWEST",
+    Oldest = "OLDEST",
+}
+export const jobsSortType: [JobsSortType, ...JobsSortType[]] = Object.values(JobsSortType) as [JobsSortType, ...JobsSortType[]];
