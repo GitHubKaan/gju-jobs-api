@@ -100,22 +100,22 @@ export function routerHandler() {
     // File
     router.get(
         "/files",
-        auth(TokenType.Access, UserType.Company),
+        auth(TokenType.Access, UserType.Student),
         routeWrapper(FileRoute.handleRetrieveFiles)
     );
     router.get(
         "/file",
-        auth(TokenType.Access, UserType.Company),
+        auth(TokenType.Access, UserType.Student),
         routeWrapper(FileRoute.handleRetrieveFile)
     );
     router.post(
         "/file",
-        auth(TokenType.Access, UserType.Company),
+        auth(TokenType.Access, UserType.Student),
         routeWrapper(FileRoute.handleUploadFile)
     );
     router.delete(
         "/file",
-        auth(TokenType.Access, UserType.Company),
+        auth(TokenType.Access, UserType.Student),
         routeWrapper(FileRoute.handleDeleteFile)
     );
     
