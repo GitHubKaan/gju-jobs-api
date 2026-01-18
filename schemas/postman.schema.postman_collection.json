@@ -674,6 +674,16 @@
             {
               "name": "Retrieve Jobs",
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "GET",
                 "header": [],
                 "url": {
@@ -695,12 +705,12 @@
                     {
                       "key": "page",
                       "value": "2",
-                      "description": "What page?"
+                      "description": "What page?; Minimum 1"
                     },
                     {
                       "key": "pageSize",
                       "value": "10",
-                      "description": "Page size? (element amount per page)"
+                      "description": "Page size? (element amount per page); Minimum 1"
                     }
                   ]
                 }

@@ -44,9 +44,17 @@ describe("File", () => {
         expect(response.status).toBe(200);
     });
 
-    // hier retrieve reinmachen
+    test("[GET] Retrieve Jobs", async () => {
+        const response = await request(app)
+            .get(`${getBackendPath()}/jobs?tags=[1, 2, 3]&sort=NEWEST&page=1&pageSize=10`)
+            .set("Authorization", accessToken)
+        
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("companyInfo");
+        expect(response.body).toHaveProperty("jobs");
+    });
 
-    test("[DELETE] Delete job", async () => {
+    test("[DELETE] Delete Job", async () => {
         const response = await request(app)
             .delete(`${getBackendPath()}/jobs/delete`)
             .set("Authorization", accessToken)

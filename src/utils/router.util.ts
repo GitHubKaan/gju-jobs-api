@@ -137,6 +137,7 @@ export function routerHandler() {
     );
     router.get(
         "/jobs",
+        auth(TokenType.Access),
         routeWrapper(JobsRoute.handleRetrieve)
     );
 
