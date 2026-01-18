@@ -71,7 +71,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"halddddlsaddo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
+                  "raw": "{\r\n    \"email\": \"halddddlsaddo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -197,7 +197,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "// STUDENT\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    \"tags\": [1, 2], // optional\r\n    \"jobPreferences\": [1, 2], // optional\r\n    \"languages\": [1, 2] // optional\r\n}\r\n\r\n// COMPANY\r\n/*\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}\r\n*/\r\n",
+                  "raw": "// STUDENT\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2], // optional\r\n    \"jobPreferences\": [1, 2], // optional\r\n    \"languages\": [1, 2] // optional\r\n}\r\n\r\n// COMPANY\r\n/*\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}\r\n*/\r\n",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -580,7 +580,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    \"tags\": [1, 2, 3, 4],\n    \"position\": \"INTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
+                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [7, 8], // optional\n    \"position\": \"INTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -616,7 +616,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    \"tags\": [1, 2, 3, 4],\n    \"position\": \"INTERN\",\n    \"exp\": 4684984621\n}",
+                  "raw": "{\n    \"jobUUID\": \"09df1f3b-926a-4727-ba95-5d421bcfa458\",\n    \"title\": \"Job Title\", // optional\n    \"description\": \"Job description\", // optional\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [1, 2, 3, 4], // optional\n    \"position\": \"SENIOR\", // optional\n    \"exp\": 3684984621 // optional\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -652,7 +652,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"uuid\": \"job-uuid\"\n}",
+                  "raw": "{\n    \"jobUUID\": \"91e2ba35-8ffe-4351-a795-8acc5120c4f0\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -677,14 +677,30 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseURL}}jobs?tags=[1, 2, 3, 4]",
+                  "raw": "{{baseURL}}jobs?tags=[1, 2, 3, 4]&sort=NEWEST&page=2&pageSize=10",
                   "host": [
                     "{{baseURL}}jobs"
                   ],
                   "query": [
                     {
                       "key": "tags",
-                      "value": "[1, 2, 3, 4]"
+                      "value": "[1, 2, 3, 4]",
+                      "description": "optional; If sort set, tags will be ignored"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "NEWEST",
+                      "description": "optional; options: NEWEST, OLDEST; If sort set, tags will be ignored"
+                    },
+                    {
+                      "key": "page",
+                      "value": "2",
+                      "description": "What page?"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10",
+                      "description": "Page size? (element amount per page)"
                     }
                   ]
                 }
