@@ -35,7 +35,15 @@ export class JobsRoute {
         req: Request<any, any, UpdateJob, ParsedQs, Record<string, any>>,
         res: Response
     ) {
+        const payload = req.body;
+        checkFormat(payload, Schemas.job, true);
+        checkFormat(payload.jobUUID, Schemas.UUID(TITLE.JOB));
+        
+        await JobsService.update(req.userUUID, payload);
 
+        return res
+            .status(StatusCodes.OK)
+            .json({ description: MESSAGE.UPDATED(TITLE.JOB) });
     }
 
     /**

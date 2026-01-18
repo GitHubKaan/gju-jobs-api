@@ -109,7 +109,7 @@ export class UserStudentService {
         };
 
         const optionalClauses: string[] = [];
-        const values: any[] = [UUID]; //First value ($1) is User UUID
+        const values: any[] = [UUID]; // First value ($1) is User UUID
 
         Object.entries(fieldsToUpdate).forEach(([field, value]): void => {
             if (value) {

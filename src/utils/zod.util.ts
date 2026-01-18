@@ -64,7 +64,6 @@ export class Schemas {
                     .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
                     { message: MESSAGE.ERROR.ARRAY() }
                 )
-                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
                 .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
                 .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() }),
             position: z.string({ message: MESSAGE.ERROR.STRING() })
@@ -129,7 +128,6 @@ export class Schemas {
                     .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
                 { message: MESSAGE.ERROR.ARRAY() }
             )
-                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
                 .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
                 .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
                 .optional(),
@@ -139,7 +137,6 @@ export class Schemas {
                     .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
                 { message: MESSAGE.ERROR.ARRAY() }
             )
-                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
                 .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
                 .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
                 .optional(),
@@ -149,7 +146,6 @@ export class Schemas {
                     .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
                 { message: MESSAGE.ERROR.ARRAY() }
             )
-                .min(1, { message: MESSAGE.ERROR.MIN_ELEMENT(1) })
                 .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
                 .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() })
                 .optional(),

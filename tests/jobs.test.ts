@@ -17,7 +17,7 @@ describe("File", () => {
             .send({
                 title: "Software Developer",
                 description: "Cool position for nerds!!! Kaan was here!",
-                tags: [1, 2, 3],
+                tags: [1, 2],
                 position: "Intern",
                 exp: 2000000000
             });
@@ -26,5 +26,21 @@ describe("File", () => {
         expect(response.body).toHaveProperty("uuid");
 
         jobUUID = response.body.uuid;
+    });
+
+    test("[PATCH] Update Job", async () => {
+        const response = await request(app)
+            .patch(`${getBackendPath()}/jobs/update`)
+            .set("Authorization", accessToken)
+            .send({
+                jobUUID: jobUUID,
+                title: "Senior Software Developer",
+                description: "Cooler position i guess?!",
+                tags: [69, 31, 32, 10, 20],
+                position: "Senior",
+                exp: 3000000000
+            });
+                
+        expect(response.status).toBe(200);
     });
 });

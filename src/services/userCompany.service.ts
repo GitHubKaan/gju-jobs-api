@@ -11,11 +11,11 @@ import { UserCompanyQueries } from "../queries/userCompany.queries";
 
 export class UserCompanyService {
     /**
-         * Add new company user
-         * @param payload Signup payload
-         * @returns UUID (userUUID) & authUUID
-         * @throws {DefaultError} Already existing email
-        */
+     * Add new company user
+     * @param payload Signup payload
+     * @returns UUID (userUUID) & authUUID
+     * @throws {DefaultError} Already existing email
+    */
     static async add(
         payload: UserCompanyType,
     ): Promise<{
@@ -57,18 +57,16 @@ export class UserCompanyService {
 
     /**
      * Update user data
-     * @param UUID userUUID
+     * @param userUUID userUUID
      * @param payload UpdateUser
     */
     static async update(
-        UUID: UUID,
+        userUUID: UUID,
         payload: UpdateUserCompanyType
     ): Promise<
         void
     > {
-        if (!payload) {
-            throw new DefaultError(StatusCodes.NOT_MODIFIED, "No values provided to update.");
-        }
+        if (!payload) throw new DefaultError(StatusCodes.NOT_MODIFIED, "No values provided to update.");
 
         const fieldsToUpdate = {
             phone: payload.phone?.trimEnd().trimStart(),
@@ -84,7 +82,7 @@ export class UserCompanyService {
         };
 
         const optionalClauses: string[] = [];
-        const values: any[] = [UUID]; //First value ($1) is User UUID
+        const values: any[] = [userUUID]; //First value ($1) is User UUID
 
         Object.entries(fieldsToUpdate).forEach(([field, value]) => {
             if (value) {
@@ -94,6 +92,6 @@ export class UserCompanyService {
         });
         const joinedOptionalClauses = optionalClauses.join(", ");
 
-        await DBPool.query(joinedOptionalClauses, values);
+        await DBPool.query(UserCompanyQueries.update(joinedOptionalClauses), values);
     }
 }

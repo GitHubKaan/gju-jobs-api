@@ -100,11 +100,13 @@ export class UserRoute {
         req: Request<any, any, UpdateUserStudentType | UpdateUserCompanyType, ParsedQs, Record<string, any>>,
         res: Response
     ) {
+        const payload = req.body;
+
         if (req.isStudent) {
-            const payload: UpdateUserStudentType = req.body;
+            checkFormat(payload, Schemas.userStudent, true);
             await UserStudentService.update(req.userUUID, payload);
         } else {
-            const payload: UpdateUserCompanyType = req.body;
+            checkFormat(payload, Schemas.userCompany, true);
             await UserCompanyService.update(req.userUUID, payload);
         }
         

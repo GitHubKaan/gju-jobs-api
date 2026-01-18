@@ -11,7 +11,9 @@ interface BaseCreateJob {
 export type CreateJob = BaseCreateJob;
 
 // Update Job
-export type UpdateJob = Partial<BaseCreateJob>; // make all values optional
+export type UpdateJob = Partial<BaseCreateJob> & {
+    jobUUID: UUID;
+};
 
 // Delete Job
 interface BaseDeleteJob {
