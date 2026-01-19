@@ -78,4 +78,23 @@ export class Testing {
         const accessToken = authResponse.headers.authorization.split(" ")[1];
         return accessToken;
     }
+
+    /**
+     * Create a job
+     * @returns jobUUID
+     */
+    static async createJob(): Promise<string> {
+        const response = await request(app)
+            .post(`${getBackendPath()}/jobs/create`)
+            .set("Authentication", await Testing.createCompanyAccessToken())
+            .send({
+                title: "Software Architect",
+                description: "Sell your time cheap and earn money with us!",
+                tags: [1, 2, 3],
+                position: "Senior",
+                exp: 2000000000
+            });
+        
+        return response.body.uuid;
+    }
 }

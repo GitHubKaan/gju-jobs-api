@@ -59,6 +59,17 @@ export class Schemas {
         .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
         .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() });
     
+    static readonly apply =
+        z.object({
+            jobUUID: this.UUID("job"),
+            message: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
+                //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
+                .optional()
+        });
+
     static readonly job =
         z.object({
             title: z.string({ message: MESSAGE.ERROR.STRING() })

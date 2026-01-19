@@ -12,6 +12,7 @@ import { GeneralRoute } from "../routes/general.route";
 import { UserRoute } from "../routes/user.route";
 import { FileRoute } from "../routes/file.route";
 import { JobsRoute } from "../routes/jobs.route";
+import { ApplicationRoute } from "../routes/application.route";
 
 /**
  * Endpoint routes
@@ -139,6 +140,13 @@ export function routerHandler() {
         "/jobs",
         auth(TokenType.Access),
         routeWrapper(JobsRoute.handleRetrieve)
+    );
+
+    // Application
+    router.post(
+        "/application/apply",
+        auth(TokenType.Access, UserType.Student),
+        routeWrapper(ApplicationRoute.handleApply)
     );
 
     // Image
