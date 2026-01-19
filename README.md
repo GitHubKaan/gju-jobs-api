@@ -132,6 +132,9 @@ The following section lists all environment variables along with a brief descrip
 Below, all endpoints are presented along with a sequence diagram. A _description_ (string) will always be included in the response body. The **Response** column only displays the successful response (HTTP 200).
 
 ### General
+#### User Authentication and Authorization<br>
+<img src="images/readme/general_support.png" width="100%"/><br>
+
 | Method | Title                   | Path                 | Headers | Body                                                              | Params | Response Headers | Response Body              |
 |--------|-------------------------|----------------------|---------|-------------------------------------------------------------------|--------|------------------|----------------------------|
 | POST   | Support Request         | /support             |         | email: string<br>phone: string<br>type: string<br>message: string |        |                  |                            |
@@ -160,7 +163,7 @@ Below, all endpoints are presented along with a sequence diagram. A _description
 
 ### File
 #### User File<br>
-<img src="images/readme/user_file.png" width="100%"/>
+<img src="images/readme/file.png" width="100%"/>
 
 | Method | Title    | Path   | Headers             | Body         | Params       | Response Headers | Response Body                                                               |
 |--------|----------|--------|---------------------|--------------|--------------|------------------|-----------------------------------------------------------------------------|
@@ -177,7 +180,7 @@ Below, all endpoints are presented along with a sequence diagram. A _description
 
 ### Jobs
 #### User Jobs<br>
-<img src="images/readme/user_jobs.png" width="100%"/>
+<img src="images/readme/jobs.png" width="100%"/>
 
 | Method | Title    | Path         | Headers             | Body                                                                                                                                                                          | Params                                                             | Response Headers | Response Body                                                                                                                                                                                                                                                                                                                 |
 |--------|----------|--------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
