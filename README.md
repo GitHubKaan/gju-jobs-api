@@ -36,8 +36,11 @@ The "Response" column only shows the response on success (200).
 
 ### User
 [ Short description ]<br>
+#### User Authentication and Authorization<br>
 <img src="images/readme/user_auth.png" width="100%"/><br>
+#### User Recovery<br>
 <img src="images/readme/user_recovery.png" width="100%"/><br>
+#### User Deletion<br>
 <img src="images/readme/user_deletion.png" width="100%"/>
 
 | Method | Title             | Path                 | Headers              | Body                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Params | Response Headers     | Response Body                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -55,6 +58,7 @@ The "Response" column only shows the response on success (200).
 
 ### File
 [ Short description ]<br>
+#### User File<br>
 <img src="images/readme/user_file.png" width="100%"/>
 
 | Method | Title    | Path   | Headers             | Body         | Params       | Response Headers | Response Body                                                               |
@@ -73,6 +77,7 @@ The "Response" column only shows the response on success (200).
 
 ### Jobs
 [ Short description ]<br>
+#### User Jobs<br>
 <img src="images/readme/user_jobs.png" width="100%"/>
 
 | Method | Title    | Path         | Headers             | Body                                                                                                                                                                          | Params                                                             | Response Headers | Response Body                                                                                                                                                                                                                                                                                                                 |
