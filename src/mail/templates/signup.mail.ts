@@ -21,7 +21,7 @@ export function sendSignupMail(email: string, authCode: string) {
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
     <meta name="x-apple-disable-message-reformatting" />
     <link href="https://fonts.googleapis.com/css?family=Rubik:ital,wght@0,400" rel="stylesheet" />
-    <title>Signup</title><!-- Made with Postcards Email Builder by Designmodo -->
+    <title>Signup</title>
     <style>
         html,
         body {
@@ -198,7 +198,7 @@ export function sendSignupMail(email: string, authCode: string) {
                                                         <tr>
                                                             <td align="left" valign="top"
                                                                 style="padding:0 0 60px;height:auto"><a
-                                                                    class="pc-font-alt" href="https://postcards.email/"
+                                                                    class="pc-font-alt"
                                                                     target="_blank"
                                                                     style="text-decoration:none;display:inline-block;vertical-align:top"><img
                                                                         src="cid:logoID"

@@ -20,7 +20,7 @@ export function sendGetDeleteUserMail(email: string, token: string) {
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
     <meta name="x-apple-disable-message-reformatting" />
     <link href="https://fonts.googleapis.com/css?family=Rubik:ital,wght@0,400;0,500" rel="stylesheet" />
-    <title>Link</title><!-- Made with Postcards Email Builder by Designmodo -->
+    <title>Link</title>
     <style>
         html,
         body {
@@ -204,7 +204,7 @@ export function sendGetDeleteUserMail(email: string, token: string) {
                                                         <tr>
                                                             <td align="left" valign="top"
                                                                 style="padding:0 0 60px;height:auto"><a
-                                                                    class="pc-font-alt" href="https://postcards.email/"
+                                                                    class="pc-font-alt"
                                                                     target="_blank"
                                                                     style="text-decoration:none;display:inline-block;vertical-align:top"><img
                                                                         src="cid:logoID"
