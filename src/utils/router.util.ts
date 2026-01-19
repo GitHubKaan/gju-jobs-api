@@ -151,7 +151,7 @@ export function routerHandler() {
         routeWrapper(ApplicationRoute.handleApply)
     );
 
-    // Image
+    // Uploads
     app.use(
         `${getBackendPath()}/${ENV.FILE_UPLOAD_PATH}`, // If changed, do not forget to edit timeout.middleware.ts also
         routeWrapper(uploadedFileHandler)

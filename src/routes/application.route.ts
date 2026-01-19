@@ -9,7 +9,6 @@ import { FileService } from "../services/file.service";
 import { FileType } from "../enums";
 import { getFileURL } from "../utils/envReader.util";
 import { JobsService } from "../services/jobs.service";
-import { DefaultError } from "../utils/error.util";
 import { UserService } from "../services/user.service";
 import { sendApplicationToCompany } from "../mail/templates/companyApplication.mail";
 import { ApplicationService } from "../services/applications.service";

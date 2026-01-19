@@ -20,7 +20,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"max@mustermann.com\",\r\n    \"phone\": \"+0123456789\",\r\n    \"type\": \"LEGAL\",\r\n    \"message\": \"Hallo, ich brauche Hilfe!\"\r\n}",
+                  "raw": "{\r\n    \"email\": \"kaan@turanics.com\",\r\n    \"phone\": \"+0123456789\",\r\n    \"type\": \"LEGAL\",\r\n    \"message\": \"Hallo, ich brauche Hilfe!\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -71,7 +71,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"halddddlsaddo2@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
+                  "raw": "{\r\n    \"email\": \"kaaddn@turanics.com\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optionaram name.\", // optional\r\n    \"program\": \"awdawd\", // optionaram name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -98,7 +98,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"haladwsdlo33@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdaw;--232#*+dwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}",
+                  "raw": "{\r\n    \"email\": \"kaan@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdaw;--232#*+dwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -125,7 +125,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"isStudent\": true, // Student login or company login?\r\n    \"email\": \"hallo2@turanics.com\"\r\n}",
+                  "raw": "{\r\n    \"isStudent\": true, // Student login or company login?\r\n    \"email\": \"kaan@turanics.com\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -152,7 +152,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3Njg1OTg5MzcsImV4cCI6MTc2ODU5OTgzN30.vBZ00Fnej0xbU-fJd3DjkidI0KXVT4bfjZEAW2E2hx8",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjJhYzJhZTkzLWZiZDgtNDc5ZC1iMTllLTk3N2M2ZDVjN2ZkNyIsImF1dGhVVUlEIjoiM2U2ODQxNjctNGExMi00ZjRjLTkyMDItYjA4YzUwYzI3MWJhIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3Njg4NTQ0MTAsImV4cCI6MTc2ODg1NTMxMH0.edy6Vjdne9LAOaHOUAu4x3WsW9aOP8UAMZ6oQpZaRss",
                       "type": "string"
                     }
                   ]
@@ -161,7 +161,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"code\": \"889078\"\r\n}",
+                  "raw": "{\r\n    \"code\": \"893611\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -227,7 +227,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjdkYWRiNjU5LTAxZTAtNGI4NS1iODFmLTlmYjNkNzA5MzMwZiIsImF1dGhVVUlEIjoiYjljNDUwNzEtNjk5Ni00OTBlLThkYmYtNGUyN2FiNmZjOTA2IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODc2NDkzMiwiZXhwIjoxNzg0MzE2OTMyfQ.p_OjNkVB60MlIa5RzkpAEsszy2waTWd2tTjCkoWlHQo",
                       "type": "string"
                     }
                   ]
@@ -272,7 +272,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"isStudent\": true,\r\n    \"email\": \"hallo2@turanics.com\"\r\n}",
+                  "raw": "{\r\n    \"isStudent\": true,\r\n    \"email\": \"kaan@turanics.com\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -292,14 +292,14 @@
               "response": []
             },
             {
-              "name": "Recovery Account",
+              "name": "Recovery",
               "request": {
                 "auth": {
                   "type": "bearer",
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMjM2NzExODAtOTBkYS00NzVkLTk4MzctNWY3NTk3NWM3ODA5IiwidHlwZSI6InJlY292ZXJ5IiwidXNlclR5cGUiOiJTVFVERU5UIiwiaWF0IjoxNzY2MTU3MTI1LCJleHAiOjE3NjYxNTgwMjV9.O5hmD8j5XOGaOSRfazFdhdfI00ZA3nZTXkqz1RlLQLo",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjJhYzJhZTkzLWZiZDgtNDc5ZC1iMTllLTk3N2M2ZDVjN2ZkNyIsImF1dGhVVUlEIjoiNTI4NThlZmItYWQ1Ni00ODIyLWJhZTUtYmZlZDRmZmQ3NTgwIiwidHlwZSI6InJlY292ZXJ5IiwidXNlclR5cGUiOiJTVFVERU5UIiwiaWF0IjoxNzY4ODMyNjQwLCJleHAiOjE3Njg4MzM1NDB9.g_eTAn-B7a-QxUmrTGoEOgh3s5Ws0ijLtAEpWRdQgm4",
                       "type": "string"
                     }
                   ]
@@ -338,7 +338,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImNlOWViZDA0LTg4ZjAtNDE1Ny04OGRlLTk3M2QyMjdkNTQ2YSIsImF1dGhVVUlEIjoiMDIxMjU0NWEtZDY3MC00YTgyLTkxMDctODkxZTljNWVkNWMyIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2NjE1Nzk2MiwiZXhwIjoxNzgxNzA5OTYyfQ.DLp21FoZ3d9X_BRRYBeRjuzkC3nJEsH471iMTyGGOAY",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjJhYzJhZTkzLWZiZDgtNDc5ZC1iMTllLTk3N2M2ZDVjN2ZkNyIsImF1dGhVVUlEIjoiNTI4NThlZmItYWQ1Ni00ODIyLWJhZTUtYmZlZDRmZmQ3NTgwIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODgzMDI2MiwiZXhwIjoxNzg0MzgyMjYyfQ.O24t0x-O4GHsvRQxWP9xqxs04Y2xAJUrWzF1nAtvGsA",
                       "type": "string"
                     }
                   ]
@@ -367,7 +367,7 @@
               "response": []
             },
             {
-              "name": "Delete Account",
+              "name": "Delete",
               "request": {
                 "auth": {
                   "type": "bearer",
@@ -415,7 +415,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
                       "type": "string"
                     }
                   ]
@@ -429,19 +429,73 @@
                       "key": "file",
                       "type": "file",
                       "uuid": "48203d9b-7594-469d-a3b3-4946902e8b07",
-                      "src": "/Users/kaan/Documents/Repositories/place-an-order-api/images/food/falafel.jpg"
+                      "src": "/Users/kaan/Documents/University/Hochschule für Technik und Wirtschaft/Semester/Semester 2/System Developement and Frameworks/sysdev_extra_praesentation.pdf"
                     }
                   ]
                 },
                 "url": {
-                  "raw": "{{baseURL}}file?type=PROFILE-PICTURE",
+                  "raw": "{{baseURL}}file?type=CV",
                   "host": [
                     "{{baseURL}}file"
                   ],
                   "query": [
                     {
                       "key": "type",
-                      "value": "PROFILE-PICTURE"
+                      "value": "CV"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrieve",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}files",
+                  "host": [
+                    "{{baseURL}}files"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrieve (single)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}file?UUID=bd09e09d-f900-4503-b2da-764e4cac09f3",
+                  "host": [
+                    "{{baseURL}}file"
+                  ],
+                  "query": [
+                    {
+                      "key": "UUID",
+                      "value": "bd09e09d-f900-4503-b2da-764e4cac09f3"
                     }
                   ]
                 }
@@ -480,79 +534,25 @@
                 }
               },
               "response": []
-            },
-            {
-              "name": "Retrieve",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE2Y2I4ZjQzLThmYzctNGQ3Ny05MTZkLThiNWVmYTUwZWFlYyIsImF1dGhVVUlEIjoiNjk0MDg0ZWItY2U4YS00ZDhlLThkYzAtODVmOTMyYmI5NjQ5IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2NjE1OTg5NywiZXhwIjoxNzgxNzExODk3fQ.YqTBBv2j8Y8XAulkTTnLYYFSoXbvIKn3TniwuOe2_CA",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseURL}}files",
-                  "host": [
-                    "{{baseURL}}files"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Retrieve (Single)",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjBjMDY3YTU5LTM1MGMtNGRmNC04ODlhLTkwZjlhMzY2MTkxYiIsImF1dGhVVUlEIjoiM2M2NGZmZmYtMGQ5Ni00MGRmLThmNTMtYjU1ZGUyN2JhYWI4IiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc2NTgwNjc2MSwiZXhwIjoxNzgxMzU4NzYxfQ.-L3BY5HuJvxH_WjXeTy2N0G_9SZvax0Jl6mKb52wXFo",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseURL}}file?UUID=de988c68-e711-4f24-8edf-d8ac856cb967",
-                  "host": [
-                    "{{baseURL}}file"
-                  ],
-                  "query": [
-                    {
-                      "key": "UUID",
-                      "value": "de988c68-e711-4f24-8edf-d8ac856cb967"
-                    }
-                  ]
-                }
-              },
-              "response": []
             }
           ]
         },
         {
-          "name": "Images",
+          "name": "Uploads",
           "item": [
             {
-              "name": "Image",
+              "name": "View File",
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseURL}}upload/16cb8f43-8fc7-4d77-916d-8b5efa50eaec/VWERKE5J7KKM7P19.jpeg",
+                  "raw": "{{baseURL}}upload/149e2226-3ea3-424d-b39a-61d8453da39b/L5QZFKRUL1E7TMXS.pdf",
                   "host": [
                     "{{baseURL}}upload"
                   ],
                   "path": [
-                    "16cb8f43-8fc7-4d77-916d-8b5efa50eaec",
-                    "VWERKE5J7KKM7P19.jpeg"
+                    "149e2226-3ea3-424d-b39a-61d8453da39b",
+                    "L5QZFKRUL1E7TMXS.pdf"
                   ]
                 }
               },
@@ -571,7 +571,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjZkMGUyMTNlLThkMzUtNGZjYS1hMDczLTU5YTZmYTU0MDllYSIsImF1dGhVVUlEIjoiNjhiZWFkNjgtOTU3My00ZTczLTlkYmMtNDFiOGEwNTRhM2MzIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODg1MTc4OCwiZXhwIjoxNzg0NDAzNzg4fQ.pOQyBk_qCE04orH0-ve78y_VH7pvQGp5iNu4aBKzhis",
                       "type": "string"
                     }
                   ]
@@ -712,6 +712,47 @@
                       "value": "10",
                       "description": "Page size? (element amount per page); Minimum 1"
                     }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Application",
+          "item": [
+            {
+              "name": "Apply for Job",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"jobUUID\": \"16df7384-9e19-4fd6-9220-e059cba3e4f0\",\n    \"message\": \"sdsd\" // optional\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}application/apply",
+                  "host": [
+                    "{{baseURL}}application"
+                  ],
+                  "path": [
+                    "apply"
                   ]
                 }
               },
