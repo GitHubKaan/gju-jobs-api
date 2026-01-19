@@ -93,16 +93,12 @@ export class JobsRoute {
             pageSize,
         };
 
-        const { companyInfo, jobs } = await JobsService.retrieve(retrievePayload);
-
-        // Convert companyInfo Map to array
-        const companyInfoArray = Array.from(companyInfo.values());
+        const { jobs } = await JobsService.retrieve(retrievePayload);
 
         return res
             .status(StatusCodes.OK)
             .json({
                 description: MESSAGE.RETRIEVED(TITLE.JOBS),
-                companyInfo: companyInfoArray,
                 jobs: jobs
             });
     }

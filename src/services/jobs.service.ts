@@ -135,31 +135,18 @@ export class JobsService {
     static async retrieve(
         payload: RetrieveJobs,
     ): Promise<
-        { companyInfo: Map<UUID, any>, jobs: any[] }
+        { jobs: any[] }
     > {
         const result = await DBPool.query(JobsQueries.retrieve);
         const rows = result.rows;
 
         // Group jobs by UUID and collect their tags
         const jobsMap = new Map<UUID, any>();
-        const companyInfoMap = new Map<UUID, any>();
 
         for (const row of rows) {
             const jobUUID = row.uuid as UUID;
             
-            // Store company info
-            if (!companyInfoMap.has(row.company_uuid)) {
-                companyInfoMap.set(row.company_uuid, {
-                    userUUID: row.uuid,
-                    email: row.email,
-                    company: decrypt(row.company),
-                    size: decrypt(row.size),
-                    industry: decrypt(row.industry),
-                    country: decrypt(row.country),
-                });
-            }
-
-            // Build job object with tags
+            // Build job object with tags and company info
             if (!jobsMap.has(jobUUID)) {
                 jobsMap.set(jobUUID, {
                     uuid: jobUUID,
@@ -169,6 +156,14 @@ export class JobsService {
                     exp: row.exp ? formatDBTimestamp(row.exp) : undefined,
                     created: row.created ? formatDBTimestamp(row.created) : undefined,
                     tags: [],
+                    companyInfo: {
+                        userUUID: row.company_uuid,
+                        email: row.email,
+                        company: decrypt(row.company),
+                        size: decrypt(row.size),
+                        industry: decrypt(row.industry),
+                        country: decrypt(row.country),
+                    }
                 });
             }
 
@@ -215,7 +210,6 @@ export class JobsService {
         const paginatedJobs = jobs.slice(offset, offset + payload.pageSize);
 
         return {
-            companyInfo: companyInfoMap,
             jobs: paginatedJobs,
         };
     };
