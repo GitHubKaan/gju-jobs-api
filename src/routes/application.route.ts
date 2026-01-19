@@ -39,7 +39,6 @@ export class ApplicationRoute {
 
         // Get student CV
         const file = await FileService.getSpecificFile(req.userUUID, FileType.CV);
-        if (!file) throw new DefaultError(StatusCodes.NOT_FOUND, MESSAGE.ERROR.CV_MISSING);
         const url = getFileURL(req.userUUID, (file?.name ?? ""));
 
         // Get Company email
@@ -48,7 +47,7 @@ export class ApplicationRoute {
         const companyEmail = companyData?.email;
         
         // Send application to company
-        sendApplicationToCompany(companyEmail, studentEmail, studentGivenName, studentSurname, url, studentPhone, payload.message, studentDegree, studentProgram);
+        sendApplicationToCompany(companyEmail, studentEmail, studentGivenName, studentSurname, studentPhone, payload.message, studentDegree, studentProgram, (file ? url : undefined));
 
         return res
             .status(StatusCodes.OK)

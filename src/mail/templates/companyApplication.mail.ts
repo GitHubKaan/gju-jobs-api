@@ -7,23 +7,23 @@ import { sendEmail } from "../mailTransporter.mail";
  * @param studentEmail
  * @param studentGivenName
  * @param studentSurname
- * @param cv
  * 
  * @param studentPhone optional
  * @param message optional
  * @param studentDegree optional
  * @param studentProgram optional
+ * @param cv optional
  */
 export function sendApplicationToCompany(
     companyEmail: string,
     studentEmail: string,
     studentGivenName: string,
     studentSurname: string,
-    cv: string,
     studentPhone: string,
     message?: string,
     studentDegree?: string,
     studentProgram?: string,
+    cv?: string,
 ) {
     const content = `
      <!DOCTYPE html>
@@ -294,11 +294,11 @@ export function sendApplicationToCompany(
                                                                             <span
                                                                                 style="font-family:'Rubik',Arial,Helvetica,sans-serif;font-weight:400;font-size:16px;line-height:180%">Program:
                                                                                 ${studentProgram}</span></div>
-                                                                        <div
+                                                                        ${cv ? `<div
                                                                             style="font-family:'Rubik',Arial,Helvetica,sans-serif">
                                                                             <span
                                                                                 style="font-family:'Rubik',Arial,Helvetica,sans-serif;font-weight:400;font-size:16px;line-height:180%">CV:
-                                                                                ${cv}</span></div>
+                                                                                ${cv}</span></div>` : ""}
                                                                         <div><br></div>
                                                                         ${message ? `<div
                                                                             style="font-family:'Rubik',Arial,Helvetica,sans-serif">
