@@ -16,7 +16,7 @@ describe("File", () => {
             .set("Authorization", accessToken)
             .send({
                 title: "Software Developer",
-                description: "Cool position for nerds!!! Kaan was here!",
+                description: "Cool position for nerds!!! Kâan was here!",
                 tags: [1, 2],
                 position: "Intern",
                 exp: 2000000000

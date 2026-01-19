@@ -29,6 +29,6 @@ export function startupLog(success?: boolean) {
         return;
     }
 
-    console.log(`\nGJU Jobs API (v${ENV.VERSION})\nMade by Kaan, Dilan and Khanh\n`);
+    console.log(`\nGJU Jobs API (v${ENV.VERSION})\nMade by Kâan, Dilan and Khanh\n`);
     console.log(`Endpoints: ${getBackendOrigin()}\n`);
 }

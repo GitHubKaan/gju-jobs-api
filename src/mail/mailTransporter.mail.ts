@@ -24,12 +24,13 @@ export async function sendEmail(
         subject: subjectTitle,
         html: content,
         attachments: [
-            /*
+            
             {
-                filename: "instagram.png",
-                path: "images/mail/instagram.png",
-                cid: "instagramID"
+                filename: "mail_logo.png",
+                path: "images/mail/mail_logo.png",
+                cid: "logoID"
             },
+            /*
             {
                 filename: "logo.png",
                 path: "images/mail/twitter.png",
