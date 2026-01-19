@@ -232,7 +232,7 @@ export function sendLoginMail(email: string, authCode: string) {
                                                                         <div
                                                                             style="text-align:center;text-align-last:center;font-family:'Arial Black',Gadget,sans-serif;letter-spacing:10px">
                                                                             <span
-                                                                                style="font-family:'Arial Black',Gadget,sans-serif;font-weight:400;font-size:50px;line-height:180%">${authCode}</span>
+                                                                                style="font-family:'Arial Black',Gadget,sans-serif;font-weight:400;font-size:50px;line-height:180%"><b>${authCode}</b></span>
                                                                         </div>
                                                                         <div
                                                                             style="text-align:center;text-align-last:center;font-family:'Rubik',Arial,Helvetica,sans-serif">
