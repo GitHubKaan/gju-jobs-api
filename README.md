@@ -1,6 +1,14 @@
+<img src="images/readme/banner.png" width="100%"/><br>
+
 # GJU Jobs API
 Made by Kaan, Dilan and Khanh<br>
 Project Lead: Silvio Peikert
+Auftraggeber: Prof. Dr. GJU typ.
+
+This project is made in cooperation with the GJU im Rahmen des Moduls.... es geht um das alte jobportal abzulösen und den studierenden zu ermöglichen sich zu bewerben und eine bessere kooperation zwischen studierenden und unternehmen zu ermöglichen. , Frontend teammitflieder lead usw zeigen. und projektlead.
+Dieses projekt steht unter MIT-Lizens. Dieses projekt wurde angefangen am 2025.01.12. die entwicklung erfolgt unter strnger beachtung von datenschutz und dem industriestandert.
+
+API Tech-lead: Kâan Turan
 
 ## Setup:
 1. Create .env, .env.production, .env.testing file, use .env.example as a template and configure
@@ -19,8 +27,7 @@ A description (string) will always be part of the body.<br>
 The "Response" column only shows the response on success (200).
 
 ### General
-[ Short description ]<br>
-[ Image ]
+[ Short description ]
 
 | Method | Title                   | Path                 | Headers | Body                                                              | Params | Response Headers | Response Body              |
 |--------|-------------------------|----------------------|---------|-------------------------------------------------------------------|--------|------------------|----------------------------|
@@ -29,7 +36,9 @@ The "Response" column only shows the response on success (200).
 
 ### User
 [ Short description ]<br>
-[ Image ]
+<img src="images/readme/user_auth.png" width="100%"/><br>
+<img src="images/readme/user_recovery.png" width="100%"/><br>
+<img src="images/readme/user_deletion.png" width="100%"/>
 
 | Method | Title             | Path                 | Headers              | Body                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Params | Response Headers     | Response Body                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 |--------|-------------------|----------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -46,7 +55,7 @@ The "Response" column only shows the response on success (200).
 
 ### File
 [ Short description ]<br>
-[ Image ]
+<img src="images/readme/user_file.png" width="100%"/>
 
 | Method | Title    | Path   | Headers             | Body         | Params       | Response Headers | Response Body                                                               |
 |--------|----------|--------|---------------------|--------------|--------------|------------------|-----------------------------------------------------------------------------|
@@ -56,8 +65,7 @@ The "Response" column only shows the response on success (200).
 | DEL    | Delete   | /file  | Authorization Token | uuid: string |              |                  |                                                                             |
 
 ### Images
-[ Short description ]<br>
-[ Image ]
+[ Short description ]
 
 | Method | Title | Path                           | Headers | Body | Params | Response Headers | Response Body |
 |--------|-------|--------------------------------|---------|------|--------|------------------|---------------|
@@ -65,7 +73,7 @@ The "Response" column only shows the response on success (200).
 
 ### Jobs
 [ Short description ]<br>
-[ Image ]
+<img src="images/readme/user_jobs.png" width="100%"/>
 
 | Method | Title    | Path         | Headers             | Body                                                                                                                                                                          | Params                                                             | Response Headers | Response Body                                                                                                                                                                                                                                                                                                                 |
 |--------|----------|--------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
