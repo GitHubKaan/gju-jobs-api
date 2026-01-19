@@ -93,6 +93,14 @@ CREATE TABLE IF NOT EXISTS jobs_tags (
     FOREIGN KEY (job_uuid) REFERENCES jobs(uuid) ON DELETE CASCADE
 );
 
+-- []==============================[ APPLICATIONS ]==============================[]
+CREATE TABLE IF NOT EXISTS applications (
+    uuid UUID PRIMARY KEY UNIQUE NOT NULL,
+    job_uuid UUID NOT NULL,
+    student_uuid UUID NOT NULL,
+    created TIMESTAMP DEFAULT NOW()
+);
+
 -- []==============================[ STUFF ]==============================[]
 -- TOKEN BLACKLIST
 CREATE TABLE IF NOT EXISTS token_blacklist (

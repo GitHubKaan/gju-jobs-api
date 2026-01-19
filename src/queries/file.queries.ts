@@ -39,7 +39,8 @@ export class FileQueries {
         SELECT * 
         FROM uploads 
         WHERE user_uuid = $1
-        AND uuid = $2;
+        AND uuid = $2
+        LIMIT 1;
     `;
 
     public static readonly getFilename = `
@@ -54,10 +55,11 @@ export class FileQueries {
         AND user_uuid = $2;
     `;
 
-    public static readonly getProfilePicture = `
+    public static readonly getSpecficFile = `
         SELECT *
         FROM uploads
         WHERE user_uuid = $1
-        AND type = $2;
+        AND type = $2
+        LIMIT 1;
     `;
 }

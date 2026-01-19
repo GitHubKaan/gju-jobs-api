@@ -1,10 +1,11 @@
 import multer from "multer";
 import path from "node:path";
 import { ValidationError } from "./error.util";
-import { ENV, getIndividualUserDataPath, imageTypes } from "./envReader.util";
+import { ENV, fileTypes, getIndividualUserDataPath, imageTypes } from "./envReader.util";
 import { MESSAGE } from "../../responseMessage";
 import { UUID } from "node:crypto";
 import { randomString } from "./stringGenerator.util";
+import { FileType } from "../enums";
 
 /**
  * Check client input format
@@ -41,9 +42,10 @@ export function checkFormat(value: any, schema: any, allOptional?: boolean) {
  * Multer picture upload format check
  * @param userUUID User UUID
  * @param fileSize File size
+ * @param fileType File type
  * @returns Multer instance
  */
-export const multerUploadCheck = (userUUID: UUID, fileSize: number) => {
+export const multerUploadCheck = (userUUID: UUID, fileSize: number, fileType: FileType) => {
     return multer({
         storage: multer.diskStorage({
             destination: (req: any, file: any, cb: any) => {
@@ -51,16 +53,24 @@ export const multerUploadCheck = (userUUID: UUID, fileSize: number) => {
             },
             filename: (req: any, file: any, cb: any) => {
                 const ext = path.extname(file.originalname).toLowerCase();
-                const newFileName = `${randomString("A0", ENV.IMAGE_NAME_LENGTH)}${ext}`;
+                const newFileName = `${randomString("A0", ENV.FILE_NAME_LENGTH)}${ext}`;
                 return cb(null, newFileName);
             }
         }),
         limits: { fileSize: 1024 * 1024 * fileSize },
         fileFilter: (req: any, file: any, cb: any) => {
-            if (!imageTypes.includes(file.mimetype)) {
-                req.fileValidationError = new ValidationError(MESSAGE.ERROR.FILE_FORMAT, "file"); // Mark file as invalid
-                return cb(null, false);
+            if (fileType === FileType.ProfilePicture) {
+                if (!imageTypes.includes(file.mimetype)) {
+                    req.fileValidationError = new ValidationError(MESSAGE.ERROR.FILE_FORMAT, "file"); // Mark file as invalid
+                    return cb(null, false);
+                }
+            } else if (fileType === FileType.CV) {
+                if (!fileTypes.includes(file.mimetype)) {
+                    req.fileValidationError = new ValidationError(MESSAGE.ERROR.FILE_FORMAT, "file"); // Mark file as invalid
+                    return cb(null, false);
+                }
             }
+            
             return cb(null, true);
         }
     });

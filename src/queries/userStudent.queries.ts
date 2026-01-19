@@ -4,7 +4,8 @@ export class UserStudentQueries {
     public static readonly selectStudentByUUID = `
         SELECT *
         FROM users_student
-        WHERE uuid = $1;
+        WHERE uuid = $1
+        LIMIT 1;
     `;
     
     public static readonly selectTagByUser = `

@@ -45,7 +45,8 @@ export enum SupportType {
 export const supportTypes: [SupportType, ...SupportType[]] = Object.values(SupportType) as [SupportType, ...SupportType[]];
 
 export enum FileType {
-    ProfilePicture = "PROFILE-PICTURE"
+    ProfilePicture = "PROFILE-PICTURE",
+    CV = "CV",
 }
 export const fileTypes: [FileType, ...FileType[]] = Object.values(FileType) as [FileType, ...FileType[]];
 

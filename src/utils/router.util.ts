@@ -3,7 +3,7 @@ import { Router } from "express";
 import { ENV, getBackendPath } from "./envReader.util";
 import { rateLimiter } from "../middlewares/rateLimiter.middleware";
 import { TokenType, UserType } from "../enums";
-import { uploadedImageHandler } from "./images.util";
+import { uploadedFileHandler } from "./images.util";
 import { app } from "../../Main";
 import { routeWrapper } from "../middlewares/wrapper.middleware";
 import { UserStudent } from "../routes/userStudent.routes";
@@ -123,6 +123,7 @@ export function routerHandler() {
     // Jobs
     router.post(
         "/jobs/create",
+        rateLimiter(ENV.CREATE_JOB_WINDOW_MS, ENV.CREATE_JOB_LIMIT),
         auth(TokenType.Access, UserType.Company),
         routeWrapper(JobsRoute.handleCreate)
     );
@@ -145,13 +146,14 @@ export function routerHandler() {
     // Application
     router.post(
         "/application/apply",
+        rateLimiter(ENV.APPLY_WINDOW_MS, ENV.APPLY_LIMIT),
         auth(TokenType.Access, UserType.Student),
         routeWrapper(ApplicationRoute.handleApply)
     );
 
     // Image
     app.use(
-        `${getBackendPath()}/${ENV.IMAGE_UPLOAD_PATH}`, // If changed, do not forget to edit timeout.middleware.ts also
-        routeWrapper(uploadedImageHandler)
+        `${getBackendPath()}/${ENV.FILE_UPLOAD_PATH}`, // If changed, do not forget to edit timeout.middleware.ts also
+        routeWrapper(uploadedFileHandler)
     );
 };

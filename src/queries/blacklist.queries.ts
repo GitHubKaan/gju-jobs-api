@@ -8,7 +8,8 @@ export class BlacklistQueries {
     public static readonly isTokenBlacklisted = `
         SELECT *
         FROM token_blacklist
-        WHERE token = $1;
+        WHERE token = $1
+        LIMIT 1;
     `
 
     public static readonly cleanupBlacklistedTokens = `

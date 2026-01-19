@@ -41,6 +41,8 @@ export class MESSAGE {
         TIMEOUT: "The request took too long.",
         FORBIDDEN: "This action is forbidden.",
         TOO_LARGE: "Content too large.",
+        CV_MISSING: "CV upload is missing.",
+        ALREADY_APPLIED: "Already applied for this job.",
         FORMAT: (value?: string): string => `${value ? `${value} ` : ""}format wrong.`,
         DUPLICATE: (value?: string): string => `${value ? `${value} ` : ""}already exists.`,
         UNAUTHORIZED: (value?: string): string => `${value ? `${value} ` : ""}unauthorized.`,

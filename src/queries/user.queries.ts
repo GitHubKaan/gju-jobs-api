@@ -25,7 +25,8 @@ export class UserQueries {
     public static readonly getUser = `
         SELECT *
         FROM users_company
-        WHERE uuid = $1;
+        WHERE uuid = $1
+        LIMIT 1;
     `;
 
     public static readonly setCooldown = (isStudent: boolean) => `
@@ -53,7 +54,8 @@ export class UserQueries {
         SELECT *
         FROM ${isStudent ? "users_student" : "users_company"}
         WHERE uuid = $1
-        AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS};
+        AND auth_code_attempt < ${ENV.AUTH_MAX_ATTEMPTS}
+        LIMIT 1;
     `;
 
     public static readonly isValidAuthCode = (isStudent: boolean) => `

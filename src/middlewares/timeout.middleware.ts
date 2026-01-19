@@ -14,7 +14,7 @@ export function timeout(server: http.Server | https.Server) {
         let requestTimeout = ENV.GLOBAL_TIMEOUT; //Global timeout
 
         //Individual timeouts
-        if (req.url === `/${ENV.IMAGE_UPLOAD_PATH}`) {
+        if (req.url === `/${ENV.FILE_UPLOAD_PATH}`) {
             requestTimeout = ENV.UPLOAD_IMAGES_TIMEOUT;
         }
 

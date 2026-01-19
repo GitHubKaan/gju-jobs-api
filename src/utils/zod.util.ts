@@ -20,7 +20,7 @@ export class Schemas {
     static readonly jobsSortType = z.nativeEnum(JobsSortType, {
         message: MESSAGE.ERROR.DECISION(`${Object.values(JobsSortType)}`),
     })
-
+    
     static readonly Number = (value: string, minimum: number, maximum: number) =>
         z.number({ message: MESSAGE.ERROR.INT(value) })
             .min(minimum, { message: MESSAGE.ERROR.MIN_INT(minimum, value) })
@@ -237,5 +237,4 @@ export class Schemas {
             .refine((value: string) => {
                 return fileTypes.includes(value as FileType);
             }, { message: MESSAGE.ERROR.AVAILABLE("fileType") });
-
 }

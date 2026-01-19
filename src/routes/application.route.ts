@@ -5,6 +5,14 @@ import { Schemas } from "../utils/zod.util";
 import { StatusCodes } from "http-status-codes";
 import { MESSAGE, TITLE } from "../../responseMessage";
 import { Apply } from "../types/application.type";
+import { FileService } from "../services/file.service";
+import { FileType } from "../enums";
+import { getFileURL } from "../utils/envReader.util";
+import { JobsService } from "../services/jobs.service";
+import { DefaultError } from "../utils/error.util";
+import { UserService } from "../services/user.service";
+import { sendApplicationToCompany } from "../mail/templates/companyApplication.mail";
+import { ApplicationService } from "../services/applications.service";
 
 export class ApplicationRoute {
     /**
@@ -16,6 +24,31 @@ export class ApplicationRoute {
     ) {
         const payload: Apply = req.body;
         checkFormat(payload, Schemas.apply);
+
+        // Add application to db and check if student already applied for this job
+        await ApplicationService.add(payload.jobUUID, req.userUUID);
+
+        // Get student Data
+        const studentData = await UserService.getUser(req.userUUID, true);
+        const studentEmail = studentData?.email;
+        const studentPhone = studentData?.phone;
+        const studentGivenName = studentData?.givenName;
+        const studentSurname = studentData?.surname;
+        const studentDegree = studentData?.degree;
+        const studentProgram = studentData?.program;
+
+        // Get student CV
+        const file = await FileService.getSpecificFile(req.userUUID, FileType.CV);
+        if (!file) throw new DefaultError(StatusCodes.NOT_FOUND, MESSAGE.ERROR.CV_MISSING);
+        const url = getFileURL(req.userUUID, (file?.name ?? ""));
+
+        // Get Company email
+        const companyUUID = await JobsService.getUserUUID(payload.jobUUID); // userUUID from company
+        const companyData = await UserService.getUser(companyUUID, false);
+        const companyEmail = companyData?.email;
+        
+        // Send application to company
+        sendApplicationToCompany(companyEmail, studentEmail, studentGivenName, studentSurname, url, studentPhone, payload.message, studentDegree, studentProgram);
 
         return res
             .status(StatusCodes.OK)

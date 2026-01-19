@@ -82,13 +82,13 @@ export function createUserUploadFolder(userUUID: UUID) {
 }
 
 /**
- * File upload
+ * Image upload
  * @param res Response
  * @param req Request
  * @param format Multer format
  * @returns filename
  */
-export function fileUpload(
+export function imageUpload(
     res: Response,
     req: Request,
     format: multer.Multer,
@@ -225,4 +225,52 @@ export function createUploadFolder() {
             fs.mkdirSync(fullPath, { recursive: true });
         }
     }
+}
+
+/**
+ * PDF upload
+ * @param res Response
+ * @param req Request
+ * @param format Multer format
+ * @returns filename
+ */
+export function pdfUpload(
+    res: Response,
+    req: Request,
+    format: multer.Multer,
+): Promise<
+    string
+> {
+    return new Promise((resolve, reject) => {
+        format.single("file")(req, res, async (error: any) => { // Only for single files -- if multiple files need to be uploaded new function needs to be created
+            try {
+                if (req.fileValidationError) { // FIX: To catch mimetype issues before all the other stuff
+                    return reject(req.fileValidationError);
+                }
+
+                if (error) { // Error from "format.util.ts" "pictureUpload"-function will be catched here
+                    throw error;
+                }
+
+                if (!req.file) {
+                    throw new ValidationError(MESSAGE.ERROR.FILE_ISSUE, "file");
+                }
+
+                // Keep the PDF file as is - no conversion needed
+                return resolve(req.file.filename);
+            } catch (error: any) {
+                if (error instanceof ValidationError) {
+                    const { description, label } = error; //Extract only this Props (Because some "format.util.ts"-"cb" errors will return more Props)
+                    return reject(new ValidationError(description, label));
+                }
+
+                if (error.code === "LIMIT_FILE_SIZE") {
+                    return reject(new DefaultError(StatusCodes.REQUEST_TOO_LONG, MESSAGE.ERROR.MAX_FILE_SIZE(0, "MB")));
+                }
+
+                addInternalError(error, true, true)
+                return reject(new ValidationError(MESSAGE.ERROR.FILE_ISSUE, "file"));
+            }
+        });
+    });
 }

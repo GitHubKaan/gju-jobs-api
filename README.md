@@ -34,9 +34,19 @@ To get started, follow the steps below to launch the API. The use of Docker is s
 7. Done! :blush:
 
 ## General
-This API is built using the <a href="https://expressjs.com">Express.js</a> framework. To operate the application, a configured <a href="https://www.postgresql.org">PostgreSQL</a> database, <a href="https://redis.io">Redis</a> instance, and mail server are required. The SSL certificate files must be stored in the root directory under /certificates. All additional third-party libraries and dependencies can be found in _/package.json_ and _/package-lock.json_. The following section provides an overview of the complete system architecture.
+This API is built using the <a href="https://expressjs.com">Express.js</a> framework. To operate the application, a configured <a href="https://www.postgresql.org">PostgreSQL</a> database, <a href="https://redis.io">Redis</a> instance, and mail server are required. The SSL certificate files must be stored in the root directory under /certificates. All additional third-party libraries and dependencies can be found in _/package.json_ and _/package-lock.json_.
+
+The following section provides an overview of the complete system architecture.
 
 <img src="images/readme/system_architecture.png" width="100%"/><br>
+
+## Security and Data Handling
+User-relevant values stored in the database are encrypted. The database uses connection pooling to ensure efficient resource utilization.
+To further enhance security, rate limiting, request timeouts, and individual account-level cooldowns have been implemented. Unauthorized tokens are automatically blacklisted.
+Algorithms for compressing uploaded files as well as file integrity checks have been implemented. All uploaded images are normalized into a unified format.
+JSON Web Tokens (JWTs) do not expose any personal user information for either students or companies; they contain only UUIDs used internally by the system for identification purposes.
+Emails can be sent through secure channels and encrypted if required; this option is configurable via the environment configuration file.
+Request payload sizes and numerous additional input validations are performed before any request is processed.
 
 ## Environment
 The following section lists all environment variables along with a brief description of each. The environment files also include short comments, although most variables are self-explanatory.
@@ -188,3 +198,11 @@ Below, all endpoints are presented along with a sequence diagram. A _description
 | PATCH  | Update   | /jobs/update | Authorization Token | jobUUID: string<br>title: string \| undefined<br>description: string \| undefined<br>tags: number[] \| undefined<br>position: string \| undefined<br>exp: number \| undefined |                                                                    |                  |                                                                                                                                                                                                                                                                                                                               |
 | DEL    | Delete   | /jobs/delete | Authorization Token | jobUUID: string                                                                                                                                                               |                                                                    |                  |                                                                                                                                                                                                                                                                                                                               |
 | GET    | Retrieve | /jobs        |                     |                                                                                                                                                                               | tags: number[]<br>sort: string<br>page: number<br>pageSize: number |                  | companyInfo: {<br>    email: string<br>    company: string<br>    size: string<br>    industry: string<br>    country: string<br>}<br>jobs: {<br>    uuid: string<br>    title: string<br>    description: string<br>    position: string<br>    exp: string \| undefined<br>    created: string<br>    tags: number[]<br>}[] |
+
+### Application
+#### Job Application<br>
+<img src="images/readme/application.png" width="100%"/>
+
+| Method | Title         | Path               | Headers             | Body                               | Params | Response Headers | Response Body |
+|--------|---------------|--------------------|---------------------|------------------------------------|--------|------------------|---------------|
+| POST   | Apply for Job | /application/apply | Authorization Token | jobUUID: string<br>message: string |        |                  |               |

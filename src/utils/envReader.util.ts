@@ -1,6 +1,7 @@
 import * as path from "node:path";
 import { NodeEnv, EnvType } from "../enums";
 import { CONSOLE } from "./console.util";
+import { UUID } from "node:crypto";
 
 require("dotenv").config();
 
@@ -112,8 +113,11 @@ export class ENV {
     static readonly SEND_FRONTEND_ERROR_WINDOW_MS: number = envAudit("SEND_FRONTEND_ERROR_WINDOW_MS", EnvType.Number);
     static readonly SEND_FRONTEND_ERROR_LIMIT: number = envAudit("SEND_FRONTEND_ERROR_LIMIT", EnvType.Number);
 
-    static readonly WS_WINDOW_MS: number = envAudit("WS_WINDOW_MS", EnvType.Number);
-    static readonly WS_LIMIT: number = envAudit("WS_LIMIT", EnvType.Number);
+    static readonly CREATE_JOB_WINDOW_MS: number = envAudit("CREATE_JOB_WINDOW_MS", EnvType.Number);
+    static readonly CREATE_JOB_LIMIT: number = envAudit("CREATE_JOB_LIMIT", EnvType.Number);
+
+    static readonly APPLY_WINDOW_MS: number = envAudit("APPLY_WINDOW_MS", EnvType.Number);
+    static readonly APPLY_LIMIT: number = envAudit("APPLY_LIMIT", EnvType.Number);
 
     // TIMEOUT
     static readonly GLOBAL_TIMEOUT: number = envAudit("GLOBAL_TIMEOUT", EnvType.Number);
@@ -125,17 +129,19 @@ export class ENV {
     // FILE
     static readonly UPLOADS_PATH: string | undefined = envAudit("UPLOADS_PATH", EnvType.String, { optional: true })
 
+    static readonly FILE_TYPES: string = envAudit("FILE_TYPES", EnvType.String);
+    static readonly FILE_NAME_LENGTH: number = envAudit("FILE_NAME_LENGTH", EnvType.Number);
+    
     static readonly IMAGE_TYPES: string = envAudit("IMAGE_TYPES", EnvType.String);
-    static readonly IMAGE_NAME_LENGTH: number = envAudit("IMAGE_NAME_LENGTH", EnvType.Number);
-
+    
     static readonly IMAGE_MAX_INIT_DIM: number = envAudit("IMAGE_MAX_INIT_DIM", EnvType.Number);
     static readonly IMAGE_RESIZE_RATE: number = envAudit("IMAGE_RESIZE_RATE", EnvType.Number);
     static readonly IMAGE_COMPRESSION_RATE: number = envAudit("IMAGE_COMPRESSION_RATE", EnvType.Number);
     
+    static readonly CV_MAX_SIZE: number = envAudit("CV_MAX_SIZE", EnvType.Number);
     static readonly PROFILE_PICTURE_MAX_SIZE: number = envAudit("PROFILE_PICTURE_MAX_SIZE", EnvType.Number);
 
-    // IMAGE
-    static readonly IMAGE_UPLOAD_PATH: string = envAudit("IMAGE_UPLOAD_PATH", EnvType.String);
+    static readonly FILE_UPLOAD_PATH: string = envAudit("FILE_UPLOAD_PATH", EnvType.String);
 
     // CORS
     static readonly USE_CORS: boolean = envAudit("USE_CORS", EnvType.Boolean);
@@ -174,6 +180,11 @@ export const getFrontendOrigin = (): string => {
     return `${protocol}${www}${host}${port}${path}`;
 }
 
+// Get fileURL
+export function getFileURL(userUUID: UUID, fileName: string) {
+    return `${getBackendOrigin()}/${ENV.FILE_UPLOAD_PATH}/${userUUID}/${fileName}`;
+}
+
 /**
  * Parrent user data path
  */
@@ -199,6 +210,11 @@ export function userDataPath(parrentOnly?: boolean) {
 export const getIndividualUserDataPath = (userUUID: string): string => {
     return path.join(userDataPath(), userUUID);
 }
+
+/**
+ * File types
+ */
+export const fileTypes = ENV.FILE_TYPES ? ENV.FILE_TYPES.split(",") : "";
 
 /**
  * Image types

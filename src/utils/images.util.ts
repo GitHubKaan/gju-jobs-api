@@ -5,19 +5,19 @@ import { Request, Response } from "express";
 import { MESSAGE } from "../../responseMessage";
 import { DefaultError } from "./error.util";
 import { StatusCodes } from "http-status-codes";
-import { userDataPath, imageTypes } from "./envReader.util";
+import { userDataPath, imageTypes, fileTypes } from "./envReader.util";
 import { getCurrentDateTime } from "./time.util";
 
-export function uploadedImageHandler(req: Request, res: Response) {
-    const imagePath = userDataPath();
-    imageHandler(imagePath, req, res);
+export function uploadedFileHandler(req: Request, res: Response) {
+    const filePath = userDataPath();
+    fileHandler(filePath, req, res);
 }
 
 /**
  * Retrieve image
  * @returns Image
  */
-function imageHandler(
+function fileHandler(
     imagePath: string,
     req: Request,
     res: Response
@@ -54,5 +54,5 @@ function imageHandler(
 function mimeTypeCheck(uploadPath: string, requestedPath: string) {
     // Check directory & Further file format check (so client wont get sensitive files in the worst case)
     const mimeType = mime.lookup(requestedPath);
-    return requestedPath.startsWith(uploadPath) && imageTypes.includes(mimeType || "");
+    return requestedPath.startsWith(uploadPath) && (imageTypes.includes(mimeType || "") || fileTypes.includes(mimeType || ""));
 }

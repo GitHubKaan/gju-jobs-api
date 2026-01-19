@@ -1,5 +1,3 @@
-import { RetrieveJobs } from "../types/jobs.type";
-
 export class JobsQueries {
     public static readonly add = `
         INSERT INTO jobs (
@@ -60,5 +58,11 @@ export class JobsQueries {
         LEFT OUTER JOIN jobs_tags jt ON j.uuid = jt.job_uuid
         INNER JOIN users_company uc ON j.user_uuid = uc.uuid
         WHERE (j.exp IS NULL OR j.exp > NOW())
+    `;
+
+    public static readonly getUserUUID = `
+        SELECT user_uuid
+        FROM jobs
+        WHERE uuid = $1;
     `;
 }

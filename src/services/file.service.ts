@@ -151,18 +151,20 @@ export class FileService {
     };
     
     /**
-     * Get profile picture name from userUUID
+     * Get file from userUUID
      * @param userUUID
+     * @param fileType What kind of fileType
      * @returns Profile picture data
      */
-    static async getProfilePicture(
-        userUUID: UUID
+    static async getSpecificFile(
+        userUUID: UUID,
+        fileType: FileType
     ): Promise<
         File | undefined
     > {
-        const result = await DBPool.query(FileQueries.getProfilePicture, [userUUID, FileType.ProfilePicture]);
+        const result = await DBPool.query(FileQueries.getSpecficFile, [userUUID, fileType]);
         
-        if (result.rows.length > 0 && result.rows[0]) { //Because profile picture is optional
+        if (result.rows.length > 0 && result.rows[0]) {
             return {
                 UUID: result.rows[0].uuid,
                 name: result.rows[0].name,

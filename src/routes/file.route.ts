@@ -4,10 +4,10 @@ import { ParsedQs } from "qs";
 import { UUID } from "node:crypto";
 import { checkFormat, multerUploadCheck } from "../utils/format.util";
 import { FileService } from "../services/file.service";
-import { deleteLocalFile, fileUpload } from "../utils/file.util";
+import { deleteLocalFile, imageUpload, pdfUpload } from "../utils/file.util";
 import { MESSAGE, TITLE } from "../../responseMessage";
 import { FileType } from "../enums";
-import { ENV, getBackendOrigin } from "../utils/envReader.util";
+import { ENV, getBackendOrigin, getFileURL } from "../utils/envReader.util";
 import { Schemas } from "../utils/zod.util";
 
 export class FileRoute {
@@ -69,7 +69,7 @@ export class FileRoute {
         
         const modifFile = {
             ...file,
-            url: `${getBackendOrigin()}/${ENV.IMAGE_UPLOAD_PATH}/${req.userUUID}/${file.name}`
+            url: getFileURL(req.userUUID, file.name)
         };
     
         return res
@@ -95,26 +95,41 @@ export class FileRoute {
     
         const userUUID = req.userUUID;
         
+        // Get old filetype
+        const fileInfo = await FileService.getSpecificFile(userUUID, fileType);
+
         let fileName: string = "";
         switch (type) {
             case FileType.ProfilePicture: {
-                // Get old profile picture
-                const PPFile = await FileService.getProfilePicture(userUUID);
-    
                 // Upload profile picture
-                const multerInstance = multerUploadCheck(userUUID, ENV.PROFILE_PICTURE_MAX_SIZE);
-                fileName = await fileUpload(res, req, multerInstance);
+                const multerInstance = multerUploadCheck(userUUID, ENV.PROFILE_PICTURE_MAX_SIZE, FileType.ProfilePicture);
+                fileName = await imageUpload(res, req, multerInstance);
     
                 // Delete old profile picture if available (needs to be down here after checks)
-                if (PPFile) {
-                    await FileService.delete(PPFile.UUID, userUUID);
-                    deleteLocalFile(userUUID, PPFile.name);
+                if (fileInfo) {
+                    await FileService.delete(fileInfo.UUID, userUUID);
+                    deleteLocalFile(userUUID, fileInfo.name);
                 }
                 break;
             }
-    
-            /* ADD FURTHER UPLOADS HERE */
-    
+            case FileType.CV: {
+                // Upload profile picture
+                const multerInstance = multerUploadCheck(userUUID, ENV.CV_MAX_SIZE, FileType.CV);
+                fileName = await pdfUpload(res, req, multerInstance);
+
+                // Delete old CV if available (needs to be down here after checks)
+                if (fileInfo) {
+                    await FileService.delete(fileInfo.UUID, userUUID);
+                    deleteLocalFile(userUUID, fileInfo.name);
+                }
+                break;
+            }
+            
+
+
+
+
+            
             default:
                 break;
         }

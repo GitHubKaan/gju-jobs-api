@@ -1,5 +1,5 @@
 import { UUID } from "node:crypto";
-import { PoolClient } from "pg";
+import { PoolClient, QueryResult } from "pg";
 import { DBPool } from "../configs/postgreSQL.config";
 import { v4 as uuidv4 } from "uuid";
 import { CreateJob, RetrieveJobs, UpdateJob } from "../types/jobs.type";
@@ -218,5 +218,20 @@ export class JobsService {
             companyInfo: companyInfoMap,
             jobs: paginatedJobs,
         };
+    };
+
+    /**
+      * Get company userUUID from jobUUID
+      * @param jobUUID
+      * @returns userUUID
+      */
+    static async getUserUUID(
+        jobUUID: UUID,
+    ): Promise<
+        UUID
+    > {
+        const result = await DBPool.query(JobsQueries.getUserUUID, [jobUUID]);
+
+        return result.rows[0].user_uuid;
     };
 }
