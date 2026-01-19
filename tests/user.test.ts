@@ -34,7 +34,7 @@ describe("User", () => {
         const response = await request(app)
         .post(`${getBackendPath()}/user/signup/company`)
         .send({
-            email: "max@maxsoftware.com",
+            email: "max@geisuvntbhgusbxf.com",
             phone: "+490123456789",
             company: "Mustermann GmbH",
             description: "This is a test description.",

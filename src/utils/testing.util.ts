@@ -50,7 +50,7 @@ export class Testing {
         const signupResponse = await request(app)
             .post(`${getBackendPath()}/user/signup/company`)
             .send({
-                email: "moritz@moritzsoftware.com",
+                email: "moritz@ifemsnochelsifhnxshg.com",
                 phone: "+490123456789",
                 company: "Mustermann GmbH",
                 description: "This is a test description.",

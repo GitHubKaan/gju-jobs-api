@@ -8,7 +8,7 @@ describe("General", () => {
         const response = await request(app)
             .post(`${getBackendPath()}/support`)
             .send({
-                email: "max@maxsoftware.com",
+                email: "max@dwightnslsguebhyds.com",
                 phone: "+490123456789",
                 type: "LEGAL",
                 message: "Hey, I need help!"
