@@ -18,7 +18,7 @@ describe("Application", () => {
                 jobUUID: jobUUID,
                 message: "I want to work here, really, really badly!!! I love your company!"
             });
-        console.log(response.body)
+        
         expect(response.status).toBe(200);
     });
 });
