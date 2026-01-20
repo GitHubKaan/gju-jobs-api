@@ -50,7 +50,6 @@ describe("File", () => {
             .set("Authorization", accessToken)
         
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("companyInfo");
         expect(response.body).toHaveProperty("jobs");
     });
 

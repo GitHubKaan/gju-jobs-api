@@ -37,8 +37,8 @@ export class ApplicationRoute {
         const studentProgram = studentData?.program;
 
         // Get student CV
-        const file = await FileService.getSpecificFile(req.userUUID, FileType.CV);
-        const url = getFileURL(req.userUUID, (file?.name ?? ""));
+        const cvFile = await FileService.getSpecificFile(req.userUUID, FileType.CV);
+        const cvUrl = getFileURL(req.userUUID, (cvFile?.name ?? ""));
 
         // Get Company email
         const companyUUID = await JobsService.getUserUUID(payload.jobUUID); // userUUID from company
@@ -46,7 +46,7 @@ export class ApplicationRoute {
         const companyEmail = companyData?.email;
         
         // Send application to company
-        sendApplicationToCompany(companyEmail, studentEmail, studentGivenName, studentSurname, studentPhone, payload.message, studentDegree, studentProgram, (file ? url : undefined));
+        sendApplicationToCompany(companyEmail, studentEmail, studentGivenName, studentSurname, studentPhone, payload.message, studentDegree, studentProgram, (cvFile ? cvUrl : undefined));
 
         return res
             .status(StatusCodes.OK)

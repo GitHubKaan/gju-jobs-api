@@ -12,7 +12,7 @@ import { sendEmail } from "../mailTransporter.mail";
  * @param message optional
  * @param studentDegree optional
  * @param studentProgram optional
- * @param cv optional
+ * @param cdUrl optional
  */
 export function sendApplicationToCompany(
     companyEmail: string,
@@ -23,7 +23,7 @@ export function sendApplicationToCompany(
     message?: string,
     studentDegree?: string,
     studentProgram?: string,
-    cv?: string,
+    cdUrl?: string,
 ) {
     const content = `
      <!DOCTYPE html>
@@ -294,11 +294,11 @@ export function sendApplicationToCompany(
                                                                             <span
                                                                                 style="font-family:'Rubik',Arial,Helvetica,sans-serif;font-weight:400;font-size:16px;line-height:180%">Program:
                                                                                 ${studentProgram}</span></div>
-                                                                        ${cv ? `<div
+                                                                        ${cdUrl ? `<div
                                                                             style="font-family:'Rubik',Arial,Helvetica,sans-serif">
                                                                             <span
                                                                                 style="font-family:'Rubik',Arial,Helvetica,sans-serif;font-weight:400;font-size:16px;line-height:180%">CV:
-                                                                                ${cv}</span></div>` : ""}
+                                                                                ${cdUrl}</span></div>` : ""}
                                                                         <div><br></div>
                                                                         ${message ? `<div
                                                                             style="font-family:'Rubik',Arial,Helvetica,sans-serif">

@@ -488,14 +488,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseURL}}file?UUID=bd09e09d-f900-4503-b2da-764e4cac09f3",
+                  "raw": "{{baseURL}}file?UUID=47f6ec3f-53ec-4239-9346-22847b2d5383",
                   "host": [
                     "{{baseURL}}file"
                   ],
                   "query": [
                     {
                       "key": "UUID",
-                      "value": "bd09e09d-f900-4503-b2da-764e4cac09f3"
+                      "value": "47f6ec3f-53ec-4239-9346-22847b2d5383"
                     }
                   ]
                 }
@@ -687,7 +687,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseURL}}jobs?tags=[1, 2, 3, 4]&sort=NEWEST&page=2&pageSize=10",
+                  "raw": "{{baseURL}}jobs?tags=[1, 2, 3, 4]&sort=NEWEST&page=1&pageSize=10",
                   "host": [
                     "{{baseURL}}jobs"
                   ],
@@ -704,7 +704,7 @@
                     },
                     {
                       "key": "page",
-                      "value": "2",
+                      "value": "1",
                       "description": "What page?; Minimum 1"
                     },
                     {
@@ -739,7 +739,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"jobUUID\": \"16df7384-9e19-4fd6-9220-e059cba3e4f0\",\n    \"message\": \"sdsd\" // optional\n}",
+                  "raw": "{\n    \"jobUUID\": \"9b01c483-0e62-4de1-ba23-f2b56f6a5d07\",\n    \"message\": \"sdsd\" // optional\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -753,6 +753,62 @@
                   ],
                   "path": [
                     "apply"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrieve received Company Applications",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}application/retrieve/company",
+                  "host": [
+                    "{{baseURL}}application"
+                  ],
+                  "path": [
+                    "retrieve",
+                    "company"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrieve applied Student Applications",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}application/retrieve/student",
+                  "host": [
+                    "{{baseURL}}application"
+                  ],
+                  "path": [
+                    "retrieve",
+                    "student"
                   ]
                 }
               },
