@@ -79,6 +79,8 @@ export class UserCompanyService {
             zip_code: String(payload.ZIPCode)?.trimEnd().trimStart(),
             city: payload.city?.trimEnd().trimStart(),
             country: payload.country?.trimEnd().trimStart(),
+            industry: payload.industry?.trimEnd().trimStart(),
+            size: payload.industry?.trimEnd().trimStart(),
         };
 
         const optionalClauses: string[] = [];
