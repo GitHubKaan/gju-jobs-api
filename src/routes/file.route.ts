@@ -43,11 +43,16 @@ export class FileRoute {
     ) {
         const files = await FileService.getFiles(req.userUUID);
         
+        const modifFiles = files.map(file => ({
+            ...file,
+            url: getFileURL(req.userUUID, file.name)
+        }));
+        
         return res
             .status(StatusCodes.OK)
             .json({
                 description: MESSAGE.RETRIEVED(TITLE.FILES),
-                files: files
+                files: modifFiles
             });
     }
     
