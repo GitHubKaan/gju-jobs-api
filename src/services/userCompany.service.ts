@@ -80,7 +80,7 @@ export class UserCompanyService {
             city: payload.city?.trimEnd().trimStart(),
             country: payload.country?.trimEnd().trimStart(),
             industry: payload.industry?.trimEnd().trimStart(),
-            size: payload.industry?.trimEnd().trimStart(),
+            size: payload.size?.trimEnd().trimStart(),
         };
 
         const optionalClauses: string[] = [];
