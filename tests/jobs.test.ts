@@ -53,6 +53,15 @@ describe("File", () => {
         expect(response.body).toHaveProperty("jobs");
     });
 
+    test("[GET] Retrieve own Jobs", async () => {
+        const response = await request(app)
+            .get(`${getBackendPath()}/jobs/own`)
+            .set("Authorization", accessToken)
+        
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("jobs");
+    });
+
     test("[DELETE] Delete Job", async () => {
         const response = await request(app)
             .delete(`${getBackendPath()}/jobs/delete`)

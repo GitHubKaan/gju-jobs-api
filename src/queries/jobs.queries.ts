@@ -60,6 +60,25 @@ export class JobsQueries {
         WHERE (j.exp IS NULL OR j.exp > NOW())
     `;
 
+    public static readonly retrieveOwn = `
+        SELECT
+            j.uuid,
+            j.user_uuid,
+            j.title,
+            j.description,
+            j.position,
+            j.exp,
+            j.created,
+            jt.tag_id
+        FROM jobs j
+        LEFT JOIN jobs_tags jt 
+            ON j.uuid = jt.job_uuid
+        WHERE 
+            (j.exp IS NULL OR j.exp > NOW())
+            AND j.user_uuid = $1
+        ORDER BY j.created DESC;
+    `;
+
     public static readonly getUserUUID = `
         SELECT user_uuid
         FROM jobs

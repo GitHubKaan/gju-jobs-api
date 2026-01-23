@@ -102,4 +102,21 @@ export class JobsRoute {
                 jobs: jobs
             });
     }
+
+    /**
+     * Retrieve Own jobs from company
+     */
+    static async handleRetrieveOwn(
+        req: Request<any, any, any, ParsedQs, Record<string, any>>,
+        res: Response
+    ) {
+        const { jobs } = await JobsService.retrieveOwn(req.userUUID);
+
+        return res
+            .status(StatusCodes.OK)
+            .json({
+                description: MESSAGE.RETRIEVED(TITLE.JOBS),
+                jobs: jobs
+            });
+    }
 }

@@ -142,6 +142,11 @@ export function routerHandler() {
         auth(TokenType.Access),
         routeWrapper(JobsRoute.handleRetrieve)
     );
+    router.get(
+        "/jobs/own",
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(JobsRoute.handleRetrieveOwn)
+    );
 
     // Application
     router.post(

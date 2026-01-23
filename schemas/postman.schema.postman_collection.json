@@ -71,7 +71,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"kaaddn@turanics.com\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optionaram name.\", // optional\r\n    \"program\": \"awdawd\", // optionaram name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
+                  "raw": "{\r\n    \"email\": \"kadaddn@turanics.com\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optionaram name.\", // optional\r\n    \"program\": \"awdawd\", // optionaram name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -98,7 +98,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"kaan@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdaw;--232#*+dwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}",
+                  "raw": "{\r\n    \"email\": \"ksan@turanics.com\",\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiawdaw;--232#*+dwa daw daw dwadudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -152,7 +152,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjJhYzJhZTkzLWZiZDgtNDc5ZC1iMTllLTk3N2M2ZDVjN2ZkNyIsImF1dGhVVUlEIjoiM2U2ODQxNjctNGExMi00ZjRjLTkyMDItYjA4YzUwYzI3MWJhIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3Njg4NTQ0MTAsImV4cCI6MTc2ODg1NTMxMH0.edy6Vjdne9LAOaHOUAu4x3WsW9aOP8UAMZ6oQpZaRss",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjMyODYxMWU0LTBjMjItNDIyMi1hYjA4LTQ2MGFhZmUyMDY5YiIsImF1dGhVVUlEIjoiMjY2ZjRmZTItZTQ5OS00YWJhLTg2MTEtMjQ3YjdkMGE0ZDcyIiwidHlwZSI6ImF1dGgiLCJ1c2VyVHlwZSI6IlNUVURFTlQiLCJpYXQiOjE3NjkxNjYzMTUsImV4cCI6MTc2OTE2NzIxNX0.U7hQkuEehitWblJZRXmr4k7vLc2umI9ja0g_r916Gk0",
                       "type": "string"
                     }
                   ]
@@ -161,7 +161,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"code\": \"893611\"\r\n}",
+                  "raw": "{\r\n    \"code\": \"722819\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -188,7 +188,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZiNDEyNmVhLWQzYzAtNDAwNi1hMmQ1LTU4Mzk4MDFiODBkNyIsImF1dGhVVUlEIjoiZTQyOWJjZWUtMzM5OC00Yjg5LTk4MDctZjA3NTdlYTRlYTUwIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2OTE2NTU2NSwiZXhwIjoxNzg0NzE3NTY1fQ.C7KwXgF9K7gNVlUNUrVmT3maK6aEx_ZedbNqXJKmhQo",
                       "type": "string"
                     }
                   ]
@@ -197,7 +197,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "// STUDENT\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2], // optional\r\n    \"jobPreferences\": [1, 2], // optional\r\n    \"languages\": [1, 2] // optional\r\n}\r\n\r\n// COMPANY\r\n/*\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"100-500\",\r\n    \"industry\": \"IT\"\r\n}\r\n*/\r\n",
+                  "raw": "// STUDENT\r\n/*\r\n{\r\n    \"phone\": \"+490123456789\", // optional\r\n    \"givenName\": \"Max\", // optional\r\n    \"surname\": \"Mustermann\", // optional\r\n    \"birthdate\": \"2000-06-15\", // optional\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optional\r\n    \"program\": \"Program name.\", // optional\r\n    \r\n    //    - When removing tags (undefined) nothing will be changed\r\n    //    - When using \"[]\"\" all old tag-value(s) will be removed\r\n    //    - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    \r\n    \"tags\": [1, 2], // optional\r\n    \"jobPreferences\": [1, 2], // optional\r\n    \"languages\": [1, 2] // optional\r\n}\r\n*/\r\n\r\n// COMPANY\r\n{\r\n    \"phone\": \"+490176123456789\",\r\n    \"company\": \"Mustermann GmbH\",\r\n    \"description\": \"aiudd awd awd wadbnawiud\", // company description - optional\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"street\": \"Geheimstraße\",\r\n    \"streetNumber\": \"11A\",\r\n    \"ZIPCode\": 12105,\r\n    \"city\": \"Berlin\",\r\n    \"country\": \"Germany\",\r\n    \"size\": \"50\",\r\n    \"industry\": \"IsdfdsT\"\r\n}\r\n",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -227,7 +227,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjdkYWRiNjU5LTAxZTAtNGI4NS1iODFmLTlmYjNkNzA5MzMwZiIsImF1dGhVVUlEIjoiYjljNDUwNzEtNjk5Ni00OTBlLThkYmYtNGUyN2FiNmZjOTA2IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODc2NDkzMiwiZXhwIjoxNzg0MzE2OTMyfQ.p_OjNkVB60MlIa5RzkpAEsszy2waTWd2tTjCkoWlHQo",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZiNDEyNmVhLWQzYzAtNDAwNi1hMmQ1LTU4Mzk4MDFiODBkNyIsImF1dGhVVUlEIjoiZTQyOWJjZWUtMzM5OC00Yjg5LTk4MDctZjA3NTdlYTRlYTUwIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2OTE2NTU2NSwiZXhwIjoxNzg0NzE3NTY1fQ.C7KwXgF9K7gNVlUNUrVmT3maK6aEx_ZedbNqXJKmhQo",
                       "type": "string"
                     }
                   ]
@@ -415,7 +415,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjMyODYxMWU0LTBjMjItNDIyMi1hYjA4LTQ2MGFhZmUyMDY5YiIsImF1dGhVVUlEIjoiMjY2ZjRmZTItZTQ5OS00YWJhLTg2MTEtMjQ3YjdkMGE0ZDcyIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2OTE2NjMzMCwiZXhwIjoxNzg0NzE4MzMwfQ.DwpFe0gcJaWz7Ht-ruprh1jYSnIf-UMQeXBti9WSGcw",
                       "type": "string"
                     }
                   ]
@@ -429,7 +429,7 @@
                       "key": "file",
                       "type": "file",
                       "uuid": "48203d9b-7594-469d-a3b3-4946902e8b07",
-                      "src": "/Users/kaan/Documents/University/Hochschule für Technik und Wirtschaft/Semester/Semester 2/System Developement and Frameworks/sysdev_extra_praesentation.pdf"
+                      "src": "/Users/kaan/Documents/Documents/Kaan/Wellenstein.pdf"
                     }
                   ]
                 },
@@ -456,7 +456,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjMyODYxMWU0LTBjMjItNDIyMi1hYjA4LTQ2MGFhZmUyMDY5YiIsImF1dGhVVUlEIjoiMjY2ZjRmZTItZTQ5OS00YWJhLTg2MTEtMjQ3YjdkMGE0ZDcyIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2OTE2NjMzMCwiZXhwIjoxNzg0NzE4MzMwfQ.DwpFe0gcJaWz7Ht-ruprh1jYSnIf-UMQeXBti9WSGcw",
                       "type": "string"
                     }
                   ]
@@ -480,7 +480,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjMyODYxMWU0LTBjMjItNDIyMi1hYjA4LTQ2MGFhZmUyMDY5YiIsImF1dGhVVUlEIjoiMjY2ZjRmZTItZTQ5OS00YWJhLTg2MTEtMjQ3YjdkMGE0ZDcyIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2OTE2NjMzMCwiZXhwIjoxNzg0NzE4MzMwfQ.DwpFe0gcJaWz7Ht-ruprh1jYSnIf-UMQeXBti9WSGcw",
                       "type": "string"
                     }
                   ]
@@ -488,14 +488,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseURL}}file?UUID=47f6ec3f-53ec-4239-9346-22847b2d5383",
+                  "raw": "{{baseURL}}file?UUID=53d0c82d-4e88-4533-8fa3-d7a71dda04a9",
                   "host": [
                     "{{baseURL}}file"
                   ],
                   "query": [
                     {
                       "key": "UUID",
-                      "value": "47f6ec3f-53ec-4239-9346-22847b2d5383"
+                      "value": "53d0c82d-4e88-4533-8fa3-d7a71dda04a9"
                     }
                   ]
                 }
@@ -571,7 +571,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjZkMGUyMTNlLThkMzUtNGZjYS1hMDczLTU5YTZmYTU0MDllYSIsImF1dGhVVUlEIjoiNjhiZWFkNjgtOTU3My00ZTczLTlkYmMtNDFiOGEwNTRhM2MzIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODg1MTc4OCwiZXhwIjoxNzg0NDAzNzg4fQ.pOQyBk_qCE04orH0-ve78y_VH7pvQGp5iNu4aBKzhis",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
                       "type": "string"
                     }
                   ]
@@ -580,7 +580,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [7, 8], // optional\n    \"position\": \"INTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
+                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [7, 8], // optional\n    \"position\": \"INasdasdTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -712,6 +712,33 @@
                       "value": "10",
                       "description": "Page size? (element amount per page); Minimum 1"
                     }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrieve Own Company Jobs",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}jobs/own",
+                  "host": [
+                    "{{baseURL}}jobs"
+                  ],
+                  "path": [
+                    "own"
                   ]
                 }
               },

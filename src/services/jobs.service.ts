@@ -228,4 +228,49 @@ export class JobsService {
 
         return result.rows[0].user_uuid;
     };
+
+    /**
+     * Retrieve own jobs
+     * @param userUUID Company user uuid 
+     * @returns Jobs from company
+    */
+    static async retrieveOwn(
+        userUUID: UUID
+    ): Promise<
+        { jobs: any[] }
+    > {
+        const result = await DBPool.query(JobsQueries.retrieveOwn, [userUUID]);
+        const rows = result.rows;
+
+        // Group jobs by UUID and collect their tags
+        const jobsMap = new Map<UUID, any>();
+
+        for (const row of rows) {
+            const jobUUID = row.uuid as UUID;
+            
+            if (!jobsMap.has(jobUUID)) {
+                jobsMap.set(jobUUID, {
+                    uuid: jobUUID,
+                    user_uuid: row.user_uuid,
+                    title: row.title,
+                    description: row.description,
+                    position: row.position,
+                    exp: row.exp ? formatDBTimestamp(row.exp) : undefined,
+                    created: row.created ? formatDBTimestamp(row.created) : undefined,
+                    tags: [],
+                });
+            }
+
+            // Add tag if it exists
+            if (row.tag_id !== null) {
+                jobsMap.get(jobUUID)!.tags.push(row.tag_id);
+            }
+        }
+
+        const jobs = Array.from(jobsMap.values());
+
+        return {
+            jobs,
+        };
+    };
 }
