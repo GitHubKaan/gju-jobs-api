@@ -18,6 +18,7 @@ describe("File", () => {
                 title: "Software Developer",
                 description: "Cool position for nerds!!! Kâan was here!",
                 tags: [1, 2],
+                location: "Berlin",
                 position: "Intern",
                 exp: 2000000000
             });
@@ -37,6 +38,7 @@ describe("File", () => {
                 title: "Senior Software Developer",
                 description: "Cooler position i guess?!",
                 tags: [69, 31, 32, 10, 20],
+                location: "Hamburg",
                 position: "Senior",
                 exp: 3000000000
             });

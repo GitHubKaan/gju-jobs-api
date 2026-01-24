@@ -5,10 +5,11 @@ export class JobsQueries {
             user_uuid,
             title,
             description,
+            location,
             position,
             exp
         )
-        VALUES ($1, $2, $3, $4, $5, $6);
+        VALUES ($1, $2, $3, $4, $5, $6, $7);
     `;
 
     public static readonly insertTags = `
@@ -44,6 +45,7 @@ export class JobsQueries {
             j.user_uuid,
             j.title,
             j.description,
+            j.location,
             j.position,
             j.exp,
             j.created,
@@ -66,6 +68,7 @@ export class JobsQueries {
             j.user_uuid,
             j.title,
             j.description,
+            j.location,
             j.position,
             j.exp,
             j.created,

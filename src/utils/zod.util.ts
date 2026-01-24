@@ -84,6 +84,11 @@ export class Schemas {
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             tags: this.tags
                 .optional(),
+            location: z.string({ message: MESSAGE.ERROR.STRING() })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
+                .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             position: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
                 .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })

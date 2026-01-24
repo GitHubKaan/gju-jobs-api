@@ -580,7 +580,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [7, 8], // optional\n    \"position\": \"INasdasdTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
+                  "raw": "{\n    \"title\": \"Job Title\",\n    \"description\": \"Job description\",\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [7, 8], // optional\n    \"location\": \"Berlin\",\n    \"position\": \"INasdasdTERN\",\n    \"exp\": 1788552606 // optional; timestamp in seconds\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -616,7 +616,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"jobUUID\": \"09df1f3b-926a-4727-ba95-5d421bcfa458\",\n    \"title\": \"Job Title\", // optional\n    \"description\": \"Job description\", // optional\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [1, 2, 3, 4], // optional\n    \"position\": \"SENIOR\", // optional\n    \"exp\": 3684984621 // optional\n}",
+                  "raw": "{\n    \"jobUUID\": \"09df1f3b-926a-4727-ba95-5d421bcfa458\",\n    \"title\": \"Job Title\", // optional\n    \"description\": \"Job description\", // optional\n    /*\n        - When removing tags (undefined) nothing will be changed\n        - When using \"[]\"\" all old tag-value(s) will be removed\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\n    */\n    \"tags\": [1, 2, 3, 4], // optional\n    \"location\": \"Berlin\",\n    \"position\": \"SENIOR\", // optional\n    \"exp\": 3684984621 // optional\n}",
                   "options": {
                     "raw": {
                       "language": "json"

@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     user_uuid UUID NOT NULL, -- company user uuid
     title TEXT NOT NULL, -- job title
     description TEXT NOT NULL, -- job description
+    location TEXT NOT NULL, -- job location
     position TEXT NOT NULL, -- what kind of job position? e.g. INTERN, SENIOR etc.
     exp TIMESTAMP, -- OPTIONAL | job expiration date
     created TIMESTAMP DEFAULT NOW()

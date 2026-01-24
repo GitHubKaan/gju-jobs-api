@@ -33,6 +33,7 @@ export class JobsService {
             userUUID,
             payload.title.trimEnd().trimStart(),
             payload.description.trimEnd().trimStart(),
+            payload.location.trimEnd().trimStart(),
             payload.position.trimEnd().trimStart(),
             payload.exp ? unixSecondsToDbTimestamp(payload.exp) : null
         ]);
@@ -68,6 +69,7 @@ export class JobsService {
         const fieldsToUpdate = {
             title: payload.title?.trimEnd().trimStart(),
             description: payload.description?.trimEnd().trimStart(),
+            location: payload.location?.trimEnd().trimStart(),
             position: payload.position?.trimEnd().trimStart(),
             exp: payload.exp ? unixSecondsToDbTimestamp(payload.exp) : undefined,
         };
@@ -152,6 +154,7 @@ export class JobsService {
                     uuid: jobUUID,
                     title: row.title,
                     description: row.description,
+                    location: row.location,
                     position: row.position,
                     exp: row.exp ? formatDBTimestamp(row.exp) : undefined,
                     created: row.created ? formatDBTimestamp(row.created) : undefined,
@@ -254,6 +257,7 @@ export class JobsService {
                     user_uuid: row.user_uuid,
                     title: row.title,
                     description: row.description,
+                    location: row.location,
                     position: row.position,
                     exp: row.exp ? formatDBTimestamp(row.exp) : undefined,
                     created: row.created ? formatDBTimestamp(row.created) : undefined,

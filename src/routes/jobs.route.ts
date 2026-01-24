@@ -19,7 +19,7 @@ export class JobsRoute {
         checkFormat(payload, Schemas.job);
 
         const jobUUID = await JobsService.add(req.userUUID, payload);
-
+        
         return res
             .status(StatusCodes.OK)
             .json({

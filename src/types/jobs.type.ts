@@ -5,7 +5,8 @@ import { JobsSortType } from "../enums";
 interface BaseCreateJob {
     title: string,
     description: string,
-    tags: number[],
+    tags?: number[],
+    location: string,
     position: string,
     exp?: number,
 };
