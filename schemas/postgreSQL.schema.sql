@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS applications (
     uuid UUID PRIMARY KEY UNIQUE NOT NULL,
     job_uuid UUID NOT NULL,
     student_uuid UUID NOT NULL,
+    MESSAGE TEXT,
     created TIMESTAMP DEFAULT NOW()
 );
 

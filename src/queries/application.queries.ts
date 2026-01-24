@@ -11,9 +11,10 @@ export class ApplicationQueries {
         INSERT INTO applications (
             uuid,
             job_uuid,
-            student_uuid
+            student_uuid,
+            message
         )
-        VALUES ($1, $2, $3);
+        VALUES ($1, $2, $3, $4);
     `;
 
     public static readonly getApplicantsByJob = `
@@ -28,7 +29,8 @@ export class ApplicationQueries {
             t.tag_id AS student_tag_id,
             jp.preference_id AS student_job_preference,
             l.language_id AS student_language,
-            u.name AS cv_name
+            u.name AS cv_name,
+            a.message
         FROM applications a
         INNER JOIN users_student s ON a.student_uuid = s.uuid
         LEFT JOIN users_student_tags t ON s.uuid = t.user_uuid
@@ -55,7 +57,8 @@ export class ApplicationQueries {
         uc.company,
         uc.size,
         uc.industry,
-        uc.country
+        uc.country,
+        a.message
     FROM applications a
     INNER JOIN jobs j ON a.job_uuid = j.uuid
     LEFT OUTER JOIN jobs_tags jt ON j.uuid = jt.job_uuid

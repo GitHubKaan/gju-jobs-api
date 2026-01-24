@@ -14,11 +14,13 @@ export class ApplicationService {
      * Add application
      * @param jobUUID
      * @param studentUUID
+     * @param message
      * @throws {DefaultError} Already applied for that job
     */
     static async add(
         jobUUID: UUID,
-        studentUUID: UUID
+        studentUUID: UUID,
+        message: String | undefined
     ): Promise<
         void
     > {
@@ -37,7 +39,8 @@ export class ApplicationService {
             [
                 uuidv4(),
                 jobUUID,
-                studentUUID
+                studentUUID,
+                message ?? null
             ]
         );
     };
@@ -72,6 +75,7 @@ export class ApplicationService {
                     tags: [] as number[],
                     jobPreferences: [] as string[],
                     languages: [] as string[],
+                    message: row.message ?? undefined
                 });
             }
 
@@ -127,6 +131,9 @@ export class ApplicationService {
                         size: decrypt(row.size),
                         industry: decrypt(row.industry),
                         country: decrypt(row.country),
+                    },
+                    studentInfo: {
+                        message: row.message ?? undefined
                     }
                 });
             }

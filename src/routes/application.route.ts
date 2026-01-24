@@ -25,7 +25,7 @@ export class ApplicationRoute {
         checkFormat(payload, Schemas.apply);
 
         // Add application to db and check if student already applied for this job
-        await ApplicationService.add(payload.jobUUID, req.userUUID);
+        await ApplicationService.add(payload.jobUUID, req.userUUID, payload.message);
 
         // Get student Data
         const studentData = await UserService.getUser(req.userUUID, true);
