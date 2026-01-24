@@ -70,6 +70,11 @@ export class Schemas {
                 .optional()
         });
 
+    static readonly applicants =
+        z.object({
+            jobUUID: this.UUID("job")
+        });
+
     static readonly job =
         z.object({
             title: z.string({ message: MESSAGE.ERROR.STRING() })

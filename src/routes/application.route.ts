@@ -4,7 +4,7 @@ import { checkFormat } from "../utils/format.util";
 import { Schemas } from "../utils/zod.util";
 import { StatusCodes } from "http-status-codes";
 import { MESSAGE, TITLE } from "../../responseMessage";
-import { Apply } from "../types/application.type";
+import { Applicants, Apply } from "../types/application.type";
 import { FileService } from "../services/file.service";
 import { FileType } from "../enums";
 import { getFileURL } from "../utils/envReader.util";
@@ -53,5 +53,42 @@ export class ApplicationRoute {
             .json({
                 description: MESSAGE.SUCCESS(TITLE.APPLICATION),
             });
+    }
+
+    /**
+     * Retrieve all Applicants of a Job
+     */
+    static async handleRetrieveApplicants(
+        req: Request<any, any, Applicants, ParsedQs, Record<string, any>>,
+        res: Response
+    ) {
+        const payload: Applicants = req.body;
+        checkFormat(payload, Schemas.applicants);
+
+        const applicants = await ApplicationService.getApplicantsByJob(payload.jobUUID);
+
+        return res
+            .status(StatusCodes.OK)
+            .json({
+                description: MESSAGE.RETRIEVED(TITLE.USER),
+                applicants
+            })
+    }
+
+    /**
+     * Retrieve all Applications of a Student
+     */
+    static async handleRetrieveApplications(
+        req: Request<any, any, any, ParsedQs, Record<string, any>>,
+        res: Response
+    ) {
+        const jobs = await ApplicationService.getApplicationsByStudent(req.userUUID);
+
+        return res
+            .status(StatusCodes.OK)
+            .json({
+                description: MESSAGE.RETRIEVED(TITLE.APPLICATION),
+                jobs
+            })
     }
 }

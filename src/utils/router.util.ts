@@ -156,6 +156,18 @@ export function routerHandler() {
         routeWrapper(ApplicationRoute.handleApply)
     );
 
+    router.get(
+        "/application/retrieve/company",
+        auth(TokenType.Access, UserType.Company),
+        routeWrapper(ApplicationRoute.handleRetrieveApplicants)
+    )
+
+    router.get(
+        "/application/retrieve/student",
+        auth(TokenType.Access, UserType.Student),
+        routeWrapper(ApplicationRoute.handleRetrieveApplications)
+    )
+
     // Uploads
     app.use(
         `${getBackendPath()}/${ENV.FILE_UPLOAD_PATH}`, // If changed, do not forget to edit timeout.middleware.ts also

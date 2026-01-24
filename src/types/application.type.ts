@@ -6,3 +6,8 @@ interface BaseApply {
     message?: string,
 };
 export type Apply = BaseApply;
+
+interface RetrieveApplicants {
+    jobUUID: UUID
+}
+export type Applicants = RetrieveApplicants;
