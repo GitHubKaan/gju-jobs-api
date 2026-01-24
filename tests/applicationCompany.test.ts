@@ -17,6 +17,7 @@ describe("Application Company", () => {
                 title: "Software Architect",
                 description: "Sell your time cheap and earn money with us!",
                 tags: [1, 2, 3],
+                location: "Berlin",
                 position: "Senior",
                 exp: 2000000000
             });
