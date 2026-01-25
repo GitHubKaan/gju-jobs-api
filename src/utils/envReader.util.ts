@@ -147,7 +147,7 @@ export class ENV {
     static readonly USE_CORS: boolean = envAudit("USE_CORS", EnvType.Boolean);
 
     // STUDENT
-    static readonly ALLOWED_STUDENT_DOMAIN: string = envAudit("ALLOWED_STUDENT_DOMAIN", EnvType.String);
+    static readonly ALLOWED_STUDENT_DOMAIN: string = envAudit("ALLOWED_STUDENT_DOMAIN", EnvType.String, { optional: true });
 }
 
 envIntegrity();

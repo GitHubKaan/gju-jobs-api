@@ -118,11 +118,18 @@ export class Schemas {
 
     static readonly userStudent =
         z.object({
-            email: z.string({ message: MESSAGE.ERROR.STRING("email") })
-                .email({ message: MESSAGE.ERROR.EMAIL("email") })
-                .max(70, { message: MESSAGE.ERROR.MAX_CHARACTERS(70, "email") })
-                .refine(
-                (value) => value.toLowerCase().endsWith(`@${ENV.ALLOWED_STUDENT_DOMAIN}`),
+            email: z
+            .string({ message: MESSAGE.ERROR.STRING("email") })
+            .email({ message: MESSAGE.ERROR.EMAIL("email") })
+            .max(70, { message: MESSAGE.ERROR.MAX_CHARACTERS(70, "email") })
+            .refine(
+                (value) => {
+                if (!ENV.ALLOWED_STUDENT_DOMAIN) return true;
+
+                return value
+                    .toLowerCase()
+                    .endsWith(`@${ENV.ALLOWED_STUDENT_DOMAIN.toLowerCase()}`);
+                },
                 { message: MESSAGE.ERROR.DOMAIN() }
             ),
             phone: this.phone

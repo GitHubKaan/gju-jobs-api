@@ -14,7 +14,7 @@ export class Testing {
         const signupResponse = await request(app)
             .post(`${getBackendPath()}/user/signup/student`)
             .send({
-                email: `felix@${ENV.ALLOWED_STUDENT_DOMAIN}`,
+                email: `felix@${ENV.ALLOWED_STUDENT_DOMAIN ?? "example.com"}`,
                 phone: "+490123456789",
                 givenName: "Max",
                 surname: "Mustermann",

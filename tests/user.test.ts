@@ -14,7 +14,7 @@ describe("User", () => {
         const response = await request(app)
         .post(`${getBackendPath()}/user/signup/student`)
         .send({
-            email: `max@${ENV.ALLOWED_STUDENT_DOMAIN}`,
+            email: `max@${ENV.ALLOWED_STUDENT_DOMAIN ?? "example.com"}`,
             phone: "+490123456789",
             givenName: "Max",
             surname: "Mustermann",
@@ -70,7 +70,7 @@ describe("User", () => {
             .get(`${getBackendPath()}/user/recovery`)
             .send({
                 isStudent: true,
-                email: `max@${ENV.ALLOWED_STUDENT_DOMAIN}`,
+                email: `max@${ENV.ALLOWED_STUDENT_DOMAIN ?? "example.com"}`,
             });
 
         expect(response.status).toBe(200);
@@ -92,7 +92,7 @@ describe("User", () => {
             .post(`${getBackendPath()}/user/login`)
             .send({
                 isStudent: true,
-                email: `max@${ENV.ALLOWED_STUDENT_DOMAIN}`,
+                email: `max@${ENV.ALLOWED_STUDENT_DOMAIN ?? "example.com"}`,
             });
 
         expect(response.status).toBe(200);
