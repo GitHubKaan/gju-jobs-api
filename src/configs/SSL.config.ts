@@ -17,15 +17,15 @@ export async function SSLHandler(): Promise<http.Server | https.Server> {
 
     server = http.createServer(app); //HTTP connection
 
-    if (!fs.existsSync("./certificates/cert.pem") || !fs.existsSync("./certificates/key.pem")) {
+    const certPath = path.join(__dirname, "../../certificates/cert.pem");
+    const keyPath = path.join(__dirname, "../../certificates/key.pem");
+
+    if (!fs.existsSync(certPath) || !fs.existsSync(keyPath)) {
         CONSOLE.ERROR("SSL certification and/or key file is missing.");
         return server;
     }
 
     if (ENV.API_HTTPS) {
-        const certPath = path.join(__dirname, "../certificates/cert.pem");
-        const keyPath = path.join(__dirname, "../certificates/key.pem");
-        
         /* 
             Bugfix for certification issue -- enable this and try if it will fix it
         
