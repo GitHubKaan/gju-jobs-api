@@ -15,6 +15,8 @@ export class ENV {
     static readonly STARTUP_TESTS: boolean = envAudit("STARTUP_TESTS", EnvType.Boolean);
     static readonly REMOVE_UNNUSED_FOLDERS: boolean = envAudit("REMOVE_UNNUSED_FOLDERS", EnvType.Boolean);
     
+    static readonly GJU_DOMAIN: boolean = envAudit("GJU_DOMAIN", EnvType.String);
+
     // API
     static readonly API_HTTPS: boolean = envAudit("API_HTTPS", EnvType.Boolean);
     static readonly API_WWW: boolean = envAudit("API_WWW", EnvType.Boolean);
@@ -147,7 +149,7 @@ export class ENV {
     static readonly USE_CORS: boolean = envAudit("USE_CORS", EnvType.Boolean);
 
     // STUDENT
-    static readonly ALLOWED_STUDENT_DOMAIN: string = envAudit("ALLOWED_STUDENT_DOMAIN", EnvType.String, { optional: true });
+    static readonly ALLOWED_STUDENT_DOMAIN: string = envAudit("ALLOWED_STUDENT_DOMAIN", EnvType.String);
 }
 
 envIntegrity();
@@ -182,7 +184,7 @@ export const getFrontendOrigin = (): string => {
 
 // Get fileURL
 export function getFileURL(userUUID: UUID, fileName: string) {
-    return `${getBackendOrigin()}/${ENV.FILE_UPLOAD_PATH}/${userUUID}/${fileName}`;
+    return `${ENV.GJU_DOMAIN}/${ENV.FILE_UPLOAD_PATH}/${userUUID}/${fileName}`;
 }
 
 /**

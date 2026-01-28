@@ -69,7 +69,6 @@ describe("User", () => {
         const response = await request(app)
             .get(`${getBackendPath()}/user/recovery`)
             .send({
-                isStudent: true,
                 email: `max@${ENV.ALLOWED_STUDENT_DOMAIN ?? "example.com"}`,
             });
 
@@ -91,7 +90,6 @@ describe("User", () => {
         const response = await request(app)
             .post(`${getBackendPath()}/user/login`)
             .send({
-                isStudent: true,
                 email: `max@${ENV.ALLOWED_STUDENT_DOMAIN ?? "example.com"}`,
             });
 

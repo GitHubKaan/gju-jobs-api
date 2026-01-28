@@ -21,6 +21,7 @@ import { UpdateUserCompanyType, UpdateUserStudentType } from "../types/user.type
 import { Schemas } from "../utils/zod.util";
 import { UserStudentService } from "../services/userStudent.service";
 import { UserCompanyService } from "../services/userCompany.service";
+import { UserUtil } from "../utils/user.util";
 
 export class UserRoute {
     /**
@@ -65,14 +66,14 @@ export class UserRoute {
     static async handleLogin(
         req: Request<any, any, {
             email: string;
-            isStudent: boolean;
         }, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        const { email, isStudent } = req.body;
+        const { email } = req.body;
         checkFormat(email, Schemas.email);
-        checkFormat(isStudent, Schemas.boolean);
-    
+        
+        const isStudent = UserUtil.emailIsStudent(email);
+        
         const UUIDs = await UserService.getUUIDs(email, isStudent);
         await handleRequestCooldown(UUIDs.UUID, isStudent);
     
@@ -140,14 +141,14 @@ export class UserRoute {
     static async handleGetRecovery(
         req: Request<any, any, {
             email: string;
-            isStudent: boolean;
         }, ParsedQs, Record<string, any>>,
         res: Response
     ) {
-        const { email, isStudent } = req.body;
+        const { email } = req.body;
         checkFormat(email, Schemas.email);
-        checkFormat(isStudent, Schemas.boolean);
-    
+        
+        const isStudent = UserUtil.emailIsStudent(email);
+        
         const UUIDs = await UserService.getUUIDs(email, isStudent);
         await handleRequestCooldown(UUIDs.UUID, isStudent);
     
