@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "88c87fe7-b9b8-4423-bdf3-0fbfd555012a",
+    "_postman_id": "c646bc69-3308-44bb-ae68-4c477550ffe1",
     "name": "HTTP/HTTPS",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "28955197"
+    "_exporter_id": "30410705",
+    "_collection_link": "https://go.postman.co/collection/30410705-c646bc69-3308-44bb-ae68-4c477550ffe1?source=collection_link"
   },
   "item": [
     {
@@ -70,7 +71,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"kadaddn@turanics.com\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optionaram name.\", // optional\r\n    \"program\": \"awdawd\", // optionaram name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
+                  "raw": "{\r\n    \"email\": \"kaan@gju.edu.jo\",\r\n    \"phone\": \"+490123456789\",\r\n    \"givenName\": \"Max\",\r\n    \"surname\": \"Mustermann\",\r\n    \"degree\": \"HIGHEST DEGREE MSc.\", // optionaram name.\", // optional\r\n    \"program\": \"awdawd\", // optionaram name.\", // optional\r\n    /*\r\n        - When removing tags (undefined) nothing will be changed\r\n        - When using \"[]\"\" all old tag-value(s) will be removed\r\n        - When inserting values like this: \"[1, 2, 3]\", all old values will be replaced by new ones\r\n    */\r\n    \"tags\": [1, 2, 3, 4], // optional\r\n    \"jobPreferences\": [1, 2, 3, 4], // optional\r\n    \"languages\": [1, 2, 3, 4] // optional\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -124,7 +125,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"isStudent\": true, // Student login or company login?\r\n    \"email\": \"kaan@turanics.com\"\r\n}",
+                  "raw": "{\r\n    \"isStudent\": true, // Student login or company login?\r\n    \"email\": \"kaan@gju.edu.jo\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -756,7 +757,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjExMzZmNjhiLTViOGItNGVhMy04NGIxLWJmYWY2YmIzMGJjZSIsImF1dGhVVUlEIjoiZGUwYjZhYTktNjBmZi00MzRiLWIzNDEtZDdjODkzZDg2NGMzIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2OTI5MDMwMywiZXhwIjoxNzg0ODQyMzAzfQ.VTuKaEFFUBfmH7jfMD9-UIxIUtvSLKT9dEOaQ5pAklQ",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjE0OWUyMjI2LTNlYTMtNDI0ZC1iMzlhLTYxZDg0NTNkYTM5YiIsImF1dGhVVUlEIjoiMGVmMTIwN2MtMjM3YS00MzIzLTk0NjAtZTU2YTc5MThiZWQ3IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2ODU5ODk1NSwiZXhwIjoxNzg0MTUwOTU1fQ.geS9kn8bqdQTv2jpKDisBiDRB_86cJWdCxLlruy8oT8",
                       "type": "string"
                     }
                   ]
@@ -765,7 +766,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"jobUUID\": \"60e8014d-2d61-4d1b-bae6-7242929cf68c\",\n    \"message\": \"hellooooo\" // optional\n}",
+                  "raw": "{\n    \"jobUUID\": \"9b01c483-0e62-4de1-ba23-f2b56f6a5d07\",\n    \"message\": \"sdsd\" // optional\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -786,31 +787,19 @@
             },
             {
               "name": "Retrieve received Company Applications",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
               "request": {
                 "auth": {
                   "type": "bearer",
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjIyMThlN2ZiLTA0NDctNDUxYy05OTYxLTY1NzIyMTEyYjExNyIsImF1dGhVVUlEIjoiNmYzNTY0NWUtZjNmMi00ZDM0LTlmODMtNmM1NmFmMTMzNTg4IiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2OTI5MDcxOSwiZXhwIjoxNzg0ODQyNzE5fQ.zNOv-r6d3t3wpDSTVGRh61XM4oZPUyMK753SCYKJ2Mw",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
                       "type": "string"
                     }
                   ]
                 },
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"jobUUID\": \"60e8014d-2d61-4d1b-bae6-7242929cf68c\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "{{baseURL}}application/retrieve/company",
                   "host": [
@@ -832,7 +821,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6IjExMzZmNjhiLTViOGItNGVhMy04NGIxLWJmYWY2YmIzMGJjZSIsImF1dGhVVUlEIjoiZGUwYjZhYTktNjBmZi00MzRiLWIzNDEtZDdjODkzZDg2NGMzIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiU1RVREVOVCIsImlhdCI6MTc2OTI5MDMwMywiZXhwIjoxNzg0ODQyMzAzfQ.VTuKaEFFUBfmH7jfMD9-UIxIUtvSLKT9dEOaQ5pAklQ",
+                      "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVVVJRCI6ImZhNmExN2U4LWMwMjMtNDAyMS1iZTE3LTNiZGIzODQ2NTM1NSIsImF1dGhVVUlEIjoiNTVhNzAzMjgtZjUwOS00MGUxLWI0YjUtZDljZTJjODgwYjVkIiwidHlwZSI6ImFjY2VzcyIsInVzZXJUeXBlIjoiQ09NUEFOWSIsImlhdCI6MTc2ODY1Njk3NCwiZXhwIjoxNzg0MjA4OTc0fQ.qH0fOjkgQovppjX_p7jt1DE0vuY6A0yzCvKXBvhoOZ0",
                       "type": "string"
                     }
                   ]
@@ -885,6 +874,11 @@
     {
       "key": "baseURL",
       "value": ""
+    },
+    {
+      "key": "baseURL",
+      "value": "",
+      "disabled": true
     }
   ]
 }

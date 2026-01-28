@@ -64,7 +64,7 @@ export class Schemas {
             jobUUID: this.UUID("job"),
             message: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
+                .max(10000, { message: MESSAGE.ERROR.MAX_CHARACTERS(10000) })
                 //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
                 .optional()
@@ -83,8 +83,8 @@ export class Schemas {
                 .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             description: z.string({ message: MESSAGE.ERROR.STRING() })
-                .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
-                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(10000, { message: MESSAGE.ERROR.MAX_CHARACTERS(10000) })
                 //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             tags: this.tags
@@ -118,11 +118,18 @@ export class Schemas {
 
     static readonly userStudent =
         z.object({
-            email: z.string({ message: MESSAGE.ERROR.STRING("email") })
-                .email({ message: MESSAGE.ERROR.EMAIL("email") })
-                .max(70, { message: MESSAGE.ERROR.MAX_CHARACTERS(70, "email") })
-                .refine(
-                (value) => value.toLowerCase().endsWith(`@${ENV.ALLOWED_STUDENT_DOMAIN}`),
+            email: z
+            .string({ message: MESSAGE.ERROR.STRING("email") })
+            .email({ message: MESSAGE.ERROR.EMAIL("email") })
+            .max(70, { message: MESSAGE.ERROR.MAX_CHARACTERS(70, "email") })
+            .refine(
+                (value) => {
+                if (!ENV.ALLOWED_STUDENT_DOMAIN) return true;
+
+                return value
+                    .toLowerCase()
+                    .endsWith(`@${ENV.ALLOWED_STUDENT_DOMAIN.toLowerCase()}`);
+                },
                 { message: MESSAGE.ERROR.DOMAIN() }
             ),
             phone: this.phone
@@ -169,8 +176,8 @@ export class Schemas {
                 .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             description: z.string({ message: MESSAGE.ERROR.STRING() })
-                .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
-                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
+                .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
+                .max(10000, { message: MESSAGE.ERROR.MAX_CHARACTERS(10000) })
                 //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
                 .optional(),
