@@ -129,7 +129,7 @@ export class UserService {
                 email: result.rows[0].email,
                 phone: result.rows[0].phone ? decrypt(result.rows[0].phone) : null,
                 company: decrypt(result.rows[0].company),
-                description: decrypt(result.rows[0].description),
+                description: result.rows[0].description ? decrypt(result.rows[0].description) : null,
                 givenName: decrypt(result.rows[0].given_name),
                 surname: decrypt(result.rows[0].surname),
                 street: decrypt(result.rows[0].street),

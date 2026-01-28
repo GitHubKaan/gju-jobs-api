@@ -127,7 +127,11 @@ export class ApplicationService {
                     companyInfo: {
                         userUUID: row.company_uuid,
                         email: row.email,
+                        phone: row.phone ? decrypt(row.phone) : null,
                         company: decrypt(row.company),
+                        description: row.company_description ? decrypt(row.company_description) : null,
+                        givenName: decrypt(row.given_name),
+                        surname: decrypt(row.surname),
                         size: decrypt(row.size),
                         industry: decrypt(row.industry),
                         country: decrypt(row.country),

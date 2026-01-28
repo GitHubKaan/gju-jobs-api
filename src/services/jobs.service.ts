@@ -1,5 +1,5 @@
 import { UUID } from "node:crypto";
-import { PoolClient, QueryResult } from "pg";
+import { PoolClient } from "pg";
 import { DBPool } from "../configs/postgreSQL.config";
 import { v4 as uuidv4 } from "uuid";
 import { CreateJob, RetrieveJobs, UpdateJob } from "../types/jobs.type";
@@ -162,7 +162,11 @@ export class JobsService {
                     companyInfo: {
                         userUUID: row.company_uuid,
                         email: row.email,
+                        phone: row.phone ? decrypt(row.phone) : null,
                         company: decrypt(row.company),
+                        description: row.company_description ? decrypt(row.company_description) : null,
+                        givenName: decrypt(row.given_name),
+                        surname: decrypt(row.surname),
                         size: decrypt(row.size),
                         industry: decrypt(row.industry),
                         country: decrypt(row.country),
