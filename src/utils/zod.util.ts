@@ -53,10 +53,10 @@ export class Schemas {
     static readonly tags = z.array(
         z.number({ message: MESSAGE.ERROR.INT() })
             .min(0, { message: MESSAGE.ERROR.MIN_INT(0) })
-            .max(100, { message: MESSAGE.ERROR.MAX_INT(100) }),
+            .max(500, { message: MESSAGE.ERROR.MAX_INT(500) }),
             { message: MESSAGE.ERROR.ARRAY() }
         )
-        .max(100, { message: MESSAGE.ERROR.MAX_ELEMENT(100) })
+        .max(1000, { message: MESSAGE.ERROR.MAX_ELEMENT(1000) })
         .refine((arr: (number | undefined)[]) => new Set(arr).size === arr.length, { message: MESSAGE.ERROR.UNIQUE() });
     
     static readonly apply =
@@ -91,7 +91,7 @@ export class Schemas {
                 .optional(),
             location: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .max(1000, { message: MESSAGE.ERROR.MAX_CHARACTERS(1000) })
                 //.regex(/^[a-zA-ZäöüÄÖÜß0-9.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() }) -- fix later
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             position: z.string({ message: MESSAGE.ERROR.STRING() })
@@ -147,13 +147,13 @@ export class Schemas {
             //birthdate: z.coerce.date(), -- removed
             degree: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
                 .optional(),
             program: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.\-\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
                 .optional(),
@@ -216,12 +216,12 @@ export class Schemas {
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             size: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(50, { message: MESSAGE.ERROR.MAX_CHARACTERS(50) })
+                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
                 .regex(/^(?:\d+(?:[.,]\d+)?)(?:\s*-\s*(?:\d+(?:[.,]\d+)?))?$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
             industry: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(1, { message: MESSAGE.ERROR.MIN_CHARACTERS(1) })
-                .max(100, { message: MESSAGE.ERROR.MAX_CHARACTERS(100) })
+                .max(500, { message: MESSAGE.ERROR.MAX_CHARACTERS(500) })
                 .regex(/^[a-zA-ZäöüÄÖÜß.,'&\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY }),
         });
@@ -237,7 +237,7 @@ export class Schemas {
                 }, { message: MESSAGE.ERROR.AVAILABLE() }),
             message: z.string({ message: MESSAGE.ERROR.STRING() })
                 .min(15, { message: MESSAGE.ERROR.MIN_CHARACTERS(15) })
-                .max(1000, { message: MESSAGE.ERROR.MAX_CHARACTERS(1000) })
+                .max(5000, { message: MESSAGE.ERROR.MAX_CHARACTERS(5000) })
                 .regex(/^[a-zA-ZäöüÄÖÜß0-9.,'"&!?%+*\-\/\s]+$/, { message: MESSAGE.ERROR.REGEX() })
                 .regex(/^(?!\s*$).+$/, { message: MESSAGE.ERROR.EMPTY })
         });
