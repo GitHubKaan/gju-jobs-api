@@ -95,10 +95,13 @@ export class JobsRoute {
 
         const { jobs } = await JobsService.retrieve(retrievePayload);
 
+        const jobsAmount = await JobsService.totalJobAmount();
+
         return res
             .status(StatusCodes.OK)
             .json({
                 description: MESSAGE.RETRIEVED(TITLE.JOBS),
+                totalJobs: jobsAmount,
                 jobs: jobs
             });
     }

@@ -17,7 +17,7 @@ export class JobsService {
      * @param payload CreateJob-payload
      * @returns Job UUID
     */
-    static async add(
+    public static async add(
         userUUID: UUID,
         payload: CreateJob,
     ): Promise<
@@ -58,7 +58,7 @@ export class JobsService {
      * @param payload UpdateJob
      * @throws {DefaultError} Job not found (maybe unauthorized access to jobUUID)
      */
-    static async update(
+    public static async update(
         userUUID: UUID,
         payload: UpdateJob
     ): Promise<
@@ -118,7 +118,7 @@ export class JobsService {
      * @param jobUUID
      * @throws {DefaultError} Job not found (maybe unauthorized access to jobUUID)
     */
-    static async delete(
+    public static async delete(
         userUUID: UUID,
         jobUUID: UUID
     ): Promise<
@@ -130,11 +130,24 @@ export class JobsService {
     }
 
     /**
+     * Count the total job amount
+     * @returns Total jobs amount
+    */
+    public static async totalJobAmount(
+
+    ): Promise<
+        number
+    > {
+        const result = await DBPool.query(JobsQueries.countJobs);
+        return result.rows[0].job_amount ?? 0;
+    }
+
+    /**
      * Retrieve jobs
      * @param payload RetrieveJobs-payload
      * @returns Jobs with company info
     */
-    static async retrieve(
+    public static async retrieve(
         payload: RetrieveJobs,
     ): Promise<
         { jobs: any[] }
@@ -226,7 +239,7 @@ export class JobsService {
       * @param jobUUID
       * @returns userUUID
       */
-    static async getUserUUID(
+    public static async getUserUUID(
         jobUUID: UUID,
     ): Promise<
         UUID
@@ -241,7 +254,7 @@ export class JobsService {
      * @param userUUID Company user uuid 
      * @returns Jobs from company
     */
-    static async retrieveOwn(
+    public static async retrieveOwn(
         userUUID: UUID
     ): Promise<
         { jobs: any[] }

@@ -66,6 +66,11 @@ export class JobsQueries {
         WHERE (j.exp IS NULL OR j.exp > NOW())
     `;
 
+    public static readonly countJobs = `
+        SELECT COUNT(*) AS job_amount
+        FROM jobs;
+    `;
+
     public static readonly retrieveOwn = `
         SELECT
             j.uuid,

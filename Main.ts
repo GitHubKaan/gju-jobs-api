@@ -25,7 +25,7 @@ async function startServer() {
         if (ENV.NODE_ENV !== NodeEnv.Testing) await startupTests();
         await runRedis();
         startupLog(true);
-
+        
         createUploadFolder();
 
         if (ENV.REMOVE_UNNUSED_FOLDERS) deleteUnnusedUploadFolders();
