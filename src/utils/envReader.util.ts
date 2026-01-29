@@ -184,7 +184,17 @@ export const getFrontendOrigin = (): string => {
 
 // Get fileURL
 export function getFileURL(userUUID: UUID, fileName: string) {
-    return `${ENV.GJU_DOMAIN}/${ENV.FILE_UPLOAD_PATH}/${userUUID}/${fileName}`;
+    const protocol = ENV.API_HTTPS ? "https://" : "http://";
+    const www = ENV.API_WWW ? "www." : "";
+    const host = NodeEnv.Dev === ENV.NODE_ENV ? ENV.API_HOST : ENV.GJU_DOMAIN;
+    const port = ENV.API_PORT ? `:${ENV.API_PORT}` : "";
+    const path = ENV.API_PATH ? `/${ENV.API_PATH}` : "";
+    const version = ENV.VERSION ? `/v${ENV.VERSION}` : "";
+    const backendPath = `${protocol}${www}${host}${port}${path}${version}`;
+
+    const filePath = `/${ENV.FILE_UPLOAD_PATH}/${userUUID}/${fileName}`;
+
+    return `${backendPath}${filePath}`;
 }
 
 /**
