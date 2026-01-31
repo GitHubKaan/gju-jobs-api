@@ -4,7 +4,7 @@
 Developed by Khanh Le Dang, Dilan Bostanci and Kâan Turan<br>
 Project lead: Silvio Peikert and Dr. Jamal Al Qundus
 
-GJU Jobs is a matchmaking platform developed in collaboration with the <a href="https://www.gju.edu.jo">German Jordanian University (GJU)</a> and the <a href="https://www.htw-berlin.de">Hochschule für Technik und Wirtschaft Berlin (HTW Berlin) - University of Applied Sciences</a>. The platform aims to connect GJU students with companies in Germany, facilitating access to internships and early career opportunities. Students can create profiles highlighting their academic background, qualifications, and skills, while companies can publish job postings and actively search for suitable candidates. An intelligent matching system recommends relevant opportunities based on academic profiles, competencies, and career interests.
+GJU Jobs is a matchmaking platform developed in collaboration with the <a href="https://www.gju.edu.jo">German Jordanian University (GJU)</a> and the <a href="https://www.htw-berlin.de">Hochschule für Technik und Wirtschaft Berlin (HTW Berlin) - University of Applied Sciences</a>. The platform aims to connect GJU students with companies in Germany, facilitating access to internships and early career opportunities. Students can create profiles highlighting their academic background, qualifications, and skills, while companies can publish job postings and actively search for suitable candidates. An intelligent matching system recommends relevant opportunities based on academic profiles, competencies, and career interests. The corresponding frontend repository can be found <a href="https://gitlab.rz.htw-berlin.de/s0579429/gju">HERE</a>.
 
 > [!NOTE]  
 > This project is licensed under the MIT License. See the _LICENSE_ file for details.
@@ -27,14 +27,17 @@ To get started, follow the steps below to launch the API. The use of Docker is s
 
 1. Create the _.env_, _.env.production_, and _.env.testing_ files inside the root directory using _.env.example_ as a template.
 2. Configure the environment files for development, deployment, and testing according to the instructions and information provided within each file. Recommended values are already provided in the _.env.example_ file.
-3. Set up PostgreSQL and Redis, then configure the environment files with the required connection details. When setting up PostgreSQL, you can use the _schemas/postgreSQL.schema.sql_ file to initialize the database.
+3. Set up <a href="https://www.postgresql.org">PostgreSQL</a> and <a href="https://redis.io">Redis</a>, then configure the environment files with the required connection details. When setting up PostgreSQL, you can use the _/schemas/postgreSQL.schema.sql_ file to initialize the database.
 4. Install all dependencies with `npm install`.
 5. Run `npm run test` to check if everything is working properly.
 6. Start the API in development mode: `npm run dev` or start the API in production mode: `npm run deploy`.
 7. Done! :blush:
 
 ## General
-This API is built using the <a href="https://expressjs.com">Express.js</a> framework. To operate the application, a configured <a href="https://www.postgresql.org">PostgreSQL</a> database, <a href="https://redis.io">Redis</a> instance, and mail server are required. The SSL certificate files must be stored in the root directory under /certificates. All additional third-party libraries and dependencies can be found in _/package.json_ and _/package-lock.json_.
+This API is built using the <a href="https://expressjs.com">Express.js</a> framework. To operate the application, a configured <a href="https://www.postgresql.org">PostgreSQL</a> database, <a href="https://redis.io">Redis</a> instance, and mail server are required. The variable values ​​required for the mail server can be found inside the environment file. The SSL certificate files must be stored in the root directory under /certificates. All additional third-party libraries and dependencies can be found in _/package.json_ and _/package-lock.json_. Under normal circumstances, database entries are managed via the admin dashboard. As this functionality is currently unavailable, <a href="https://www.pgadmin.org">pgAdmin</a> is recommended. The database schema can be found in _/schemas/postgreSQL.schema.sql_.
+
+> [!NOTE]  
+> Detailed information and official documentation regarding the installation of PostgreSQL, Redis, and pgAdmin can be accessed through the provided links.
 
 The following section provides an overview of the complete system architecture.
 
@@ -50,6 +53,9 @@ Request payload sizes and numerous additional input validations are performed be
 
 ## Environment
 The following section lists all environment variables along with a brief description of each. The environment files also include short comments, although most variables are self-explanatory.
+
+> [!CAUTION]
+> Misconfiguring the environment file may result in severe security risks. Please proceed with caution and consult the comments in the _.env.example_
 
 | Variable | Description | Recommended |
 |----------|-------------|-------------|
