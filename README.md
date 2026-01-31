@@ -33,6 +33,8 @@ To get started, follow the steps below to launch the API. The use of Docker is s
 6. Start the API in development mode: `npm run dev` or start the API in production mode: `npm run deploy`.
 7. Done! :blush:
 
+<img src="images/readme/preview.gif" width="100%"/>
+
 ## General
 This API is built using the <a href="https://expressjs.com">Express.js</a> framework. To operate the application, a configured <a href="https://www.postgresql.org">PostgreSQL</a> database, <a href="https://redis.io">Redis</a> instance, and mail server are required. The variable values ​​required for the mail server can be found inside the environment file. The SSL certificate files must be stored in the root directory under /certificates. All additional third-party libraries and dependencies can be found in _/package.json_ and _/package-lock.json_. Under normal circumstances, database entries are managed via the admin dashboard. As this functionality is currently unavailable, <a href="https://www.pgadmin.org">pgAdmin</a> is recommended. The database schema can be found in _/schemas/postgreSQL.schema.sql_.
 
